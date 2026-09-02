@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Фестиваль «Атлас» — Технический портал площадки</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0c12;
+      --card-bg: rgba(20, 25, 38, 0.75);
+      --card-border: rgba(255, 255, 255, 0.09);
+      --primary: #f0c352;
+      --primary-glow: rgba(240, 195, 82, 0.35);
+      --accent-blue: #3498db;
+      --accent-warn: #e67e22;
+      --text: #f3f5fa;
+      --text-muted: #8d95ab;
+      --item-bg: rgba(255, 255, 255, 0.04);
+      --item-border: rgba(255, 255, 255, 0.07);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 15% 10%, rgba(240, 195, 82, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 85% 90%, rgba(52, 152, 219, 0.08) 0%, transparent 45%);
+      background-attachment: fixed;
+      color: var(--text);
+      padding: 24px 16px;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 1024px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Шапка */
+    header {
+      text-align: center;
+      padding: 16px 0;
+    }
+
+    .badge-fest {
+      display: inline-block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--primary);
+      background: rgba(240, 195, 82, 0.12);
+      border: 1px solid rgba(240, 195, 82, 0.3);
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #ffffff 40%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 6px;
+    }
+
+    /* Стеклянные панели */
+    .glass-panel {
+      background: var(--card-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .panel-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Переключатель сцен */
+    .scene-switch-bar {
+      display: flex;
+      background: var(--item-bg);
+      border: 1px solid var(--item-border);
+      border-radius: 12px;
+      padding: 4px;
+      gap: 4px;
+    }
+
+    .scene-tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .scene-tab-btn.active {
+      background: linear-gradient(135deg, rgba(240, 195, 82, 0.22), rgba(240, 195, 82, 0.08));
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
+    /* Сетка пяти разделов райдера */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 16px;
+    }
+
+    .spec-card {
+      background: var(--item-bg);
+      border: 1px solid var(--item-border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .spec-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .spec-items-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .spec-items-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      line-height: 1.4;
+    }
+
+    .download-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: auto;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .download-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* Блок интерактивного чат-ассистента */
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      height: 520px;
+      background: rgba(12, 15, 23, 0.85);
+      border: 1px solid var(--item-border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .chat-bubble {
+      max-width: 85%;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-size: 0.88rem;
+      line-height: 1.45;
+      position: relative;
+    }
+
+    .chat-bubble.bot {
+      align-self: flex-start;
+      background: rgba(30, 37, 56, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      border-bottom-left-radius: 2px;
+    }
+
+    .chat-bubble.bot b {
+      color: var(--primary);
+    }
+
+    .chat-bubble.user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, rgba(240, 195, 82, 0.2), rgba(240, 195, 82, 0.08));
+      border: 1px solid var(--primary);
+      color: #fff;
+      border-bottom-right-radius: 2px;
+    }
+
+    .tip-box {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: rgba(230, 126, 34, 0.12);
+      border-left: 3px solid var(--accent-warn);
+      border-radius: 6px;
+      font-size: 0.78rem;
+      color: #fce4d6;
+    }
+
+    .quick-replies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .quick-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quick-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .chat-input-row {
+      display: flex;
+      gap: 8px;
+      padding: 12px;
+      background: rgba(18, 22, 33, 0.95);
+      border-top: 1px solid var(--item-border);
+    }
+
+    .chat-input {
+      flex: 1;
+      background: var(--item-bg);
+      border: 1px solid var(--item-border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .chat-input:focus {
+      border-color: var(--primary);
+    }
+
+    .chat-send-btn {
+      background: linear-gradient(135deg, var(--primary), #caa038);
+      border: none;
+      color: #0b0d13;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Блок превью файла и Telegram */
+    .summary-card {
+      margin-top: 16px;
+      display: none;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px dashed var(--primary);
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .summary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .summary-title {
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 0.92rem;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-main {
+      background: linear-gradient(135deg, var(--primary), #caa038);
+      border: none;
+      color: #090a0f;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-tg {
+      background: linear-gradient(135deg, #2980b9, #3498db);
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+  <header>
+    <div class="badge-fest">Фестиваль «Атлас»</div>
+    <h1>Технический кабинет площадки</h1>
+    <p class="subtitle">Паспорта сцен, спецификации оборудования и согласование вызова служб</p>
+  </header>
+
+  <!-- Блок 1: Документация и райдеры -->
+  <div class="glass-panel">
+    <div class="panel-header">
+      <div class="panel-title">📂 Техническая документация и чертежи</div>
+      <div class="scene-switch-bar">
+        <button class="scene-tab-btn active" onclick="switchSceneView('main')">Основная сцена</button>
+        <button class="scene-tab-btn" onclick="switchSceneView('small')">Малая сцена</button>
+      </div>
+    </div>
+
+    <div class="specs-grid" id="specsGridContainer">
+      <!-- Наполняется динамически скриптом в зависимости от выбранной сцены -->
+    </div>
+  </div>
+
+  <!-- Блок 2: Интерактивный диалог -->
+  <div class="glass-panel">
+    <div class="panel-header">
+      <div class="panel-title">💬 Согласование графика и вызова служб театра</div>
+    </div>
+    <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 14px;">
+      Ответьте на вопросы ассистента. В диалоге можно уточнять детали или запрашивать подсказки. По итогам сформируется готовый паспорт согласования.
+    </p>
+
+    <div class="chat-container">
+      <div class="chat-messages" id="chatMessages">
+        <!-- Сообщения бота и пользователя -->
+      </div>
+      <div class="chat-input-row">
+        <input type="text" id="chatInput" class="chat-input" placeholder="Введите ответ или выберите вариант выше..." onkeydown="if(event.key==='Enter') handleUserSend()">
+        <button class="chat-send-btn" onclick="handleUserSend()">Ответить</button>
+      </div>
+    </div>
+
+    <!-- Карточка сформированного отчёта -->
+    <div class="summary-card" id="summaryCard">
+      <div class="summary-header">
+        <span class="summary-title">📄 Технический паспорт согласования сформирован</span>
+      </div>
+      <pre id="summaryText" style="font-size: 0.78rem; line-height: 1.4; color: #cfd6e6; max-height: 200px; overflow-y: auto; white-space: pre-wrap; background: rgba(0,0,0,0.25); padding: 10px; border-radius: 8px;"></pre>
+      <div class="action-row">
+        <button class="btn-main" onclick="downloadSummaryDoc()">💾 Скачать файл (.txt)</button>
+        <a id="tgShareBtn" href="#" target="_blank" class="btn-tg">✈️ Отправить в Telegram дирекции</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* 1. База спецификаций по двум сценам */
+  const specsData = {
+    main: [
+      {
+        title: "🎭 1. Сцена и планшет",
+        files: ["План сцены (DWG/PDF)", "Таблица штанкетного хозяйства", "Паспорт одежды сцены"],
+        items: ["Зеркало: 12м х 7м, полезная глубина 14м", "Штанкеты: 32 штанкета (SWL 350 кг)", "Поворотный круг: Ø 10м с реверсом"]
+      },
+      {
+        title: "💡 2. Осветительский цех",
+        files: ["План софитов и выноса (PDF)", "DMX-патч площадки"],
+        items: ["Пульт: grandMA2 / ChamSys", "Парк: профили, Wash LED, заливной свет", "Протоколы: Art-Net, sACN, DMX-512"]
+      },
+      {
+        title: "🔊 3. Звуковой цех",
+        files: ["Акустический паспорт зала", "Список микрофонного парка"],
+        items: ["Консоль: Dante-сеть, цифровая FOH", "Порталы: линейный массив L/R + Sub", "Радиосистемы: UHF-диапазон (8 каналов)"]
+      },
+      {
+        title: "📽 4. Видео и проекция",
+        files: ["Схема подвеса экранов"],
+        items: ["Проектор: 16 000 ANSI Lm", "Экран: 10м х 6м прямой проекции", "Линии: оптический HDMI, SDI со сцены"]
+      },
+      {
+        title: "🚚 5. Логистика и гримёрки",
+        files: ["Схема подъезда фур к рампе"],
+        items: ["Ворота: 3.2м х 2.8м (пандус во двор)", "Гримёрный блок: 4 комнаты (до 25 чел)"]
+      }
+    ],
+    small: [
+      {
+        title: "🎬 1. Малая сцена",
+        files: ["План планшета Малой сцены (PDF)"],
+        items: ["Зал-трансформер: 9м х 11м", "Высота до ферм: 4.8м", "Стационарный чёрный кабинет"]
+      },
+      {
+        title: "💡 2. Свет (Малая сцена)",
+        files: ["Схема световых ферм"],
+        items: ["Пульт: ETC / ChamSys", "Компактные LED профили и линзы PC", "Прямое управление по DMX"]
+      },
+      {
+        title: "🔊 3. Звук (Малая сцена)",
+        files: ["План сценических лючков"],
+        items: ["Точечные источники акустики FOH", "Цифровой стейджбокс 16/8", "4 радиосистемы головных гарнитур"]
+      },
+      {
+        title: "📽 4. Проекция (Малая сцена)",
+        files: ["Спецификация проектора"],
+        items: ["Короткофокусный лазерный проектор 7000 Lm", "Моторизованный задний экран 4м х 3м"]
+      },
+      {
+        title: "🚚 5. Разгрузка и гримёрки",
+        files: ["Инструкция проноса декораций"],
+        items: ["Пронос через малый грузовой лифт", "Гримёрка: 1 общая комната на 10 мест"]
+      }
+    ]
+  };
+
+  function switchSceneView(sceneKey) {
+    document.querySelectorAll('.scene-tab-btn').forEach((b, idx) => {
+      b.classList.toggle('active', (sceneKey === 'main' && idx === 0) || (sceneKey === 'small' && idx === 1));
+    });
+
+    const container = document.getElementById('specsGridContainer');
+    container.innerHTML = '';
+
+    specsData[sceneKey].forEach(section => {
+      const card = document.createElement('div');
+      card.className = 'spec-card';
+      
+      let itemsListHtml = section.items.map(i => `<li>• ${i}</li>`).join('');
+      let downloadLinksHtml = section.files.map(f => `<a class="download-btn" href="javascript:alert('Файл будет доступен после загрузки архива: ${f}')">📥 ${f}</a>`).join('');
+
+      card.innerHTML = `
+        <div class="spec-title">${section.title}</div>
+        <ul class="spec-items-list">${itemsListHtml}</ul>
+        ${downloadLinksHtml}
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  /* 2. Пошаговый диалоговый мастер вызова служб */
+  const applicationData = {
+    theatre: '',
+    playName: '',
+    contactName: '',
+    contactPhone: '',
+    targetScene: '',
+    arrivalDateTime: '',
+    isNightWork: false,
+    nightWorkDetails: '',
+    timingSchedule: '',
+    servicesCalled: [],
+    customServicesNotes: '',
+    riderLinks: ''
+  };
+
+  let chatStep = 0;
+
+  const chatFlow = [
+    {
+      question: "Приветствую! Я технический координатор фестиваля «Атлас». Помогу быстро согласовать график монтажа и вызов служб театра. <b>Укажите название вашего театра, спектакль и контакты завпоста (ФИО и телефон)</b>.",
+      tip: "Пример: Театр Драмы, спектакль «Чайка», завпост Иванов Иван +79001234567",
+      quick: ["Уточнить требования к завпосту"],
+      handler: (val) => {
+        applicationData.theatre = val;
+        return true;
+      }
+    },
+    {
+      question: "Какую площадку фестиваля вы планируете задействовать для показа?",
+      tip: "Если спектакль масштабен или у вас серия постановок, можно выбрать сразу две сцены.",
+      quick: ["Основная сцена", "Малая сцена", "Обе площадки (Основная + Малая)"],
+      handler: (val) => {
+        applicationData.targetScene = val;
+        return true;
+      }
+    },
+    {
+      question: "Когда планируется прибытие транспорта с декорациями (дата и ориентировочное время)? И важный момент: <b>планируются ли ночные работы на площадке?</b>",
+      tip: "⚡ <b>Обратите внимание:</b> В нашем театре РАЗРЕШЕНЫ ночные монтажи и репетиции, но их необходимо отразить в заявке заранее, чтобы мы составили сменный график дежурных служб.",
+      quick: ["Без ночных работ", "Да, потребуется ночной монтаж"],
+      handler: (val) => {
+        applicationData.arrivalDateTime = val;
+        if (val.toLowerCase().includes("ночн")) {
+          applicationData.isNightWork = true;
+        }
+        return true;
+      }
+    },
+    {
+      question: "Опишите базовый тайминг дня (время начала монтажа, фокус света, репетиции и начало спектакля).",
+      tip: "Пример: 08:00 заезд, 09:00–13:00 монтировка, 13:00–15:00 свет/звук, 16:00 прогон, 19:00 спектакль.",
+      quick: ["Стандартный 1-дневный график", "Заезд накануне вечером"],
+      handler: (val) => {
+        applicationData.timingSchedule = val;
+        return true;
+      }
+    },
+    {
+      question: "Какие <b>технические службы нашего театра</b> вам потребуются на площадке? Перечислите нужные цеха и ориентировочное время вызова.",
+      tip: "Доступные цеха:<br>• <b>Монтировщики (машинисты сцены)</b><br>• <b>Оператор механооборудования (штанкеты/круг)</b><br>• <b>Осветительский цех (планшетные осветители и/или художник по свету)</b><br>• <b>Звукоцех</b><br>• <b>Видеоцех / проекция</b><br>• <b>Помощник режиссёра (помреж)</b><br>• <b>Завпост площадки для координации</b><br>• <b>Дежурный электрик / механик</b><br>• <b>Уборка сцены (клининг до и после прогона)</b>",
+      quick: ["Вызов всех ключевых служб (полный стек)", "Только монтировщики + свет + звук + уборка"],
+      handler: (val) => {
+        applicationData.servicesCalled = val;
+        return true;
+      }
+    },
+    {
+      question: "Есть ли у вас запросы к <b>костюмерам, гримёрам или реквизиторам</b> театра? (Отпариватели, утюги, доп. зеркала, реквизиторский холодильник).",
+      tip: "Опишите в свободной форме или напишите «Нет запросов», если всё привозите с собой.",
+      quick: ["Нужны только отпариватели и гладильная", "Без запросов к костюмерам/реквизиторам"],
+      handler: (val) => {
+        applicationData.customServicesNotes = val;
+        return true;
+      }
+    },
+    {
+      question: "Финальный шаг: прикрепите <b>ссылку на облако</b> (Яндекс.Диск, Google Drive) с вашими световыми партитурами, райдером и планом расстановки декораций.",
+      tip: "Если ссылок пока нет, напишите «Передадим позже».",
+      quick: ["Ссылка на Яндекс.Диск", "Передадим на площадке"],
+      handler: (val) => {
+        applicationData.riderLinks = val;
+        return true;
+      }
+    }
+  ];
+
+  function addBotMessage(text, tip = null, quickReplies = []) {
+    const container = document.getElementById('chatMessages');
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-bubble bot';
+    
+    let tipHtml = tip ? `<div class="tip-box">${tip}</div>` : '';
+    let quickHtml = '';
+    if (quickReplies && quickReplies.length > 0) {
+      quickHtml = `<div class="quick-replies">` + 
+        quickReplies.map(q => `<button class="quick-btn" onclick="sendQuickReply('${q.replace(/'/g, "\\'")}')">${q}</button>`).join('') + 
+        `</div>`;
+    }
+
+    bubble.innerHTML = text + tipHtml + quickHtml;
+    container.appendChild(bubble);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function addUserMessage(text) {
+    const container = document.getElementById('chatMessages');
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-bubble user';
+    bubble.innerText = text;
+    container.appendChild(bubble);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function sendQuickReply(text) {
+    document.getElementById('chatInput').value = text;
+    handleUserSend();
+  }
+
+  function handleUserSend() {
+    const input = document.getElementById('chatInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    addUserMessage(text);
+    input.value = '';
+
+    // Обработка подсказок-вопросов от пользователя
+    if (text.toLowerCase().includes("что имеется в виду") || text.toLowerCase().includes("уточнить") || text.toLowerCase().includes("подскажи")) {
+      setTimeout(() => {
+        addBotMessage("Поясняю: укажите точные часы или формат, удобный для вашей постановочной группы. Если есть сомнения, напишите ориентировочные данные — мы скорректируем их на созвоне с техдиректором фестиваля.", null, ["Понятно, продолжаю"]);
+      }, 400);
+      return;
+    }
+
+    // Сохранение шага
+    const currentQuestion = chatFlow[chatStep];
+    if (currentQuestion.handler(text)) {
+      chatStep++;
+      if (chatStep < chatFlow.length) {
+        setTimeout(() => {
+          const next = chatFlow[chatStep];
+          addBotMessage(next.question, next.tip, next.quick);
+        }, 500);
+      } else {
+        setTimeout(() => {
+          renderFinalSummary();
+        }, 600);
+      }
+    }
+  }
+
+  /* 3. Генерация сводного технического паспорта */
+  function renderFinalSummary() {
+    addBotMessage("✅ <b>Паспорт технического согласования успешно сформирован!</b> Файл готов к сохранению и передаче в дирекцию фестиваля.", "Вы можете скачать структурированный текстовый документ или сразу направить сформированный свод в Telegram.");
+
+    const summaryText = 
+`=========================================
+ТЕХНИЧЕСКИЙ ПАСПОРТ СПЕКТАКЛЯ — ФЕСТИВАЛЬ «АТЛАС»
+=========================================
+1. КОЛЛЕКТИВ И КОНТАКТЫ:
+${applicationData.theatre}
+
+2. ВЫБРАННАЯ ПЛОЩАДКА:
+${applicationData.targetScene}
+
+3. ГРАФИК ЗАЕЗДА И СМЕННОСТЬ:
+Заезд: ${applicationData.arrivalDateTime}
+Ночные работы: ${applicationData.isNightWork ? "ТРЕБУЮТСЯ (согласовано регламентом площадки)" : "Не требуются"}
+
+4. ТАЙМИНГ МОНТАЖА И РЕПЕТИЦИЙ:
+${applicationData.timingSchedule}
+
+5. ВЫЗОВ СЛУЖБ ТЕАТРА:
+${applicationData.servicesCalled}
+
+6. ЗАПРОСЫ К БЫТОВЫМ СЛУЖБАМ (Костюмеры/Гримёры/Реквизит):
+${applicationData.customServicesNotes}
+
+7. ССЫЛКИ НА РАЙДЕРЫ И СВЕТОВЫЕ ПАРТИТУРЫ:
+${applicationData.riderLinks}
+=========================================
+Дата формирования: ${new Date().toLocaleString('ru-RU')}
+Статус: Сформировано через Технический портал`;
+
+    document.getElementById('summaryText').innerText = summaryText;
+    document.getElementById('summaryCard').style.display = 'block';
+
+    // Формирование ссылки для отправки в Telegram
+    const tgEncoded = encodeURIComponent(`Новая техническая заявка (Фестиваль «Атлас»):\n\n` + summaryText);
+    document.getElementById('tgShareBtn').href = `https://t.me/share/url?url=&text=${tgEncoded}`;
+  }
+
+  function downloadSummaryDoc() {
+    const text = document.getElementById('summaryText').innerText;
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `Atlas_TechPassport_${Date.now()}.txt`;
+    link.click();
+  }
+
+  // Запуск при загрузке
+  window.onload = () => {
+    switchSceneView('main');
+    addBotMessage(chatFlow[0].question, chatFlow[0].tip, chatFlow[0].quick);
+  };
+</script>
+</body>
+</html>
