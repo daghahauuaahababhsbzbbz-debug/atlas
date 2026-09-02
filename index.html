@@ -1,737 +1,1690 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Фестиваль «Атлас» — Технический портал площадки</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0c0e" />
+  <meta name="description" content="ATLAS — технический портал фестиваля." />
+  <title>ATLAS — Технический портал фестиваля</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg-dark: #0a0c12;
-      --card-bg: rgba(20, 25, 38, 0.75);
-      --card-border: rgba(255, 255, 255, 0.09);
-      --primary: #f0c352;
-      --primary-glow: rgba(240, 195, 82, 0.35);
-      --accent-blue: #3498db;
-      --accent-warn: #e67e22;
-      --text: #f3f5fa;
-      --text-muted: #8d95ab;
-      --item-bg: rgba(255, 255, 255, 0.04);
-      --item-border: rgba(255, 255, 255, 0.07);
+      --bg: #0a0b0d;
+      --panel: #111316;
+      --panel-2: #15171a;
+      --panel-3: #0d0f11;
+      --line: rgba(216, 168, 95, .22);
+      --line-soft: rgba(255,255,255,.09);
+      --gold: #d6a85f;
+      --gold-light: #edc77f;
+      --cream: #f2eee5;
+      --text: #e7e3db;
+      --muted: #85878b;
+      --muted-2: #62656a;
+      --warn: #e67e22;
+      --shadow: 0 30px 80px rgba(0,0,0,.38);
+      --radius: 2px;
+      --max: 1540px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
-      background-color: var(--bg-dark);
-      background-image: 
-        radial-gradient(circle at 15% 10%, rgba(240, 195, 82, 0.08) 0%, transparent 45%),
-        radial-gradient(circle at 85% 90%, rgba(52, 152, 219, 0.08) 0%, transparent 45%);
-      background-attachment: fixed;
+      margin: 0;
+      background:
+        radial-gradient(circle at 70% 16%, rgba(214,168,95,.06), transparent 28%),
+        radial-gradient(circle at 15% 80%, rgba(255,255,255,.025), transparent 25%),
+        var(--bg);
       color: var(--text);
-      padding: 24px 16px;
-      display: flex;
-      justify-content: center;
+      font-family: "Manrope", system-ui, sans-serif;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    .wrapper {
-      width: 100%;
-      max-width: 1024px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .25;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: linear-gradient(to bottom, black, transparent 92%);
     }
 
-    /* Шапка */
-    header {
-      text-align: center;
-      padding: 16px 0;
-    }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
 
-    .badge-fest {
-      display: inline-block;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--primary);
-      background: rgba(240, 195, 82, 0.12);
-      border: 1px solid rgba(240, 195, 82, 0.3);
-      padding: 4px 14px;
-      border-radius: 20px;
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-
-    h1 {
-      font-family: 'Cinzel', serif;
-      font-size: 2rem;
-      letter-spacing: 2px;
-      background: linear-gradient(135deg, #ffffff 40%, var(--primary) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .subtitle {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-top: 6px;
-    }
-
-    /* Стеклянные панели */
-    .glass-panel {
-      background: var(--card-bg);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid var(--card-border);
-      border-radius: 18px;
-      padding: 22px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
-    }
-
-    .panel-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .panel-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    /* Переключатель сцен */
-    .scene-switch-bar {
-      display: flex;
-      background: var(--item-bg);
-      border: 1px solid var(--item-border);
-      border-radius: 12px;
-      padding: 4px;
-      gap: 4px;
-    }
-
-    .scene-tab-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      padding: 8px 18px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.25s;
-    }
-
-    .scene-tab-btn.active {
-      background: linear-gradient(135deg, rgba(240, 195, 82, 0.22), rgba(240, 195, 82, 0.08));
-      color: var(--primary);
-      border: 1px solid var(--primary);
-    }
-
-    /* Сетка пяти разделов райдера */
-    .specs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 16px;
-    }
-
-    .spec-card {
-      background: var(--item-bg);
-      border: 1px solid var(--item-border);
-      border-radius: 14px;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .spec-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .spec-items-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-    }
-
-    .spec-items-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 6px;
-      line-height: 1.4;
-    }
-
-    .download-btn {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--text);
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      margin-top: auto;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .download-btn:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    /* Блок интерактивного чат-ассистента */
-    .chat-container {
-      display: flex;
-      flex-direction: column;
-      height: 520px;
-      background: rgba(12, 15, 23, 0.85);
-      border: 1px solid var(--item-border);
-      border-radius: 14px;
-      overflow: hidden;
-    }
-
-    .chat-messages {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .chat-bubble {
-      max-width: 85%;
-      padding: 12px 16px;
-      border-radius: 14px;
-      font-size: 0.88rem;
-      line-height: 1.45;
+    .shell {
+      width: min(calc(100% - 28px), var(--max));
+      margin: 14px auto 0;
+      border: 1px solid var(--line-soft);
+      background: rgba(9,10,12,.86);
+      box-shadow: var(--shadow);
       position: relative;
     }
 
-    .chat-bubble.bot {
-      align-self: flex-start;
-      background: rgba(30, 37, 56, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    /* ---------- HEADER ---------- */
+    header {
+      min-height: 86px;
+      display: grid;
+      grid-template-columns: 300px 1fr auto;
+      align-items: center;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .brand {
+      height: 86px;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      padding: 0 28px;
+      border-right: 1px solid var(--line-soft);
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(214,168,95,.5);
+      position: relative;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      background: var(--gold);
+      opacity: .65;
+    }
+    .brand-mark::before { width: 1px; height: 26px; }
+    .brand-mark::after { height: 1px; width: 26px; }
+
+    .brand-name {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      color: var(--gold-light);
+      font-size: 34px;
+      letter-spacing: .24em;
+      line-height: 1;
+      text-shadow: 0 0 22px rgba(214,168,95,.13);
+    }
+
+    .brand-sub {
+      font-size: 10px;
+      line-height: 1.45;
+      letter-spacing: .17em;
+      text-transform: uppercase;
+      color: var(--muted);
+      max-width: 110px;
+    }
+
+    nav {
+      display: flex;
+      align-items: stretch;
+      height: 86px;
+      padding-left: 18px;
+    }
+
+    nav button {
+      border: 0;
+      background: transparent;
+      color: #a9aaad;
+      padding: 0 25px;
+      position: relative;
+      letter-spacing: .07em;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    nav button:hover, nav button.active { color: var(--cream); }
+    nav button.active::after {
+      content: "";
+      position: absolute;
+      left: 25px;
+      right: 25px;
+      bottom: 0;
+      height: 2px;
+      background: var(--gold);
+      box-shadow: 0 0 18px rgba(214,168,95,.35);
+    }
+
+    .system {
+      height: 86px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding: 0 28px;
+      border-left: 1px solid var(--line-soft);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 10px;
+      letter-spacing: .08em;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .online { color: var(--gold); display: flex; align-items: center; gap: 9px; }
+    .online i {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--gold-light);
+      box-shadow: 0 0 12px rgba(237,199,127,.65);
+    }
+
+    /* ---------- MAIN LAYOUT ---------- */
+    .content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 475px;
+    }
+
+    .left {
+      min-width: 0;
+      border-right: 1px solid var(--line-soft);
+    }
+
+    .hero {
+      min-height: 380px;
+      position: relative;
+      padding: 50px 52px 38px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .hero-blueprint {
+      position: absolute;
+      width: 680px;
+      height: 680px;
+      right: -90px;
+      top: -130px;
+      opacity: .34;
+      background:
+        radial-gradient(circle at center, transparent 0 30px, rgba(214,168,95,.17) 30px 31px, transparent 31px 105px, rgba(214,168,95,.12) 105px 106px, transparent 106px 180px, rgba(214,168,95,.10) 180px 181px, transparent 181px 255px, rgba(214,168,95,.07) 255px 256px, transparent 256px),
+        conic-gradient(from 0deg, transparent 0 9deg, rgba(214,168,95,.12) 9deg 10deg, transparent 10deg 24deg, rgba(214,168,95,.08) 24deg 25deg, transparent 25deg 44deg, rgba(214,168,95,.1) 44deg 45deg, transparent 45deg);
+      mask-image: radial-gradient(circle, black 0 62%, transparent 74%);
+      transform: rotate(-12deg);
+    }
+
+    .eyebrow {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 10px;
+      letter-spacing: .18em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      position: relative;
+      z-index: 2;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 600;
+      font-size: clamp(84px, 11vw, 150px);
+      line-height: .72;
+      letter-spacing: .12em;
+      color: var(--cream);
+      text-shadow: 0 8px 40px rgba(0,0,0,.55);
+    }
+
+    .hero h1 span { color: var(--gold-light); }
+
+    .hero-title {
+      position: relative;
+      z-index: 2;
+      margin-top: 36px;
+      color: var(--cream);
+      font-size: 17px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+    }
+
+    .hero-subtitle {
+      position: relative;
+      z-index: 2;
+      margin-top: 14px;
+      color: var(--gold);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      letter-spacing: .12em;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 26px 52px 18px;
+      font-family: "IBM Plex Mono", monospace;
+      color: var(--cream);
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 30px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    /* ---------- STAGE CARDS ---------- */
+    .stages {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      padding: 0 52px 48px;
+    }
+
+    .stage {
+      background: var(--panel);
+      border: 1px solid rgba(214,168,95,.34);
+      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stage:hover {
+      transform: translateY(-4px);
+      border-color: rgba(214,168,95,.75);
+      box-shadow: 0 22px 50px rgba(0,0,0,.35);
+    }
+
+    .stage-image {
+      height: 230px;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(to top, rgba(5,6,7,.95), rgba(5,6,7,.15)),
+        radial-gradient(ellipse at 50% 110%, rgba(214,168,95,.25), transparent 43%),
+        linear-gradient(115deg, #17191d 0 14%, #08090b 14% 18%, #17191c 18% 20%, #08090b 20% 80%, #17191c 80% 82%, #08090b 82% 86%, #17191d 86%);
+    }
+
+    .stage.small .stage-image {
+      background:
+        linear-gradient(to top, rgba(5,6,7,.95), rgba(5,6,7,.16)),
+        radial-gradient(ellipse at 65% 110%, rgba(214,168,95,.18), transparent 38%),
+        linear-gradient(165deg, #17191d 0 9%, #08090b 9% 13%, #191b1e 13% 16%, #08090b 16% 83%, #191b1e 83% 86%, #08090b 86% 90%, #17191d 90%);
+    }
+
+    .stage-number {
+      position: absolute;
+      z-index: 2;
+      top: 20px;
+      left: 26px;
+      color: var(--gold-light);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 40px;
+    }
+
+    .stage-name {
+      position: absolute;
+      z-index: 2;
+      left: 26px;
+      bottom: 25px;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 28px;
+      letter-spacing: .09em;
+      color: var(--cream);
+    }
+
+    .stage-type {
+      position: absolute;
+      z-index: 2;
+      left: 28px;
+      bottom: 10px;
+      color: var(--gold);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 9px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .stage-specs {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      border-top: 1px solid var(--line-soft);
+    }
+
+    .spec {
+      padding: 15px 13px;
+      border-right: 1px solid var(--line-soft);
+    }
+
+    .spec:last-child { border-right: 0; }
+    .spec-label {
+      font-size: 9px;
+      color: var(--muted);
+      line-height: 1.35;
+      min-height: 24px;
+    }
+    .spec-value {
+      margin-top: 6px;
+      color: var(--cream);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+    }
+
+    .stage-actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      border-top: 1px solid var(--line-soft);
+    }
+
+    .mini-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 15px 16px;
+      color: var(--muted);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 8px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .mini-links button {
+      border: 0;
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+    .mini-links button:hover { color: var(--cream); }
+
+    .open-stage {
+      border: 0;
+      border-left: 1px solid var(--line-soft);
+      padding: 0 20px;
+      min-width: 125px;
+      background: rgba(214,168,95,.03);
+      color: var(--gold-light);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .open-stage:hover { background: rgba(214,168,95,.08); }
+
+    /* ---------- RIGHT SIDEBAR ---------- */
+    .right {
+      background: rgba(10,11,13,.72);
+    }
+
+    .workflow {
+      padding: 34px 32px 30px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .workflow-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .workflow-title {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 24px;
+      letter-spacing: .07em;
+      color: var(--cream);
+    }
+
+    .workflow-kicker {
+      color: var(--muted);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 9px;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      margin-top: 7px;
+    }
+
+    .progress-value {
+      color: var(--gold-light);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 34px;
+      white-space: nowrap;
+    }
+
+    .steps {
+      list-style: none;
+      padding: 20px 0 5px;
+      margin: 0;
+      position: relative;
+    }
+
+    .steps::before {
+      content: "";
+      position: absolute;
+      left: 11px;
+      top: 27px;
+      bottom: 28px;
+      width: 1px;
+      background: rgba(214,168,95,.32);
+    }
+
+    .step {
+      min-height: 52px;
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-dot {
+      width: 23px;
+      height: 23px;
+      border: 1px solid #4b4d51;
+      border-radius: 50%;
+      background: #0d0f11;
+      display: grid;
+      place-items: center;
+      color: var(--gold-light);
+      font-size: 11px;
+    }
+
+    .step.done .step-dot {
+      border-color: var(--gold);
+      color: var(--gold-light);
+      background: #12120f;
+    }
+
+    .step.current .step-dot {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 5px rgba(214,168,95,.06);
+    }
+
+    .step-title {
+      color: #777a7f;
+      font-size: 11px;
+      padding-top: 3px;
+    }
+
+    .step.done .step-title, .step.current .step-title { color: var(--cream); }
+    .step-detail {
+      color: var(--gold);
+      font-size: 9px;
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+
+    .continue {
+      width: 100%;
+      height: 54px;
+      border: 1px solid rgba(214,168,95,.5);
+      background: transparent;
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      transition: .2s ease;
+      margin-top: 10px;
+    }
+    .continue:hover { background: rgba(214,168,95,.08); border-color: var(--gold); }
+    .continue span:last-child { font-size: 18px; }
+
+    /* ---------- PASSPORT ---------- */
+    .passport {
+      padding: 31px 32px 34px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .passport-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .passport-title {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 22px;
+      letter-spacing: .07em;
+      color: var(--cream);
+    }
+
+    .status {
+      border: 1px solid rgba(214,168,95,.24);
+      color: var(--gold);
+      padding: 7px 9px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 8px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .document {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .document-paper {
+      height: 140px;
+      border: 1px solid rgba(214,168,95,.38);
+      background:
+        linear-gradient(135deg, transparent 0 80%, rgba(214,168,95,.12) 80% 80.7%, transparent 80.7%),
+        #101214;
+      position: relative;
+      padding: 21px 15px;
+    }
+
+    .document-paper::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0;
+      width: 28px; height: 28px;
+      border-right: 1px solid rgba(214,168,95,.38);
+      border-bottom: 1px solid rgba(214,168,95,.38);
+    }
+
+    .document-paper strong {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 19px;
+      letter-spacing: .12em;
+      color: var(--gold-light);
+    }
+
+    .doc-lines {
+      margin-top: 25px;
+      display: grid;
+      gap: 7px;
+    }
+    .doc-lines i {
+      display: block;
+      height: 1px;
+      background: rgba(255,255,255,.16);
+    }
+    .doc-lines i:nth-child(2) { width: 75%; }
+    .doc-lines i:nth-child(3) { width: 55%; }
+
+    .doc-name {
+      color: var(--cream);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .doc-meta {
+      color: var(--muted);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 9px;
+      margin-top: 12px;
+      line-height: 1.7;
+      text-transform: uppercase;
+    }
+
+    .passport-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 23px;
+    }
+
+    .passport-actions button {
+      height: 48px;
+      background: transparent;
+      border: 1px solid var(--line-soft);
       color: var(--text);
-      border-bottom-left-radius: 2px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 9px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
     }
 
-    .chat-bubble.bot b {
-      color: var(--primary);
+    .passport-actions button:first-child {
+      border-color: rgba(214,168,95,.5);
+      color: var(--gold-light);
+    }
+    .passport-actions button:hover { background: rgba(255,255,255,.035); }
+
+    /* ---------- INFO STRIP ---------- */
+    .info-strip {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      border-top: 1px solid var(--line-soft);
+      margin: 0;
     }
 
-    .chat-bubble.user {
-      align-self: flex-end;
-      background: linear-gradient(135deg, rgba(240, 195, 82, 0.2), rgba(240, 195, 82, 0.08));
-      border: 1px solid var(--primary);
-      color: #fff;
-      border-bottom-right-radius: 2px;
+    .info-item {
+      min-height: 105px;
+      padding: 22px 28px;
+      border-right: 1px solid var(--line-soft);
+    }
+    .info-item:last-child { border-right: 0; }
+    .info-label {
+      color: var(--gold);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 8px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .info-value {
+      margin-top: 10px;
+      color: var(--text);
+      font-size: 11px;
+      line-height: 1.55;
     }
 
-    .tip-box {
+    /* ---------- FOOTER ---------- */
+    footer {
+      border-top: 1px solid var(--line-soft);
+      padding: 22px 28px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      color: var(--muted-2);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 8px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    /* ---------- MODAL / CHAT ---------- */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0,0,0,.75);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal.open { display: flex; }
+
+    .modal-card {
+      width: min(760px, 100%);
+      max-height: min(800px, calc(100vh - 40px));
+      overflow: hidden;
+      background: #101214;
+      border: 1px solid rgba(214,168,95,.38);
+      box-shadow: 0 40px 100px rgba(0,0,0,.65);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .modal-head {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--line-soft);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-head h2 {
+      margin: 0;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 24px;
+      letter-spacing: .07em;
+      font-weight: 600;
+    }
+    .close {
+      width: 34px; height: 34px;
+      border: 1px solid var(--line-soft);
+      color: var(--muted);
+      background: transparent;
+      font-size: 18px;
+    }
+
+    .chat {
+      padding: 24px;
+      overflow-y: auto;
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .chat-message {
+      max-width: 90%;
+    }
+    .chat-message.assistant {
+      border-left: 2px solid var(--gold);
+      padding-left: 14px;
+    }
+    .chat-message.user {
+      margin-left: auto;
+      border: 1px solid var(--line-soft);
+      background: rgba(214,168,95,.05);
+      padding: 10px 14px;
+      color: var(--cream);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .chat-label {
+      color: var(--gold);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 8px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .chat-text { font-size: 13px; line-height: 1.6; color: #d4d0c7; }
+
+    .chat-tip {
       margin-top: 8px;
       padding: 8px 12px;
-      background: rgba(230, 126, 34, 0.12);
-      border-left: 3px solid var(--accent-warn);
-      border-radius: 6px;
-      font-size: 0.78rem;
-      color: #fce4d6;
+      background: rgba(230, 126, 34, 0.1);
+      border-left: 2px solid var(--warn);
+      color: #f7d7c4;
+      font-size: 11px;
+      line-height: 1.45;
     }
 
-    .quick-replies {
+    .chat-options {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
       margin-top: 10px;
     }
-
-    .quick-btn {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: var(--text);
-      padding: 6px 12px;
-      border-radius: 16px;
-      font-size: 0.78rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
+    .chat-options button {
+      border: 1px solid rgba(214,168,95,.3);
+      color: var(--gold-light);
+      background: transparent;
+      padding: 8px 12px;
+      font-size: 10px;
+      transition: all .2s;
     }
+    .chat-options button:hover { background: rgba(214,168,95,.1); border-color: var(--gold); }
 
-    .quick-btn:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    .chat-input-row {
+    .chat-form {
+      border-top: 1px solid var(--line-soft);
+      padding: 14px;
       display: flex;
-      gap: 8px;
-      padding: 12px;
-      background: rgba(18, 22, 33, 0.95);
-      border-top: 1px solid var(--item-border);
+      gap: 10px;
+      background: #0c0e10;
     }
-
-    .chat-input {
+    .chat-form input {
       flex: 1;
-      background: var(--item-bg);
-      border: 1px solid var(--item-border);
-      color: var(--text);
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-size: 0.9rem;
+      min-width: 0;
+      height: 48px;
+      border: 1px solid var(--line-soft);
+      background: #08090a;
+      color: var(--cream);
+      padding: 0 14px;
       outline: none;
+      font-size: 12px;
+    }
+    .chat-form input:focus { border-color: rgba(214,168,95,.55); }
+    .chat-form button {
+      border: 1px solid rgba(214,168,95,.55);
+      color: var(--gold-light);
+      background: transparent;
+      padding: 0 20px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
     }
 
-    .chat-input:focus {
-      border-color: var(--primary);
+    /* ---------- DOCS MODAL CONTENT ---------- */
+    .docs-category {
+      margin-bottom: 22px;
     }
-
-    .chat-send-btn {
-      background: linear-gradient(135deg, var(--primary), #caa038);
-      border: none;
-      color: #0b0d13;
-      padding: 10px 18px;
-      border-radius: 10px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
+    .docs-cat-title {
+      font-family: "IBM Plex Mono", monospace;
+      color: var(--gold);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-
-    /* Блок превью файла и Telegram */
-    .summary-card {
-      margin-top: 16px;
-      display: none;
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px dashed var(--primary);
-      border-radius: 12px;
-      padding: 16px;
+    .docs-cat-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line-soft);
     }
-
-    .summary-header {
+    .docs-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 8px;
+    }
+    .doc-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,.02);
+      border: 1px solid var(--line-soft);
     }
-
-    .summary-title {
-      font-weight: 700;
-      color: var(--primary);
-      font-size: 0.92rem;
-    }
-
-    .action-row {
+    .doc-item-info {
       display: flex;
-      gap: 10px;
-      margin-top: 14px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 3px;
     }
-
-    .btn-main {
-      background: linear-gradient(135deg, var(--primary), #caa038);
-      border: none;
-      color: #090a0f;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn-tg {
-      background: linear-gradient(135deg, #2980b9, #3498db);
-      border: none;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+    .doc-item-title { font-size: 12px; color: var(--cream); }
+    .doc-item-desc { font-size: 9px; color: var(--muted); font-family: "IBM Plex Mono", monospace; }
+    .doc-download {
+      color: var(--gold-light);
+      border: 1px solid rgba(214,168,95,.3);
+      padding: 5px 10px;
+      font-size: 9px;
       text-decoration: none;
+      font-family: "IBM Plex Mono", monospace;
+      text-transform: uppercase;
+    }
+    .doc-download:hover { background: rgba(214,168,95,.08); }
+
+    .toast {
+      position: fixed;
+      z-index: 200;
+      right: 22px;
+      bottom: 22px;
+      max-width: 380px;
+      background: #15171a;
+      border: 1px solid rgba(214,168,95,.4);
+      color: var(--cream);
+      padding: 14px 17px;
+      box-shadow: var(--shadow);
+      transform: translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s ease;
+      font-size: 12px;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1180px) {
+      header { grid-template-columns: 255px 1fr; }
+      .system { display: none; }
+      .content { grid-template-columns: 1fr; }
+      .left { border-right: 0; }
+      .right { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line-soft); }
+      .workflow { border-right: 1px solid var(--line-soft); border-bottom: 0; }
+      .passport { border-bottom: 0; }
+    }
+
+    @media (max-width: 820px) {
+      .shell { width: calc(100% - 12px); margin-top: 6px; }
+      header { min-height: auto; display: block; }
+      .brand { height: 72px; border-right: 0; }
+      nav { height: 52px; border-top: 1px solid var(--line-soft); overflow-x: auto; padding: 0; }
+      nav button { padding: 0 18px; white-space: nowrap; }
+      nav button.active::after { left: 18px; right: 18px; }
+      .hero { padding: 42px 26px 80px; min-height: 320px; }
+      .hero h1 { font-size: clamp(68px, 18vw, 110px); }
+      .hero-title { font-size: 12px; letter-spacing: .19em; }
+      .section-title { padding-left: 26px; padding-right: 26px; }
+      .stages { grid-template-columns: 1fr; padding: 0 26px 34px; }
+      .right { display: block; }
+      .workflow { border-right: 0; border-bottom: 1px solid var(--line-soft); }
+      .info-strip { grid-template-columns: 1fr 1fr; }
+      .info-item:nth-child(2) { border-right: 0; }
+      .info-item:nth-child(-n+2) { border-bottom: 1px solid var(--line-soft); }
+    }
+
+    @media (max-width: 520px) {
+      .brand { padding: 0 18px; gap: 14px; }
+      .brand-name { font-size: 29px; }
+      .brand-mark { width: 36px; height: 36px; }
+      .hero { padding-left: 20px; padding-right: 20px; }
+      .hero-blueprint { right: -240px; }
+      .stage-image { height: 200px; }
+      .stage-specs { grid-template-columns: 1fr; }
+      .spec { border-right: 0; border-bottom: 1px solid var(--line-soft); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+      .spec-label { min-height: auto; }
+      .stage-actions { grid-template-columns: 1fr; }
+      .mini-links { border-bottom: 1px solid var(--line-soft); }
+      .open-stage { height: 46px; border-left: 0; }
+      .passport-actions { grid-template-columns: 1fr; }
+      .document { grid-template-columns: 90px 1fr; gap: 14px; }
+      .document-paper { height: 120px; }
+      .info-strip { grid-template-columns: 1fr; }
+      .info-item { border-right: 0 !important; border-bottom: 1px solid var(--line-soft); }
+      footer { flex-direction: column; }
     }
   </style>
 </head>
+
 <body>
-
-<div class="wrapper">
-  <header>
-    <div class="badge-fest">Фестиваль «Атлас»</div>
-    <h1>Технический кабинет площадки</h1>
-    <p class="subtitle">Паспорта сцен, спецификации оборудования и согласование вызова служб</p>
-  </header>
-
-  <!-- Блок 1: Документация и райдеры -->
-  <div class="glass-panel">
-    <div class="panel-header">
-      <div class="panel-title">📂 Техническая документация и чертежи</div>
-      <div class="scene-switch-bar">
-        <button class="scene-tab-btn active" onclick="switchSceneView('main')">Основная сцена</button>
-        <button class="scene-tab-btn" onclick="switchSceneView('small')">Малая сцена</button>
+  <div class="shell">
+    <header>
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <div class="brand-name">ATLAS</div>
+        <div class="brand-sub">Техническая система<br>фестиваля</div>
       </div>
+
+      <nav aria-label="Основная навигация">
+        <button class="active" data-scroll="stages-section">Сцены</button>
+        <button data-action="open-docs" data-stage="Основная сцена">Документы</button>
+        <button data-action="open-chat">Согласование</button>
+        <button data-action="open-reference">Справочник</button>
+      </nav>
+
+      <div class="system">
+        <div class="online"><i></i> СИСТЕМА ОНЛАЙН</div>
+        <div id="clock">02.09.2026<br>21:57</div>
+      </div>
+    </header>
+
+    <div class="content">
+      <main class="left">
+        <section class="hero">
+          <div class="hero-blueprint" aria-hidden="true"></div>
+          <div class="eyebrow">Технический портал · Фестиваль «Атлас»</div>
+          <h1>A<span>T</span>LAS</h1>
+          <div class="hero-title">Техническая система площадки</div>
+          <div class="hero-subtitle">ПАСПОРТА СЦЕН · ЧЕРТЕЖИ · СОГЛАСОВАНИЕ ВЫЗОВА СЛУЖБ</div>
+        </section>
+
+        <section id="stages-section">
+          <div class="section-title">Площадки фестиваля</div>
+
+          <div class="stages">
+            <!-- ОСНОВНАЯ СЦЕНА -->
+            <article class="stage" data-stage="Основная сцена">
+              <div class="stage-image">
+                <div class="stage-number">01</div>
+                <div class="stage-name">Основная сцена</div>
+                <div class="stage-type">Большой зал</div>
+              </div>
+
+              <div class="stage-specs">
+                <div class="spec">
+                  <div class="spec-label">Зеркало сцены</div>
+                  <div class="spec-value">12 × 7 м</div>
+                </div>
+                <div class="spec">
+                  <div class="spec-label">Полезная глубина</div>
+                  <div class="spec-value">14 м</div>
+                </div>
+                <div class="spec">
+                  <div class="spec-label">Штанкеты / Нагрузка</div>
+                  <div class="spec-value">32 шт · 350 кг</div>
+                </div>
+              </div>
+
+              <div class="stage-actions">
+                <div class="mini-links">
+                  <button data-action="open-docs" data-stage="Основная сцена" data-cat="plans">▦ планы</button>
+                  <button data-action="open-docs" data-stage="Основная сцена" data-cat="light">💡 свет</button>
+                  <button data-action="open-docs" data-stage="Основная сцена" data-cat="sound">🔊 звук</button>
+                </div>
+                <button class="open-stage" data-action="start-stage" data-stage="Основная сцена">Согласовать →</button>
+              </div>
+            </article>
+
+            <!-- МАЛАЯ СЦЕНА -->
+            <article class="stage small" data-stage="Малая сцена">
+              <div class="stage-image">
+                <div class="stage-number">02</div>
+                <div class="stage-name">Малая сцена</div>
+                <div class="stage-type">Камерный зал-трансформер</div>
+              </div>
+
+              <div class="stage-specs">
+                <div class="spec">
+                  <div class="spec-label">Планшет зала</div>
+                  <div class="spec-value">9 × 11 м</div>
+                </div>
+                <div class="spec">
+                  <div class="spec-label">Высота до ферм</div>
+                  <div class="spec-value">4,8 м</div>
+                </div>
+                <div class="spec">
+                  <div class="spec-label">Кабинет сцены</div>
+                  <div class="spec-value">Черный трансф.</div>
+                </div>
+              </div>
+
+              <div class="stage-actions">
+                <div class="mini-links">
+                  <button data-action="open-docs" data-stage="Малая сцена" data-cat="plans">▦ планы</button>
+                  <button data-action="open-docs" data-stage="Малая сцена" data-cat="light">💡 свет</button>
+                  <button data-action="open-docs" data-stage="Малая сцена" data-cat="sound">🔊 звук</button>
+                </div>
+                <button class="open-stage" data-action="start-stage" data-stage="Малая сцена">Согласовать →</button>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="documents-section" class="info-strip">
+          <div class="info-item">
+            <div class="info-label">Дирекция фестиваля</div>
+            <div class="info-value">Фестиваль «Атлас»<br>Театральная Россия</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Тех. директор («Атлас»)</div>
+            <div class="info-value">Руслан<br>+7 902 876-57-92</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Дежурный администратор</div>
+            <div class="info-value">Оксана<br>+7 963 655-40-21</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Ночной регламент</div>
+            <div class="info-value">Ночные работы разрешены<br>при согласовании в графике</div>
+          </div>
+        </section>
+      </main>
+
+      <aside class="right">
+        <!-- БЛОК ЭТАПОВ СОГЛАСОВАНИЯ -->
+        <section class="workflow">
+          <div class="workflow-head">
+            <div>
+              <div class="workflow-title">Вызов служб и график</div>
+              <div class="workflow-kicker">Этапы согласования</div>
+            </div>
+            <div>
+              <div class="workflow-kicker">Прогресс</div>
+              <div class="progress-value" id="progressValue">0%</div>
+            </div>
+          </div>
+
+          <ol class="steps" id="steps">
+            <li class="step current" id="step-0">
+              <div class="step-dot">•</div>
+              <div><div class="step-title">Коллектив и завпост</div><div class="step-detail">Театр, спектакль, телефон</div></div>
+            </li>
+            <li class="step" id="step-1">
+              <div class="step-dot"></div>
+              <div><div class="step-title">Выбор площадки</div><div class="step-detail">Основная, Малая или Обе</div></div>
+            </li>
+            <li class="step" id="step-2">
+              <div class="step-dot"></div>
+              <div><div class="step-title">Заезд и сменность</div><div class="step-detail">Дата, время, ночные смены</div></div>
+            </li>
+            <li class="step" id="step-3">
+              <div class="step-dot"></div>
+              <div><div class="step-title">Тайминг площадки</div><div class="step-detail">Монтаж, свет, прогон, старт</div></div>
+            </li>
+            <li class="step" id="step-4">
+              <div class="step-dot"></div>
+              <div><div class="step-title">Вызов цехов театра</div><div class="step-detail">Свет, звук, механика, помреж</div></div>
+            </li>
+            <li class="step" id="step-5">
+              <div class="step-dot"></div>
+              <div><div class="step-title">Быт и костюмеры</div><div class="step-detail">Гримёрки, отпариватели, реквизит</div></div>
+            </li>
+            <li class="step" id="step-6">
+              <div class="step-dot"></div>
+              <div><div class="step-title">Файлы райдеров</div><div class="step-detail">Ссылки на партитуры и чертежи</div></div>
+            </li>
+          </ol>
+
+          <button class="continue" data-action="open-chat">
+            <span id="btnContinueLabel">Начать согласование</span><span>→</span>
+          </button>
+        </section>
+
+        <!-- БЛОК ПАСПОРТА -->
+        <section class="passport" id="passport-card">
+          <div class="passport-head">
+            <div class="passport-title">Технический паспорт</div>
+            <div class="status" id="passportStatus">Ожидает заполнения</div>
+          </div>
+
+          <div class="document">
+            <div class="document-paper">
+              <strong>ATLAS</strong>
+              <div class="doc-lines"><i></i><i></i><i></i></div>
+            </div>
+            <div>
+              <div class="doc-name">Паспорт технического<br>согласования</div>
+              <div class="doc-meta" id="docMeta">Площадка не выбрана<br>Версия 1.0 · 2026</div>
+            </div>
+          </div>
+
+          <div class="passport-actions">
+            <button data-action="download">Скачать файл</button>
+            <button data-action="telegram">Отправить в TG ↗</button>
+          </div>
+        </section>
+      </aside>
     </div>
 
-    <div class="specs-grid" id="specsGridContainer">
-      <!-- Наполняется динамически скриптом в зависимости от выбранной сцены -->
+    <footer>
+      <span>ATLAS · Фестиваль театральной России</span>
+      <span>Версия 1.1 · 2026</span>
+      <span>Координация технических служб</span>
+    </footer>
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО ЧАТА-СОГЛАСОВАНИЯ -->
+  <div class="modal" id="modal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <div class="eyebrow" style="margin:0 0 4px">ATLAS · Диалог согласования</div>
+          <h2 id="modalTitle">Технический паспорт спектакля</h2>
+        </div>
+        <button class="close" id="closeModal" aria-label="Закрыть">×</button>
+      </div>
+
+      <div class="chat" id="chat">
+        <!-- Сообщения генерируются скриптом -->
+      </div>
+
+      <form class="chat-form" id="chatForm">
+        <input id="chatInput" autocomplete="off" placeholder="Введите ответ или уточнение..." />
+        <button type="submit">Ответить</button>
+      </form>
     </div>
   </div>
 
-  <!-- Блок 2: Интерактивный диалог -->
-  <div class="glass-panel">
-    <div class="panel-header">
-      <div class="panel-title">💬 Согласование графика и вызова служб театра</div>
-    </div>
-    <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 14px;">
-      Ответьте на вопросы ассистента. В диалоге можно уточнять детали или запрашивать подсказки. По итогам сформируется готовый паспорт согласования.
-    </p>
-
-    <div class="chat-container">
-      <div class="chat-messages" id="chatMessages">
-        <!-- Сообщения бота и пользователя -->
+  <!-- МОДАЛЬНОЕ ОКНО ТЕХНИЧЕСКОЙ ДОКУМЕНТАЦИИ -->
+  <div class="modal" id="docsModal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <div class="eyebrow" style="margin:0 0 4px">ATLAS · База спецификаций</div>
+          <h2 id="docsModalTitle">Документы и планы</h2>
+        </div>
+        <button class="close" data-close-docs aria-label="Закрыть">×</button>
       </div>
-      <div class="chat-input-row">
-        <input type="text" id="chatInput" class="chat-input" placeholder="Введите ответ или выберите вариант выше..." onkeydown="if(event.key==='Enter') handleUserSend()">
-        <button class="chat-send-btn" onclick="handleUserSend()">Ответить</button>
-      </div>
-    </div>
-
-    <!-- Карточка сформированного отчёта -->
-    <div class="summary-card" id="summaryCard">
-      <div class="summary-header">
-        <span class="summary-title">📄 Технический паспорт согласования сформирован</span>
-      </div>
-      <pre id="summaryText" style="font-size: 0.78rem; line-height: 1.4; color: #cfd6e6; max-height: 200px; overflow-y: auto; white-space: pre-wrap; background: rgba(0,0,0,0.25); padding: 10px; border-radius: 8px;"></pre>
-      <div class="action-row">
-        <button class="btn-main" onclick="downloadSummaryDoc()">💾 Скачать файл (.txt)</button>
-        <a id="tgShareBtn" href="#" target="_blank" class="btn-tg">✈️ Отправить в Telegram дирекции</a>
+      <div class="chat" id="docsModalContent">
+        <!-- Наполняется динамически -->
       </div>
     </div>
   </div>
-</div>
 
-<script>
-  /* 1. База спецификаций по двум сценам */
-  const specsData = {
-    main: [
-      {
-        title: "🎭 1. Сцена и планшет",
-        files: ["План сцены (DWG/PDF)", "Таблица штанкетного хозяйства", "Паспорт одежды сцены"],
-        items: ["Зеркало: 12м х 7м, полезная глубина 14м", "Штанкеты: 32 штанкета (SWL 350 кг)", "Поворотный круг: Ø 10м с реверсом"]
-      },
-      {
-        title: "💡 2. Осветительский цех",
-        files: ["План софитов и выноса (PDF)", "DMX-патч площадки"],
-        items: ["Пульт: grandMA2 / ChamSys", "Парк: профили, Wash LED, заливной свет", "Протоколы: Art-Net, sACN, DMX-512"]
-      },
-      {
-        title: "🔊 3. Звуковой цех",
-        files: ["Акустический паспорт зала", "Список микрофонного парка"],
-        items: ["Консоль: Dante-сеть, цифровая FOH", "Порталы: линейный массив L/R + Sub", "Радиосистемы: UHF-диапазон (8 каналов)"]
-      },
-      {
-        title: "📽 4. Видео и проекция",
-        files: ["Схема подвеса экранов"],
-        items: ["Проектор: 16 000 ANSI Lm", "Экран: 10м х 6м прямой проекции", "Линии: оптический HDMI, SDI со сцены"]
-      },
-      {
-        title: "🚚 5. Логистика и гримёрки",
-        files: ["Схема подъезда фур к рампе"],
-        items: ["Ворота: 3.2м х 2.8м (пандус во двор)", "Гримёрный блок: 4 комнаты (до 25 чел)"]
-      }
-    ],
-    small: [
-      {
-        title: "🎬 1. Малая сцена",
-        files: ["План планшета Малой сцены (PDF)"],
-        items: ["Зал-трансформер: 9м х 11м", "Высота до ферм: 4.8м", "Стационарный чёрный кабинет"]
-      },
-      {
-        title: "💡 2. Свет (Малая сцена)",
-        files: ["Схема световых ферм"],
-        items: ["Пульт: ETC / ChamSys", "Компактные LED профили и линзы PC", "Прямое управление по DMX"]
-      },
-      {
-        title: "🔊 3. Звук (Малая сцена)",
-        files: ["План сценических лючков"],
-        items: ["Точечные источники акустики FOH", "Цифровой стейджбокс 16/8", "4 радиосистемы головных гарнитур"]
-      },
-      {
-        title: "📽 4. Проекция (Малая сцена)",
-        files: ["Спецификация проектора"],
-        items: ["Короткофокусный лазерный проектор 7000 Lm", "Моторизованный задний экран 4м х 3м"]
-      },
-      {
-        title: "🚚 5. Разгрузка и гримёрки",
-        files: ["Инструкция проноса декораций"],
-        items: ["Пронос через малый грузовой лифт", "Гримёрка: 1 общая комната на 10 мест"]
-      }
-    ]
-  };
+  <!-- МОДАЛЬНОЕ ОКНО СПРАВОЧНИКА -->
+  <div class="modal" id="referenceModal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <div class="eyebrow" style="margin:0 0 4px">ATLAS · Регламент фестиваля</div>
+          <h2>Справочник и правила площадки</h2>
+        </div>
+        <button class="close" data-close-reference aria-label="Закрыть">×</button>
+      </div>
+      <div class="chat">
+        <div class="chat-message assistant">
+          <div class="chat-label">Ночные монтажи и смены</div>
+          <div class="chat-text">
+            Площадка фестиваля «Атлас» поддерживает круглосуточную готовность. Ночные работы (монтировка, развес, юстировка света) <b>разрешены</b>, но требуют заблаговременной фиксации в графике для составления графика дежурств инженеров и администрации.
+          </div>
+        </div>
+        <div class="chat-message assistant">
+          <div class="chat-label">Пожарная безопасность</div>
+          <div class="chat-text">
+            Любое применение открытого огня, пиротехники, дым-машин тяжелого дыма и спецжидкостей согласовывается с техническим директором Русланом не менее чем за 48 часов до начала монтажа. Все материалы декораций должны иметь противопожарную пропитку.
+          </div>
+        </div>
+        <div class="chat-message assistant">
+          <div class="chat-label">Разгрузка и логистика</div>
+          <div class="chat-text">
+            Высота рампы служебного входа — 1.1 м. Разгрузочные ворота: 3.2 × 2.8 м. Проезд фур грузоподъёмностью свыше 10 тонн во внутренний двор требует согласования пропусков накануне заезда.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  function switchSceneView(sceneKey) {
-    document.querySelectorAll('.scene-tab-btn').forEach((b, idx) => {
-      b.classList.toggle('active', (sceneKey === 'main' && idx === 0) || (sceneKey === 'small' && idx === 1));
-    });
+  <div class="toast" id="toast"></div>
 
-    const container = document.getElementById('specsGridContainer');
-    container.innerHTML = '';
-
-    specsData[sceneKey].forEach(section => {
-      const card = document.createElement('div');
-      card.className = 'spec-card';
-      
-      let itemsListHtml = section.items.map(i => `<li>• ${i}</li>`).join('');
-      let downloadLinksHtml = section.files.map(f => `<a class="download-btn" href="javascript:alert('Файл будет доступен после загрузки архива: ${f}')">📥 ${f}</a>`).join('');
-
-      card.innerHTML = `
-        <div class="spec-title">${section.title}</div>
-        <ul class="spec-items-list">${itemsListHtml}</ul>
-        ${downloadLinksHtml}
-      `;
-      container.appendChild(card);
-    });
-  }
-
-  /* 2. Пошаговый диалоговый мастер вызова служб */
-  const applicationData = {
-    theatre: '',
-    playName: '',
-    contactName: '',
-    contactPhone: '',
-    targetScene: '',
-    arrivalDateTime: '',
-    isNightWork: false,
-    nightWorkDetails: '',
-    timingSchedule: '',
-    servicesCalled: [],
-    customServicesNotes: '',
-    riderLinks: ''
-  };
-
-  let chatStep = 0;
-
-  const chatFlow = [
-    {
-      question: "Приветствую! Я технический координатор фестиваля «Атлас». Помогу быстро согласовать график монтажа и вызов служб театра. <b>Укажите название вашего театра, спектакль и контакты завпоста (ФИО и телефон)</b>.",
-      tip: "Пример: Театр Драмы, спектакль «Чайка», завпост Иванов Иван +79001234567",
-      quick: ["Уточнить требования к завпосту"],
-      handler: (val) => {
-        applicationData.theatre = val;
-        return true;
-      }
-    },
-    {
-      question: "Какую площадку фестиваля вы планируете задействовать для показа?",
-      tip: "Если спектакль масштабен или у вас серия постановок, можно выбрать сразу две сцены.",
-      quick: ["Основная сцена", "Малая сцена", "Обе площадки (Основная + Малая)"],
-      handler: (val) => {
-        applicationData.targetScene = val;
-        return true;
-      }
-    },
-    {
-      question: "Когда планируется прибытие транспорта с декорациями (дата и ориентировочное время)? И важный момент: <b>планируются ли ночные работы на площадке?</b>",
-      tip: "⚡ <b>Обратите внимание:</b> В нашем театре РАЗРЕШЕНЫ ночные монтажи и репетиции, но их необходимо отразить в заявке заранее, чтобы мы составили сменный график дежурных служб.",
-      quick: ["Без ночных работ", "Да, потребуется ночной монтаж"],
-      handler: (val) => {
-        applicationData.arrivalDateTime = val;
-        if (val.toLowerCase().includes("ночн")) {
-          applicationData.isNightWork = true;
+  <script>
+    /* 1. БАЗА СПЕЦИФИКАЦИЙ И ЧЕРТЕЖЕЙ */
+    const docsDatabase = {
+      "Основная сцена": [
+        {
+          cat: "plans",
+          catName: "🎭 Сцена, планшет и машинерия",
+          files: [
+            { name: "План и продольный разрез сцены (DWG/PDF)", desc: "Масштаб 1:50, отметки колосников и софитов, полезная глубина 14м", url: "docs/main/stage_plan.pdf" },
+            { name: "Таблица штанкетного хозяйства", desc: "32 штанкета, нагрузка 350 кг, экспликация свободных подъемов", url: "docs/main/rigging_table.pdf" },
+            { name: "Паспорт дежурной одежды сцены", desc: "Черный кабинет, поплановые кулисы, горизонт", url: "docs/main/soft_goods.pdf" }
+          ]
+        },
+        {
+          cat: "light",
+          catName: "💡 Осветительский цех",
+          files: [
+            { name: "План софитов и выносных галерей (PDF)", desc: "Развес приборов, углы раскрытия профилей и PC", url: "docs/main/light_plot.pdf" },
+            { name: "DMX-патч и сетевая карта площадки", desc: "grandMA2 / ChamSys, протоколы Art-Net, sACN, свободные юниверсы", url: "docs/main/dmx_patch.pdf" }
+          ]
+        },
+        {
+          cat: "sound",
+          catName: "🔊 Звуковой и видеоцех",
+          files: [
+            { name: "Акустический паспорт и маршрутизация Dante", desc: "Портальная система L/R + Sub, сценические мониторы", url: "docs/main/sound_passport.pdf" },
+            { name: "Микрофонный парк и интерком", desc: "Радиосистемы UHF, головные гарнитуры, служебная связь", url: "docs/main/mic_park.pdf" },
+            { name: "Спецификация проектора и экрана", desc: "Лазерный проектор 16 000 Lm, экран 10×6 м прямой проекции", url: "docs/main/video_spec.pdf" }
+          ]
         }
-        return true;
+      ],
+      "Малая сцена": [
+        {
+          cat: "plans",
+          catName: "🎬 Планшет зала-трансформера",
+          files: [
+            { name: "План зала и фермовых конструкций (PDF)", desc: "Размеры 9×11 м, высота до нижнего пояса ферм 4.8 м", url: "docs/small/stage_plan.pdf" },
+            { name: "Схема точек подвеса малой сцены", desc: "Допустимые точечные нагрузки на несущие балки", url: "docs/small/load_points.pdf" }
+          ]
+        },
+        {
+          cat: "light",
+          catName: "💡 Свет (Малая сцена)",
+          files: [
+            { name: "План световых ферм и приборов", desc: "LED-профили, заливка, пульт ETC / ChamSys", url: "docs/small/light_spec.pdf" }
+          ]
+        },
+        {
+          cat: "sound",
+          catName: "🔊 Звук и проекция (Малая сцена)",
+          files: [
+            { name: "Акустика и коммутационные лючки", desc: "Точечные FOH-системы, стейджбокс 16/8, радиомикрофоны", url: "docs/small/sound_spec.pdf" },
+            { name: "Короткофокусный проектор и моторизованный экран", desc: "Лазерный проектор 7000 Lm, задник 4×3 м", url: "docs/small/video_spec.pdf" }
+          ]
+        }
+      ]
+    };
+
+    /* 2. СОСТОЯНИЕ ОПРОСНИКА СОГЛАСОВАНИЯ */
+    const appState = {
+      selectedStage: "Основная сцена",
+      step: 0,
+      data: {
+        theatre: "",
+        scene: "Основная сцена",
+        arrival: "",
+        isNight: false,
+        timing: "",
+        services: "",
+        costumes: "",
+        riders: ""
       }
-    },
-    {
-      question: "Опишите базовый тайминг дня (время начала монтажа, фокус света, репетиции и начало спектакля).",
-      tip: "Пример: 08:00 заезд, 09:00–13:00 монтировка, 13:00–15:00 свет/звук, 16:00 прогон, 19:00 спектакль.",
-      quick: ["Стандартный 1-дневный график", "Заезд накануне вечером"],
-      handler: (val) => {
-        applicationData.timingSchedule = val;
-        return true;
+    };
+
+    const questions = [
+      {
+        q: "Приветствую! Я технический ассистент фестиваля «Атлас». Помогу быстро сформировать согласованный график работ на площадке и оформить вызов служб театра.<br><br><b>Укажите название вашего театра, спектакль и контакты завпоста (ФИО и телефон).</b>",
+        tip: "Например: «Театр Драмы, спектакль Маскарад, завпост Алексей +7 900 000-00-00»",
+        quick: [],
+        stepTitle: "Театр и контакты",
+        apply: (val) => { appState.data.theatre = val; }
+      },
+      {
+        q: "Какую площадку фестиваля вы планируете задействовать для показа и монтажа?",
+        tip: "Если один коллектив привозит масштабную постановку или два спектакля, можно выбрать обе сцены.",
+        quick: ["Основная сцена", "Малая сцена", "Обе сцены (Основная + Малая)"],
+        stepTitle: "Выбор сцены",
+        apply: (val) => { 
+          appState.data.scene = val;
+          appState.selectedStage = val.includes("Малая") && !val.includes("Основная") ? "Малая сцена" : "Основная сцена";
+          document.getElementById('docMeta').innerHTML = `${val}<br>Версия 1.0 · ${new Date().toLocaleDateString('ru-RU')}`;
+        }
+      },
+      {
+        q: "Когда планируется прибытие транспорта с декорациями (дата и точное время)? И важный вопрос: <b>потребуются ли ночные смены на площадке?</b>",
+        tip: "⚡ <b>Обратите внимание:</b> В нашем театре РАЗРЕШЕНЫ ночные работы, но их необходимо зафиксировать заранее, чтобы мы выставили дежурные службы в график.",
+        quick: ["Без ночных смен", "Да, потребуется ночной монтаж"],
+        stepTitle: "Заезд и ночные работы",
+        apply: (val) => { 
+          appState.data.arrival = val;
+          if (val.toLowerCase().includes("ночн") || val.toLowerCase().includes("ночь")) {
+            appState.data.isNight = true;
+          }
+        }
+      },
+      {
+        q: "Опишите базовый тайминг дня (время начала монтажа декораций, фокус света, репетиции и начало спектакля).",
+        tip: "Пример: «08:00 заезд, 09:00–13:00 монтировка, 13:00–15:00 свет/звук, 16:00 прогон, 19:00 спектакль».",
+        quick: ["Стандартный 1-дневный график", "Заезд накануне вечером"],
+        stepTitle: "Тайминг площадки",
+        apply: (val) => { appState.data.timing = val; }
+      },
+      {
+        q: "Какие <b>технические службы нашего театра</b> вам потребуются и в какие часы?",
+        tip: "Доступные цеха:<br>• <b>Монтировщики сцены</b><br>• <b>Оператор механооборудования (штанкеты / круг)</b><br>• <b>Осветители (планшетные + художник по свету)</b><br>• <b>Звукоцех</b><br>• <b>Видеоцех / проекция</b><br>• <b>Помощник режиссёра (помреж)</b><br>• <b>Дежурный завпост</b><br>• <b>Дежурные электрик и механик</b><br>• <b>Уборка сцены (до и после прогона)</b>",
+        quick: ["Полный вызов всех служб", "Монтировщики + свет + звук + уборка"],
+        stepTitle: "Вызов цехов театра",
+        apply: (val) => { appState.data.services = val; }
+      },
+      {
+        q: "Есть ли у вас запросы к <b>костюмерам, гримёрам или реквизиторам</b> театра? (Отпариватели, гладильные доски, доп. зеркала, гримваген).",
+        tip: "Опишите в свободной форме или напишите «Без запросов», если всё привозите с собой.",
+        quick: ["Нужны отпариватели и гладильная", "Без запросов к бытовым службам"],
+        stepTitle: "Бытовые службы",
+        apply: (val) => { appState.data.costumes = val; }
+      },
+      {
+        q: "Финальный шаг: прикрепите <b>ссылку на облачный диск</b> (Яндекс.Диск, Google Drive) с вашими световыми партитурами, райдером и планом расстановки декораций.",
+        tip: "Если ссылка пока не готова, напишите «Передадим при заезде».",
+        quick: ["Ссылка на Яндекс.Диск", "Передадим на площадке"],
+        stepTitle: "Райдеры и партитуры",
+        apply: (val) => { appState.data.riders = val; }
       }
-    },
-    {
-      question: "Какие <b>технические службы нашего театра</b> вам потребуются на площадке? Перечислите нужные цеха и ориентировочное время вызова.",
-      tip: "Доступные цеха:<br>• <b>Монтировщики (машинисты сцены)</b><br>• <b>Оператор механооборудования (штанкеты/круг)</b><br>• <b>Осветительский цех (планшетные осветители и/или художник по свету)</b><br>• <b>Звукоцех</b><br>• <b>Видеоцех / проекция</b><br>• <b>Помощник режиссёра (помреж)</b><br>• <b>Завпост площадки для координации</b><br>• <b>Дежурный электрик / механик</b><br>• <b>Уборка сцены (клининг до и после прогона)</b>",
-      quick: ["Вызов всех ключевых служб (полный стек)", "Только монтировщики + свет + звук + уборка"],
-      handler: (val) => {
-        applicationData.servicesCalled = val;
-        return true;
-      }
-    },
-    {
-      question: "Есть ли у вас запросы к <b>костюмерам, гримёрам или реквизиторам</b> театра? (Отпариватели, утюги, доп. зеркала, реквизиторский холодильник).",
-      tip: "Опишите в свободной форме или напишите «Нет запросов», если всё привозите с собой.",
-      quick: ["Нужны только отпариватели и гладильная", "Без запросов к костюмерам/реквизиторам"],
-      handler: (val) => {
-        applicationData.customServicesNotes = val;
-        return true;
-      }
-    },
-    {
-      question: "Финальный шаг: прикрепите <b>ссылку на облако</b> (Яндекс.Диск, Google Drive) с вашими световыми партитурами, райдером и планом расстановки декораций.",
-      tip: "Если ссылок пока нет, напишите «Передадим позже».",
-      quick: ["Ссылка на Яндекс.Диск", "Передадим на площадке"],
-      handler: (val) => {
-        applicationData.riderLinks = val;
-        return true;
-      }
+    ];
+
+    /* 3. ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ */
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => [...document.querySelectorAll(s)];
+
+    function toast(msg) {
+      const el = $("#toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => el.classList.remove("show"), 2800);
     }
-  ];
 
-  function addBotMessage(text, tip = null, quickReplies = []) {
-    const container = document.getElementById('chatMessages');
-    const bubble = document.createElement('div');
-    bubble.className = 'chat-bubble bot';
-    
-    let tipHtml = tip ? `<div class="tip-box">${tip}</div>` : '';
-    let quickHtml = '';
-    if (quickReplies && quickReplies.length > 0) {
-      quickHtml = `<div class="quick-replies">` + 
-        quickReplies.map(q => `<button class="quick-btn" onclick="sendQuickReply('${q.replace(/'/g, "\\'")}')">${q}</button>`).join('') + 
-        `</div>`;
+    function updateClock() {
+      const now = new Date();
+      $("#clock").innerHTML = `${now.toLocaleDateString("ru-RU")}<br>${now.toLocaleTimeString("ru-RU", {hour:"2-digit", minute:"2-digit"})}`;
+    }
+    updateClock();
+    setInterval(updateClock, 30000);
+
+    /* 4. ЧАТ-ДИАЛОГ */
+    function openChat(targetStage = null) {
+      if (targetStage) {
+        appState.selectedStage = targetStage;
+      }
+      $("#modal").classList.add("open");
+      document.body.style.overflow = "hidden";
+      if (appState.step === 0 && $("#chat").children.length === 0) {
+        showQuestion(0);
+      }
+      setTimeout(() => $("#chatInput").focus(), 80);
     }
 
-    bubble.innerHTML = text + tipHtml + quickHtml;
-    container.appendChild(bubble);
-    container.scrollTop = container.scrollHeight;
-  }
-
-  function addUserMessage(text) {
-    const container = document.getElementById('chatMessages');
-    const bubble = document.createElement('div');
-    bubble.className = 'chat-bubble user';
-    bubble.innerText = text;
-    container.appendChild(bubble);
-    container.scrollTop = container.scrollHeight;
-  }
-
-  function sendQuickReply(text) {
-    document.getElementById('chatInput').value = text;
-    handleUserSend();
-  }
-
-  function handleUserSend() {
-    const input = document.getElementById('chatInput');
-    const text = input.value.trim();
-    if (!text) return;
-
-    addUserMessage(text);
-    input.value = '';
-
-    // Обработка подсказок-вопросов от пользователя
-    if (text.toLowerCase().includes("что имеется в виду") || text.toLowerCase().includes("уточнить") || text.toLowerCase().includes("подскажи")) {
-      setTimeout(() => {
-        addBotMessage("Поясняю: укажите точные часы или формат, удобный для вашей постановочной группы. Если есть сомнения, напишите ориентировочные данные — мы скорректируем их на созвоне с техдиректором фестиваля.", null, ["Понятно, продолжаю"]);
-      }, 400);
-      return;
+    function closeChat() {
+      $("#modal").classList.remove("open");
+      document.body.style.overflow = "";
     }
 
-    // Сохранение шага
-    const currentQuestion = chatFlow[chatStep];
-    if (currentQuestion.handler(text)) {
-      chatStep++;
-      if (chatStep < chatFlow.length) {
-        setTimeout(() => {
-          const next = chatFlow[chatStep];
-          addBotMessage(next.question, next.tip, next.quick);
-        }, 500);
+    function showQuestion(idx) {
+      const stepData = questions[idx];
+      const chat = $("#chat");
+
+      const msg = document.createElement("div");
+      msg.className = "chat-message assistant";
+      
+      let quickHtml = "";
+      if (stepData.quick && stepData.quick.length > 0) {
+        quickHtml = `<div class="chat-options">` + 
+          stepData.quick.map(btn => `<button type="button" onclick="submitAnswer('${btn.replace(/'/g, "\\'")}')">${btn}</button>`).join('') + 
+          `</div>`;
+      }
+
+      msg.innerHTML = `
+        <div class="chat-label">Этап 0${idx + 1} из 07 · ${stepData.stepTitle}</div>
+        <div class="chat-text">${stepData.q}</div>
+        ${stepData.tip ? `<div class="chat-tip">${stepData.tip}</div>` : ""}
+        ${quickHtml}
+      `;
+
+      chat.appendChild(msg);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function submitAnswer(text) {
+      const chat = $("#chat");
+      const userMsg = document.createElement("div");
+      userMsg.className = "chat-message user";
+      userMsg.textContent = text;
+      chat.appendChild(userMsg);
+
+      // Применяем ответ
+      questions[appState.step].apply(text);
+
+      // Обновляем визуал шагов в правом сайдбаре
+      const currentStepEl = $(`#step-${appState.step}`);
+      if (currentStepEl) {
+        currentStepEl.classList.remove("current");
+        currentStepEl.classList.add("done");
+        currentStepEl.querySelector(".step-dot").textContent = "✓";
+      }
+
+      appState.step++;
+      const progressPercent = Math.round((appState.step / 7) * 100);
+      $("#progressValue").textContent = `${progressPercent}%`;
+
+      if (appState.step < questions.length) {
+        const nextStepEl = $(`#step-${appState.step}`);
+        if (nextStepEl) {
+          nextStepEl.classList.add("current");
+          nextStepEl.querySelector(".step-dot").textContent = "•";
+        }
+        $("#btnContinueLabel").textContent = "Продолжить согласование";
+        setTimeout(() => showQuestion(appState.step), 400);
       } else {
+        // Завершение
+        $("#passportStatus").textContent = "Готов к сдаче";
+        $("#passportStatus").style.borderColor = "var(--gold)";
+        $("#btnContinueLabel").textContent = "Согласование завершено";
+        
         setTimeout(() => {
-          renderFinalSummary();
-        }, 600);
+          const finalMsg = document.createElement("div");
+          finalMsg.className = "chat-message assistant";
+          finalMsg.innerHTML = `
+            <div class="chat-label">Финал согласования</div>
+            <div class="chat-text">
+              ✅ <b>Паспорт технического согласования успешно сформирован!</b><br>
+              Все параметры зафиксированы. Вы можете скачать сформированный текстовый паспорт или сразу отправить его техническому директору фестиваля в Telegram.
+            </div>
+            <div class="chat-options">
+              <button type="button" onclick="downloadPassport()">💾 Скачать паспорт (.txt)</button>
+              <button type="button" onclick="sendTelegram()">✈️ Отправить в Telegram</button>
+            </div>
+          `;
+          chat.appendChild(finalMsg);
+          chat.scrollTop = chat.scrollHeight;
+        }, 400);
       }
     }
-  }
 
-  /* 3. Генерация сводного технического паспорта */
-  function renderFinalSummary() {
-    addBotMessage("✅ <b>Паспорт технического согласования успешно сформирован!</b> Файл готов к сохранению и передаче в дирекцию фестиваля.", "Вы можете скачать структурированный текстовый документ или сразу направить сформированный свод в Telegram.");
+    $("#chatForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const input = $("#chatInput");
+      const val = input.value.trim();
+      if (!val) return;
+      if (appState.step >= questions.length) {
+        toast("Все этапы уже заполнены. Вы можете скачать паспорт.");
+        input.value = "";
+        return;
+      }
+      submitAnswer(val);
+      input.value = "";
+    });
 
-    const summaryText = 
-`=========================================
-ТЕХНИЧЕСКИЙ ПАСПОРТ СПЕКТАКЛЯ — ФЕСТИВАЛЬ «АТЛАС»
-=========================================
-1. КОЛЛЕКТИВ И КОНТАКТЫ:
-${applicationData.theatre}
+    /* 5. ФОРМИРОВАНИЕ И ВЫГРУЗКА ПАСПОРТА */
+    function generatePassportText() {
+      return [
+        "==================================================",
+        "ATLAS — ПАСПОРТ ТЕХНИЧЕСКОГО СОГЛАСОВАНИЯ ПЛОЩАДКИ",
+        "Фестиваль «Атлас театральной России»",
+        "==================================================",
+        `ДАТА ФОРМИРОВАНИЯ: ${new Date().toLocaleString('ru-RU')}`,
+        `ВЫБРАННАЯ ПЛОЩАДКА: ${appState.data.scene || appState.selectedStage}`,
+        "",
+        "1. КОЛЛЕКТИВ И КОНТАКТЫ ЗАВПОСТА:",
+        appState.data.theatre || "Не указано",
+        "",
+        "2. ЗАЕЗД И НОЧНОЙ РЕГЛАМЕНТ:",
+        `График прибытия: ${appState.data.arrival || "Не указано"}`,
+        `Ночные работы: ${appState.data.isNight ? "ТРЕБУЮТСЯ (разрешены регламентом площадки)" : "Не требуются"}`,
+        "",
+        "3. ПОЧАСОВОЙ ТАЙМИНГ ПЛОЩАДКИ:",
+        appState.data.timing || "Не указано",
+        "",
+        "4. ВЫЗОВ СЛУЖБ ТЕАТРА (Монтировщики, свет, звук, помреж, уборка):",
+        appState.data.services || "Не указано",
+        "",
+        "5. ЗАПРОСЫ К БЫТОВЫМ ЦЕХАМ (Гримёрки, костюмеры, реквизит):",
+        appState.data.costumes || "Без особых запросов",
+        "",
+        "6. ССЫЛКИ НА ОБЛАКО (Партитуры света, райдер, чертежи):",
+        appState.data.riders || "Не прикреплено",
+        "",
+        "==================================================",
+        "Технический директор фестиваля «Атлас»: Руслан (+7 902 876-57-92)",
+        "Дежурный администратор: Оксана (+7 963 655-40-21)",
+        "Документ сгенерирован техническим порталом ATLAS."
+      ].join("\n");
+    }
 
-2. ВЫБРАННАЯ ПЛОЩАДКА:
-${applicationData.targetScene}
+    function downloadPassport() {
+      if (appState.step === 0) {
+        toast("Сначала пройдите согласование в диалоге.");
+        openChat();
+        return;
+      }
+      const text = generatePassportText();
+      const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `Atlas_TechPassport_${Date.now()}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+      toast("Паспорт сформирован и скачан.");
+    }
 
-3. ГРАФИК ЗАЕЗДА И СМЕННОСТЬ:
-Заезд: ${applicationData.arrivalDateTime}
-Ночные работы: ${applicationData.isNightWork ? "ТРЕБУЮТСЯ (согласовано регламентом площадки)" : "Не требуются"}
+    function sendTelegram() {
+      if (appState.step === 0) {
+        toast("Сначала заполните данные согласования.");
+        openChat();
+        return;
+      }
+      const text = generatePassportText();
+      const message = encodeURIComponent(`Заявка технического согласования (Фестиваль «Атлас»):\n\n` + text);
+      window.open(`https://t.me/share/url?url=&text=${message}`, "_blank");
+    }
 
-4. ТАЙМИНГ МОНТАЖА И РЕПЕТИЦИЙ:
-${applicationData.timingSchedule}
+    /* 6. ОТКРЫТИЕ МОДАЛКИ С ДОКУМЕНТАЦИЕЙ */
+    function openDocsModal(stageName, targetCategory = null) {
+      const modal = $("#docsModal");
+      $("#docsModalTitle").textContent = `Спецификации — ${stageName}`;
+      const content = $("#docsModalContent");
+      content.innerHTML = "";
 
-5. ВЫЗОВ СЛУЖБ ТЕАТРА:
-${applicationData.servicesCalled}
+      const sections = docsDatabase[stageName] || docsDatabase["Основная сцена"];
 
-6. ЗАПРОСЫ К БЫТОВЫМ СЛУЖБАМ (Костюмеры/Гримёры/Реквизит):
-${applicationData.customServicesNotes}
+      sections.forEach(sec => {
+        if (targetCategory && sec.cat !== targetCategory) return;
 
-7. ССЫЛКИ НА РАЙДЕРЫ И СВЕТОВЫЕ ПАРТИТУРЫ:
-${applicationData.riderLinks}
-=========================================
-Дата формирования: ${new Date().toLocaleString('ru-RU')}
-Статус: Сформировано через Технический портал`;
+        const catBox = document.createElement("div");
+        catBox.className = "docs-category";
 
-    document.getElementById('summaryText').innerText = summaryText;
-    document.getElementById('summaryCard').style.display = 'block';
+        const title = document.createElement("div");
+        title.className = "docs-cat-title";
+        title.textContent = sec.catName;
+        catBox.appendChild(title);
 
-    // Формирование ссылки для отправки в Telegram
-    const tgEncoded = encodeURIComponent(`Новая техническая заявка (Фестиваль «Атлас»):\n\n` + summaryText);
-    document.getElementById('tgShareBtn').href = `https://t.me/share/url?url=&text=${tgEncoded}`;
-  }
+        const list = document.createElement("ul");
+        list.className = "docs-list";
 
-  function downloadSummaryDoc() {
-    const text = document.getElementById('summaryText').innerText;
-    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `Atlas_TechPassport_${Date.now()}.txt`;
-    link.click();
-  }
+        sec.files.forEach(f => {
+          const item = document.createElement("li");
+          item.className = "doc-item";
+          item.innerHTML = `
+            <div class="doc-item-info">
+              <span class="doc-item-title">${f.name}</span>
+              <span class="doc-item-desc">${f.desc}</span>
+            </div>
+            <a href="${f.url}" class="doc-download" onclick="handleDocClick(event, '${f.name}')">📥 Скачать</a>
+          `;
+          list.appendChild(item);
+        });
 
-  // Запуск при загрузке
-  window.onload = () => {
-    switchSceneView('main');
-    addBotMessage(chatFlow[0].question, chatFlow[0].tip, chatFlow[0].quick);
-  };
-</script>
+        catBox.appendChild(list);
+        content.appendChild(catBox);
+      });
+
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function handleDocClick(e, name) {
+      toast(`Загрузка файла: ${name}`);
+    }
+
+    /* 7. СЛУШАТЕЛИ СОБЫТИЙ */
+    $$("[data-scroll]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const target = $(`#${btn.dataset.scroll}`);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+          $$("nav button").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+        }
+      });
+    });
+
+    $$("[data-action='open-chat']").forEach(btn => {
+      btn.addEventListener("click", () => openChat());
+    });
+
+    $$("[data-action='start-stage']").forEach(btn => {
+      btn.addEventListener("click", () => openChat(btn.dataset.stage));
+    });
+
+    $$("[data-action='open-docs']").forEach(btn => {
+      btn.addEventListener("click", () => {
+        openDocsModal(btn.dataset.stage || appState.selectedStage, btn.dataset.cat || null);
+      });
+    });
+
+    $$("[data-action='open-reference']").forEach(btn => {
+      btn.addEventListener("click", () => {
+        $("#referenceModal").classList.add("open");
+        document.body.style.overflow = "hidden";
+      });
+    });
+
+    $$("[data-action='download']").forEach(btn => {
+      btn.addEventListener("click", downloadPassport);
+    });
+
+    $$("[data-action='telegram']").forEach(btn => {
+      btn.addEventListener("click", sendTelegram);
+    });
+
+    $("#closeModal").addEventListener("click", closeChat);
+    $("[data-close-docs]").addEventListener("click", () => {
+      $("#docsModal").classList.remove("open");
+      document.body.style.overflow = "";
+    });
+    $("[data-close-reference]").addEventListener("click", () => {
+      $("#referenceModal").classList.remove("open");
+      document.body.style.overflow = "";
+    });
+
+    window.addEventListener("click", (e) => {
+      if (e.target === $("#modal")) closeChat();
+      if (e.target === $("#docsModal")) {
+        $("#docsModal").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+      if (e.target === $("#referenceModal")) {
+        $("#referenceModal").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeChat();
+        $("#docsModal").classList.remove("open");
+        $("#referenceModal").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+    });
+  </script>
 </body>
 </html>
