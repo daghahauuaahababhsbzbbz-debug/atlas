@@ -810,7 +810,6 @@
     }
     .doc-download:hover { background: rgba(214,168,95,.1); border-color: var(--gold); }
 
-    /* ---------- ИНТЕЛЛЕКТУАЛЬНЫЙ ЧАТ ---------- */
     .chat {
       padding: 24px;
       overflow-y: auto;
@@ -896,7 +895,6 @@
     }
     .btn-edit-step:hover { opacity: 1; }
 
-    /* Таблица интерактивного чек-листа цехов */
     .services-interactive-box {
       margin-top: 14px;
       background: rgba(0,0,0,0.35);
@@ -1074,7 +1072,7 @@
 
       <div class="system">
         <div class="online"><i></i> СИСТЕМА ОНЛАЙН</div>
-        <div id="clock">03.09.2026<br>18:00</div>
+        <div id="clock">03.09.2026<br>18:30</div>
       </div>
     </header>
 
@@ -1198,7 +1196,7 @@
             </li>
             <li class="step" id="step-2">
               <div class="step-dot"></div>
-              <div><div class="step-title">Транспорт и заезд</div><div class="step-detail">Точная дата, время, габариты</div></div>
+              <div><div class="step-title">Транспорт и заезд</div><div class="step-detail">Точная дата, время, длина кузова</div></div>
             </li>
             <li class="step" id="step-3">
               <div class="step-dot"></div>
@@ -1206,7 +1204,7 @@
             </li>
             <li class="step" id="step-4">
               <div class="step-dot"></div>
-              <div><div class="step-title">Почасовой тайминг</div><div class="step-detail">Монтаж, фокус, прогон, старт</div></div>
+              <div><div class="step-title">Почасовой тайминг</div><div class="step-detail">Монтаж, прогон, спектакль, демонтаж</div></div>
             </li>
             <li class="step" id="step-5">
               <div class="step-dot"></div>
@@ -1218,7 +1216,7 @@
             </li>
             <li class="step" id="step-7">
               <div class="step-dot"></div>
-              <div><div class="step-title">Райдеры и партитуры</div><div class="step-detail">Ссылки на облачные диски</div></div>
+              <div><div class="step-title">Райдеры и партитуры</div><div class="step-detail">Обязательная ссылка на облако</div></div>
             </li>
           </ol>
 
@@ -1254,7 +1252,7 @@
 
     <footer>
       <span>ATLAS · Фестиваль театральной России</span>
-      <span>Версия 1.4 · 2026</span>
+      <span>Версия 1.5 · 2026</span>
       <span>Координация технических служб</span>
     </footer>
   </div>
@@ -1306,6 +1304,12 @@
       </div>
       <div class="chat">
         <div class="chat-message assistant">
+          <div class="chat-label">Логистика и габариты транспорта</div>
+          <div class="chat-text">
+            <b>Внимание!</b> Заезд грузового транспорта осуществляется с дублёра Новинского бульвара. Из-за геометрии дорожного поворота заезд длинномерных машин с длиной кузова <b>более 7 метров</b> крайне осложнён и физически невозможен без маневрирования с выездом на встречную полосу. Рекомендуется использовать среднетоннажный транспорт.
+          </div>
+        </div>
+        <div class="chat-message assistant">
           <div class="chat-label">Ночные монтажи и смены</div>
           <div class="chat-text">
             Площадка фестиваля «Атлас» поддерживает круглосуточную готовность. Ночные работы (монтировка, развес, юстировка света) <b>разрешены</b>, но требуют обязательной фиксации в графике для составления графика дежурств инженеров и администрации.
@@ -1315,12 +1319,6 @@
           <div class="chat-label">Пожарная безопасность</div>
           <div class="chat-text">
             Любое применение открытого огня, пиротехники, дым-машин тяжелого дыма и спецжидкостей согласовывается с техническим директором Русланом не менее чем за 48 часов до начала монтажа. Все материалы декораций должны иметь противопожарную пропитку.
-          </div>
-        </div>
-        <div class="chat-message assistant">
-          <div class="chat-label">Разгрузка и логистика</div>
-          <div class="chat-text">
-            Параметры грузового узла Основной сцены: ворота 3100 × 2200 мм, подъёмно-опускная платформа 4500 × 2500 мм (до 2500 кг). Разгрузка Малой сцены осуществляется через зрительское фойе с подъёмом на 2 этаж по лестнице.
           </div>
         </div>
       </div>
@@ -1431,12 +1429,17 @@
       toast(`Загрузка файла: ${name}`);
     }
 
-    /* 2. ПЕРЕСТРОЕННЫЙ ДИАЛОГ СОГЛАСОВАНИЯ */
+    /* 2. СОСТОЯНИЕ И ВОПРОСЫ ОПРОСНИКА */
     const appState = {
       selectedStage: "Основная сцена",
       step: 0,
       data: {
         theatreInfo: "",
+        parsedTheatre: "",
+        parsedPlay: "",
+        parsedRole: "",
+        parsedName: "",
+        parsedPhone: "",
         scene: "Основная сцена",
         transportArrival: "",
         nightWork: "",
@@ -1450,11 +1453,20 @@
     const questions = [
       {
         stepTitle: "Коллектив и контакты",
-        q: "Приветствую! Я технический координатор фестиваля «Атлас». Помогу составить согласованный график работ на площадке.<br><br><b>Укажите: название вашего театра, спектакль, а также должность, ФИО и телефон контактного лица (завпост, техдиректор или помреж).</b>",
-        tip: "Пример: Театр Драмы, спектакль «Маскарад», завпост Иванов Алексей Сергеевич +7 900 123-45-67",
+        q: "Приветствую! Я технический координатор фестиваля «Атлас». Помогу составить согласованный график работ на площадке.<br><br><b>Введите, пожалуйста, полное официальное название вашего театра, название спектакля, а также должность, ФИО и контактный телефон ответственного лица (завпост, техдиректор или помреж).</b>",
+        tip: "Пример: ГАУК «Театр Драмы имени А.С. Пушкина», спектакль «Маскарад», завпост Иванов Алексей Сергеевич, +7 900 123-45-67",
         type: "text",
         quickFill: [],
-        apply: (val) => { appState.data.theatreInfo = val; }
+        apply: (val) => {
+          appState.data.theatreInfo = val;
+          // Интеллектуальный парсинг для блока подписей в PDF
+          const parts = val.split(/[,;\n]+/).map(p => p.trim()).filter(Boolean);
+          appState.data.parsedTheatre = parts[0] || "Театр-участник";
+          appState.data.parsedPlay = parts[1] || "Спектакль";
+          appState.data.parsedRole = parts[2] || "Ответственный представитель";
+          appState.data.parsedName = parts[3] || "";
+          appState.data.parsedPhone = parts[4] || "";
+        }
       },
       {
         stepTitle: "Выбор площадки",
@@ -1470,12 +1482,12 @@
       },
       {
         stepTitle: "Транспорт и заезд",
-        q: "<b>Когда прибывает транспорт с декорациями?</b><br>Укажите точную дату, ориентировочное время прибытия к рампе и габариты машины (фура, 5-тонник, Газель).",
-        tip: "Пример: 12 сентября к 08:30 утра, 1 еврофура (13.6м). Потребуется подъёмник к планшету сцены.",
+        q: "<b>Когда прибывает транспорт с декорациями?</b><br><br>⚠️ <b>ВНИМАНИЕ ПО ЛОГИСТИКЕ:</b> Заезд грузового транспорта осуществляется строго с дублёра Новинского бульвара. Из-за геометрии заезда и радиуса поворота въезд машин с длиной кузова <b>более 7 метров</b> крайне осложнён и физически невозможен без маневрирования на встречную полосу. Рекомендуется использовать транспорт с длиной кузова до 7 метров.<br><br>Укажите точную дату, расчётное время прибытия и габариты вашей машины:",
+        tip: "Пример: 12 сентября к 08:30 утра, 5-тонник (кузов 6.5 м), подача к рампе с подъёмником.",
         type: "text",
         quickFill: [
-          { label: "Подставить шаблон еврофуры", text: "12 сентября в 08:00, 1 еврофура (13.6 м), требуется подача на рампу" },
-          { label: "Подставить шаблон малой машины", text: "12 сентября в 09:00, Газель 5 метров, разгрузка ручная" }
+          { label: "Шаблон: 5-тонник (кузов до 7м)", text: "12 сентября в 08:30, 5-тонник (длина кузова 6.5 м), требуется подача на грузовой подъёмник" },
+          { label: "Шаблон: Газель / фургон (до 5м)", text: "12 сентября в 09:00, удлинённая Газель (длина 5 м), подача к служебному входу" }
         ],
         apply: (val) => { appState.data.transportArrival = val; }
       },
@@ -1493,17 +1505,17 @@
       },
       {
         stepTitle: "Почасовой тайминг",
-        q: "<b>Опишите базовый тайминг дня спектакля.</b><br>Укажите время начала монтировки, время на фокус света и проверку звука, время репетиции/прогона и время начала спектакля.",
-        tip: "Нажмите на один из шаблонов ниже, чтобы подставить его в поле ввода и отредактировать ваши точные часы:",
+        q: "<b>Опишите базовый почасовой тайминг дня спектакля.</b><br>Укажите время начала монтировки, время на фокус света и настройку звука, репетицию, начало спектакля, а также <b>время на демонтаж и погрузку декораций</b> после показа.",
+        tip: "Нажмите на один из шаблонов ниже, чтобы подставить его в поле ввода и отредактировать под ваше расписание:",
         type: "text",
         quickFill: [
           { 
-            label: "Вставить стандартный 1-дневный тайминг", 
-            text: "08:00–12:00 — монтаж декораций на планшете\n12:00–14:00 — фокус света и настройка звукового тракта\n14:00–15:00 — технический перерыв / обед служб\n15:00–18:00 — репетиция и прогон спектакля\n18:00–18:30 — уборка сцены и проверка систем\n19:00 — спектакль" 
+            label: "Шаблон: 1-дневный график (с демонтажем)", 
+            text: "08:00–12:00 — монтаж декораций на планшете сцены\n12:00–14:00 — фокус света и настройка звукового тракта\n14:00–15:00 — технический перерыв / обед служб\n15:00–18:00 — репетиция и генеральный прогон\n18:00–18:30 — уборка планшета сцены и проверка систем\n19:00–21:30 — спектакль\n21:30–01:00 — демонтаж декораций, разбор подвесов и погрузка в транспорт" 
           },
           { 
-            label: "Вставить 2-дневный тайминг (монтаж накануне)", 
-            text: "День 1 (накануне): 14:00–22:00 монтаж декораций, подвес и настройка света.\nДень 2 (показ): 10:00–13:00 репетиция, 14:00–17:00 генеральный прогон, 17:00–18:00 уборка, 19:00 спектакль." 
+            label: "Шаблон: 2-дневный график (монтаж накануне + демонтаж)", 
+            text: "День 1 (накануне): 14:00–22:00 монтаж декораций, развес и юстировка света.\nДень 2 (день показа): 11:00–13:00 саундчек, 14:00–17:00 прогон, 17:00–18:00 уборка планшета, 19:00–21:30 спектакль, 22:00–01:00 демонтаж и ночная погрузка." 
           }
         ],
         apply: (val) => { appState.data.dayTiming = val; }
@@ -1528,12 +1540,10 @@
       },
       {
         stepTitle: "Райдеры и партитуры",
-        q: "<b>Финальный шаг: укажите ссылку на облачный диск</b> (Яндекс.Диск, Google Drive, Облако Mail.ru) с вашим техническим райдером, световыми партитурами и чертежами расстановки.",
-        tip: "⚠️ Вставьте прямую ссылку на открытую папку в поле ниже. Если материалов пока нет, нажмите «Передадим при заезде»:",
-        type: "text",
-        quickFill: [
-          { label: "Передадим лично при заезде", text: "Материалы передадим на флеш-накопителе лично техническому директору Руслану в день заезда." }
-        ],
+        q: "<b>Финальный шаг: предоставление технического райдера.</b><br><br>Райдеры и световые партитуры должны быть согласованы с технической дирекцией <u>заблаговременно</u>. Передача материалов в день заезда не допускается.<br><br><b>Вставьте прямую ссылку на облачный диск</b> (Яндекс.Диск, Google Drive, Облако Mail.ru), где открыт доступ к файлам райдера, световым партитурам и схеме расстановки декораций:",
+        tip: "⚠️ Вставьте ссылку на открытую папку. Без предоставления доступа к райдеру согласование не может быть завершено.",
+        type: "strict_url",
+        quickFill: [],
         apply: (val) => { appState.data.riders = val; }
       }
     ];
@@ -1546,7 +1556,7 @@
       el.textContent = msg;
       el.classList.add("show");
       clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => el.classList.remove("show"), 3000);
+      window.__toastTimer = setTimeout(() => el.classList.remove("show"), 3200);
     }
 
     function updateClock() {
@@ -1580,7 +1590,6 @@
 
       let interactiveHtml = "";
 
-      // Если это шаг с интерактивным вызовом цехов
       if (stepData.type === "interactive_services") {
         interactiveHtml = `
           <div class="services-interactive-box" id="servicesBox">
@@ -1588,37 +1597,37 @@
               <input type="checkbox" id="srv_mach" checked>
               <label for="srv_mach"><b>Монтировщики сцены</b></label>
               <input type="text" id="srv_mach_cnt" placeholder="Кол-во чел." value="4 человека">
-              <input type="text" id="srv_mach_time" placeholder="Часы работы" value="с 08:00 до 22:00">
+              <input type="text" id="srv_mach_time" placeholder="Часы работы" value="с 08:00 до 01:00">
             </div>
             <div class="service-row">
               <input type="checkbox" id="srv_mech" checked>
               <label for="srv_mech"><b>Оператор механики (штанкеты/круг)</b></label>
               <input type="text" id="srv_mech_cnt" placeholder="Кол-во чел." value="1 специалист">
-              <input type="text" id="srv_mech_time" placeholder="Часы работы" value="с 09:00 до 22:00">
+              <input type="text" id="srv_mech_time" placeholder="Часы работы" value="с 09:00 до 01:00">
             </div>
             <div class="service-row">
               <input type="checkbox" id="srv_light" checked>
               <label for="srv_light"><b>Осветители (планшет + оператор)</b></label>
               <input type="text" id="srv_light_cnt" placeholder="Кол-во чел." value="2 специалиста">
-              <input type="text" id="srv_light_time" placeholder="Часы работы" value="с 10:00 до 22:00">
+              <input type="text" id="srv_light_time" placeholder="Часы работы" value="с 10:00 до 00:00">
             </div>
             <div class="service-row">
               <input type="checkbox" id="srv_sound" checked>
               <label for="srv_sound"><b>Звукоцех площадки</b></label>
               <input type="text" id="srv_sound_cnt" placeholder="Кол-во чел." value="1 звукорежиссёр">
-              <input type="text" id="srv_sound_time" placeholder="Часы работы" value="с 10:00 до 22:00">
+              <input type="text" id="srv_sound_time" placeholder="Часы работы" value="с 10:00 до 23:00">
             </div>
             <div class="service-row">
               <input type="checkbox" id="srv_video">
               <label for="srv_video"><b>Видеоцех / проекция</b></label>
               <input type="text" id="srv_video_cnt" placeholder="Кол-во чел." value="1 видеоинженер">
-              <input type="text" id="srv_video_time" placeholder="Часы работы" value="с 11:00 до 22:00">
+              <input type="text" id="srv_video_time" placeholder="Часы работы" value="с 11:00 до 22:30">
             </div>
             <div class="service-row">
               <input type="checkbox" id="srv_pomrezh" checked>
               <label for="srv_pomrezh"><b>Помощник режиссёра / Завпост</b></label>
               <input type="text" id="srv_pomrezh_cnt" placeholder="Кол-во чел." value="1 дежурный">
-              <input type="text" id="srv_pomrezh_time" placeholder="Часы работы" value="с 08:00 до 22:00">
+              <input type="text" id="srv_pomrezh_time" placeholder="Часы работы" value="с 08:00 до 01:00">
             </div>
             <div class="service-row">
               <input type="checkbox" id="srv_clean" checked>
@@ -1637,7 +1646,6 @@
         `;
       }
 
-      // Если это шаг с прямым выбором (кнопками)
       let choicesHtml = "";
       if (stepData.type === "choice" && stepData.options) {
         choicesHtml = `<div class="chat-options">` + 
@@ -1645,7 +1653,6 @@
           `</div>`;
       }
 
-      // Кнопки быстрой подстановки в поле ввода
       let quickFillHtml = "";
       if (stepData.quickFill && stepData.quickFill.length > 0) {
         quickFillHtml = `<div class="chat-options" style="margin-top:10px;">` + 
@@ -1667,25 +1674,26 @@
       chat.appendChild(msg);
       chat.scrollTop = chat.scrollHeight;
 
-      // Скрываем форму ввода, если на шаге используется интерактивная таблица чек-боксов
       $("#chatForm").style.display = (stepData.type === "interactive_services") ? "none" : "flex";
+      if (stepData.type === "strict_url") {
+        $("#chatInput").placeholder = "Вставьте ссылку: https://disk.yandex.ru/... или https://drive.google.com/...";
+      } else {
+        $("#chatInput").placeholder = "Введите ваш ответ или отредактируйте предложенный текст...";
+      }
     }
 
-    // Подстановка шаблона в поле ввода без закрытия вопроса
     function fillInputDraft(encodedText) {
       const decoded = decodeURIComponent(encodedText);
       const input = $("#chatInput");
       input.value = decoded;
       input.focus();
-      toast("Текст вставлен в поле ввода. Вы можете скорректировать его и нажать «Ответить».");
+      toast("Текст вставлен в поле ввода. Вы можете изменить его перед отправкой.");
     }
 
-    // Обработка прямого выбора кнопки (например, сцены)
     function submitDirectChoice(text) {
       handleStepSubmission(text);
     }
 
-    // Сбор интерактивной таблицы служб
     function confirmServicesForm() {
       const rows = $$("#servicesBox .service-row");
       const selectedServices = [];
@@ -1709,10 +1717,20 @@
       handleStepSubmission(resultText);
     }
 
-    // Универсальное сохранение ответа и переход к следующему вопросу
     function handleStepSubmission(text) {
-      const chat = $("#chat");
       const currentIdx = appState.step;
+      const stepData = questions[currentIdx];
+
+      // Строгая валидация ссылки на 8-м шаге
+      if (stepData.type === "strict_url") {
+        const isUrl = /^(http|https):\/\/[^ "]+$/.test(text.trim());
+        if (!isUrl) {
+          toast("Пожалуйста, укажите действующую веб-ссылку (начинающуюся с http:// или https://) на облачный диск.");
+          return;
+        }
+      }
+
+      const chat = $("#chat");
 
       const userMsg = document.createElement("div");
       userMsg.className = "chat-message user";
@@ -1725,7 +1743,7 @@
       `;
       chat.appendChild(userMsg);
 
-      questions[currentIdx].apply(text);
+      stepData.apply(text);
 
       const currentStepEl = $(`#step-${currentIdx}`);
       if (currentStepEl) {
@@ -1759,7 +1777,7 @@
             <div class="chat-label"><span>Финал согласования</span></div>
             <div class="chat-text">
               ✅ <b>Паспорт технического согласования сформирован!</b><br>
-              Все 8 разделов заполнены. Теперь вы можете сохранить выверенный печатный документ (A4 PDF) или передать данные техническому директору в Telegram.
+              Все 8 разделов зафиксированы. Документ готов к сохранению в фирменном формате A4 (PDF) или передаче в Telegram техническому директору.
             </div>
             <div class="chat-options">
               <button type="button" onclick="downloadPassport()">📄 Скачать официальный PDF-паспорт</button>
@@ -1772,7 +1790,6 @@
       }
     }
 
-    // Возможность вернуться и отредактировать любой ответ
     function rollbackToStep(targetIdx) {
       for (let i = targetIdx; i < questions.length; i++) {
         const qEl = document.getElementById(`chat-q-${i}`);
@@ -1816,10 +1833,10 @@
     });
 
     function escapeHtml(str) {
-      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+      return (str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     }
 
-    /* 3. ГЕНЕРАЦИЯ ДИЗАЙНЕРСКОГО PDF-ПАСПОРТА */
+    /* 3. ДИЗАЙНЕРСКИЙ ПЕЧАТНЫЙ ПАСПОРТ С ДАННЫМИ ПОДПИСАНТА */
     function downloadPassport() {
       if (appState.step < questions.length) {
         toast("Сначала завершите все этапы согласования в чате.");
@@ -1828,17 +1845,24 @@
       }
 
       const printWindow = window.open('', '_blank');
+      
+      // Подготовка данных для подписи
+      const theatreTitle = appState.data.parsedTheatre || "Театр-участник";
+      const signerRole = appState.data.parsedRole || "Завпост / Технический директор";
+      const signerName = appState.data.parsedName || "Ответственное лицо";
+      const signerPhone = appState.data.parsedPhone ? `Тел.: ${appState.data.parsedPhone}` : "";
+
       const docHtml = `
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Технический паспорт — ${escapeHtml(appState.data.theatreInfo.split(',')[0])}</title>
+  <title>Технический паспорт — ${escapeHtml(theatreTitle)}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    @page { size: A4 portrait; margin: 16mm 14mm; }
+    @page { size: A4 portrait; margin: 14mm 12mm; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Inter', sans-serif;
@@ -1846,13 +1870,13 @@
       background: #fff;
       padding: 0;
       line-height: 1.45;
-      font-size: 11pt;
+      font-size: 10pt;
     }
     .passport-border {
       border: 2px solid #b89758;
-      padding: 24px;
+      padding: 22px;
       position: relative;
-      min-height: 260mm;
+      min-height: 265mm;
     }
     .passport-border::after {
       content: "";
@@ -1866,8 +1890,8 @@
       justify-content: space-between;
       align-items: center;
       border-bottom: 2px solid #b89758;
-      padding-bottom: 16px;
-      margin-bottom: 20px;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
     }
     .logo-box {
       display: flex;
@@ -1876,7 +1900,7 @@
     }
     .logo-main {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 28pt;
+      font-size: 26pt;
       letter-spacing: 0.18em;
       color: #947132;
       line-height: 1;
@@ -1884,7 +1908,7 @@
     }
     .logo-sub {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 8pt;
+      font-size: 7.5pt;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: #555;
@@ -1898,51 +1922,51 @@
     }
     .doc-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 20pt;
+      font-size: 19pt;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       text-align: center;
       color: #1a1a1a;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
     .section-block {
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       page-break-inside: avoid;
     }
     .section-head {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 9pt;
+      font-size: 8.5pt;
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: #947132;
       border-bottom: 1px solid #d4c29d;
-      padding-bottom: 4px;
-      margin-bottom: 8px;
+      padding-bottom: 3px;
+      margin-bottom: 6px;
     }
     .section-content {
-      font-size: 9.5pt;
+      font-size: 9pt;
       color: #222;
       white-space: pre-wrap;
-      line-height: 1.5;
+      line-height: 1.45;
     }
     .grid-2col {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 16px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
     .signatures-block {
-      margin-top: 36px;
+      margin-top: 28px;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 40px;
+      gap: 36px;
       page-break-inside: avoid;
     }
     .sign-col {
       border-top: 1px dashed #777;
       padding-top: 8px;
-      font-size: 8.5pt;
+      font-size: 8pt;
       color: #333;
       font-family: 'IBM Plex Mono', monospace;
       line-height: 1.6;
@@ -1963,7 +1987,7 @@
       </div>
       <div class="doc-meta">
         <div><b>АКТ ТЕХНИЧЕСКОГО СОГЛАСОВАНИЯ</b></div>
-        <div>Дата: ${new Date().toLocaleDateString('ru-RU')}</div>
+        <div>Дата формирования: ${new Date().toLocaleDateString('ru-RU')}</div>
         <div>Площадка: ${escapeHtml(appState.data.scene)}</div>
       </div>
     </div>
@@ -1977,7 +2001,7 @@
 
     <div class="grid-2col">
       <div class="section-block">
-        <div class="section-head">2. График прибытия транспорта</div>
+        <div class="section-head">2. График прибытия транспорта (кузов до 7 м)</div>
         <div class="section-content">${escapeHtml(appState.data.transportArrival)}</div>
       </div>
       <div class="section-block">
@@ -1987,7 +2011,7 @@
     </div>
 
     <div class="section-block">
-      <div class="section-head">4. Почасовой тайминг (монтаж / репетиции / спектакль)</div>
+      <div class="section-head">4. Почасовой тайминг (монтаж / репетиции / спектакль / демонтаж)</div>
       <div class="section-content">${escapeHtml(appState.data.dayTiming)}</div>
     </div>
 
@@ -2002,7 +2026,7 @@
         <div class="section-content">${escapeHtml(appState.data.costumes)}</div>
       </div>
       <div class="section-block">
-        <div class="section-head">7. Доступ к райдерам и партитурам</div>
+        <div class="section-head">7. Доступ к райдерам и партитурам (облако)</div>
         <div class="section-content">${escapeHtml(appState.data.riders)}</div>
       </div>
     </div>
@@ -2015,9 +2039,10 @@
         Подпись: __________________ / М.П.
       </div>
       <div class="sign-col">
-        <b>Представитель театра / завпост:</b><br>
-        Ответственное лицо: __________________<br>
-        Телефон: __________________<br>
+        <b>Ответственный представитель коллектива:</b><br>
+        ${escapeHtml(theatreTitle)}<br>
+        ${escapeHtml(signerRole)}: ${escapeHtml(signerName)}<br>
+        ${escapeHtml(signerPhone)}<br>
         Подпись: __________________ / М.П.
       </div>
     </div>
@@ -2032,10 +2057,10 @@
       printWindow.document.open();
       printWindow.document.write(docHtml);
       printWindow.document.close();
-      toast("Открыто окно формирования официального PDF-документа.");
+      toast("Сформирован официальный макет паспорта A4. Открыто окно печати/PDF.");
     }
 
-    /* 4. ОТПРАВКА В TELEGRAM ЧЕРЕЗ БУФЕР ОБМЕНА (БЕЗ 400 BAD REQUEST) */
+    /* 4. ОТПРАВКА В TELEGRAM ЧЕРЕЗ БУФЕР */
     function sendTelegram() {
       if (appState.step < questions.length) {
         toast("Сначала завершите согласование.");
@@ -2051,13 +2076,13 @@
         "1. КОЛЛЕКТИВ И КОНТАКТЫ:",
         appState.data.theatreInfo,
         "",
-        "2. ЗАЕЗД ТРАНСПОРТА:",
+        "2. ЗАЕЗД ТРАНСПОРТА (КУЗОВ ДО 7 М):",
         appState.data.transportArrival,
         "",
         "3. НОЧНЫЕ РАБОТЫ:",
         appState.data.nightWork,
         "",
-        "4. ПОЧАСОВОЙ ТАЙМИНГ:",
+        "4. ПОЧАСОВОЙ ТАЙМИНГ (ВКЛЮЧАЯ ДЕМОНТАЖ):",
         appState.data.dayTiming,
         "",
         "5. ВЫЗОВ СЛУЖБ ТЕАТРА:",
@@ -2066,17 +2091,15 @@
         "6. БЫТ И КОСТЮМЕРЫ:",
         appState.data.costumes,
         "",
-        "7. ССЫЛКИ НА РАЙДЕРЫ:",
+        "7. ССЫЛКА НА РАЙДЕР И ПАРТИТУРЫ:",
         appState.data.riders,
         "--------------------------------------------------",
         "Сформировано на портале ATLAS"
       ].join("\n");
 
-      // Копируем полный текст в буфер обмена
       navigator.clipboard.writeText(text).then(() => {
-        toast("Полный паспорт скопирован в буфер обмена! Переходим в Telegram к Руслану...");
+        toast("Текст заявки скопирован в буфер обмена! Переходим в Telegram к Руслану...");
         setTimeout(() => {
-          // Открываем прямой чат с Русланом (номер +79028765792)
           window.open("https://t.me/+79028765792", "_blank");
         }, 900);
       }).catch(() => {
