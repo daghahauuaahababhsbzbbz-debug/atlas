@@ -189,7 +189,7 @@
       border-right: 1px solid var(--line-soft);
     }
 
-    /* Роза ветров как атмосферный фон шапки */
+    /* Роза ветров в шапке */
     .hero {
       min-height: 400px;
       position: relative;
@@ -285,7 +285,7 @@
       background: var(--gold);
     }
 
-    /* ---------- КАРТОЧКИ СЦЕН С ФОТО ---------- */
+    /* ---------- ПОЛНОСТЬЮ КЛИКАБЕЛЬНЫЕ КАРТОЧКИ СЦЕН ---------- */
     .stages {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -293,22 +293,29 @@
       padding: 0 52px 48px;
     }
 
-    .stage {
+    .stage-card-btn {
       background: var(--panel);
       border: 1px solid rgba(214,168,95,.34);
       transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
       position: relative;
       overflow: hidden;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      color: inherit;
     }
 
-    .stage:hover {
+    .stage-card-btn:hover {
       transform: translateY(-4px);
-      border-color: rgba(214,168,95,.8);
-      box-shadow: 0 22px 50px rgba(0,0,0,.5);
+      border-color: var(--gold-light);
+      box-shadow: 0 22px 50px rgba(0,0,0,.65);
     }
 
     .stage-image {
       height: 250px;
+      width: 100%;
       position: relative;
       overflow: hidden;
       background-size: cover;
@@ -316,16 +323,14 @@
       background-repeat: no-repeat;
     }
 
-    /* Фото Основной сцены */
-    .stage.main-stage .stage-image {
+    .stage-card-btn.main-stage .stage-image {
       background-image: 
         linear-gradient(to top, rgba(9,10,12,0.96) 0%, rgba(9,10,12,0.3) 50%, rgba(9,10,12,0.15) 100%),
         url('img/main_stage_real.jpg'),
         url('main_stage_real.jpg');
     }
 
-    /* Фото Малой сцены */
-    .stage.small-stage .stage-image {
+    .stage-card-btn.small-stage .stage-image {
       background-image: 
         linear-gradient(to top, rgba(9,10,12,0.96) 0%, rgba(9,10,12,0.3) 50%, rgba(9,10,12,0.15) 100%),
         url('img/small_stage_real.jpg'),
@@ -363,6 +368,7 @@
       grid-template-columns: repeat(3,1fr);
       border-top: 1px solid var(--line-soft);
       background: #0e1013;
+      width: 100%;
     }
 
     .spec {
@@ -384,48 +390,25 @@
       font-size: 11px;
     }
 
-    .stage-actions {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      border-top: 1px solid var(--line-soft);
-      background: #0b0d0f;
-    }
-
-    .mini-links {
+    .stage-action-bar {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 15px 16px;
-      color: var(--muted);
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 8px;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-    }
-
-    .mini-links button {
-      border: 0;
-      background: transparent;
-      color: inherit;
-      padding: 0;
-    }
-    .mini-links button:hover { color: var(--cream); }
-
-    .open-stage {
-      border: 0;
-      border-left: 1px solid var(--line-soft);
-      padding: 0 20px;
-      min-width: 125px;
-      background: rgba(214,168,95,.04);
-      color: var(--gold-light);
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-top: 1px solid var(--line-soft);
+      background: #0b0d0f;
       font-family: "IBM Plex Mono", monospace;
       font-size: 10px;
       letter-spacing: .08em;
+      color: var(--gold-light);
       text-transform: uppercase;
-      transition: all .2s;
+      transition: background .2s;
     }
 
-    .open-stage:hover { background: rgba(214,168,95,.12); color: #fff; }
+    .stage-card-btn:hover .stage-action-bar {
+      background: rgba(214,168,95,.08);
+      color: #fff;
+    }
 
     /* ---------- RIGHT SIDEBAR ---------- */
     .right {
@@ -707,12 +690,12 @@
       text-transform: uppercase;
     }
 
-    /* ---------- MODAL / CHAT ---------- */
+    /* ---------- МОДАЛЬНЫЕ ОКНА ---------- */
     .modal {
       position: fixed;
       inset: 0;
       z-index: 100;
-      background: rgba(0,0,0,.78);
+      background: rgba(0,0,0,.82);
       backdrop-filter: blur(8px);
       display: none;
       align-items: center;
@@ -722,18 +705,18 @@
     .modal.open { display: flex; }
 
     .modal-card {
-      width: min(760px, 100%);
-      max-height: min(800px, calc(100vh - 40px));
+      width: min(840px, 100%);
+      max-height: min(860px, calc(100vh - 40px));
       overflow: hidden;
       background: #101214;
-      border: 1px solid rgba(214,168,95,.38);
-      box-shadow: 0 40px 100px rgba(0,0,0,.65);
+      border: 1px solid rgba(214,168,95,.45);
+      box-shadow: 0 40px 100px rgba(0,0,0,.75);
       display: grid;
       grid-template-rows: auto 1fr auto;
     }
 
     .modal-head {
-      padding: 20px 24px;
+      padding: 22px 26px;
       border-bottom: 1px solid var(--line-soft);
       display: flex;
       justify-content: space-between;
@@ -742,18 +725,133 @@
     .modal-head h2 {
       margin: 0;
       font-family: "Cormorant Garamond", Georgia, serif;
-      font-size: 24px;
+      font-size: 26px;
       letter-spacing: .07em;
       font-weight: 600;
     }
     .close {
-      width: 34px; height: 34px;
+      width: 36px; height: 36px;
       border: 1px solid var(--line-soft);
       color: var(--muted);
       background: transparent;
-      font-size: 18px;
+      font-size: 20px;
+      display: grid;
+      place-items: center;
+      transition: all .2s;
+    }
+    .close:hover {
+      border-color: var(--gold);
+      color: var(--gold-light);
     }
 
+    .modal-scrollable-body {
+      padding: 26px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Таблица параметров сцены */
+    .stage-details-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .stage-details-table tr {
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+
+    .stage-details-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .stage-details-table td {
+      padding: 10px 8px;
+      vertical-align: top;
+    }
+
+    .stage-details-table .param-label {
+      width: 38%;
+      color: var(--muted);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .stage-details-table .param-val {
+      color: var(--cream);
+      font-weight: 500;
+    }
+
+    .stage-details-table .highlight {
+      color: var(--gold-light);
+    }
+
+    /* Блок файлов сцены */
+    .modal-section-title {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .modal-section-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line-soft);
+    }
+
+    .docs-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .doc-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      background: rgba(255,255,255,.02);
+      border: 1px solid var(--line-soft);
+      gap: 12px;
+    }
+
+    .doc-item-info {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .doc-item-title { font-size: 12px; color: var(--cream); font-weight: 500; }
+    .doc-item-desc { font-size: 9px; color: var(--muted); font-family: "IBM Plex Mono", monospace; }
+
+    .doc-download {
+      color: var(--gold-light);
+      border: 1px solid rgba(214,168,95,.3);
+      padding: 7px 14px;
+      font-size: 9px;
+      text-decoration: none;
+      font-family: "IBM Plex Mono", monospace;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: all .2s;
+    }
+    .doc-download:hover { background: rgba(214,168,95,.1); border-color: var(--gold); }
+
+    /* Чат согласования */
     .chat {
       padding: 24px;
       overflow-y: auto;
@@ -845,39 +943,6 @@
       letter-spacing: .08em;
     }
 
-    /* ---------- СПЕЦИФИКАЦИИ ---------- */
-    .docs-category { margin-bottom: 22px; }
-    .docs-cat-title {
-      font-family: "IBM Plex Mono", monospace;
-      color: var(--gold);
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: .12em;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .docs-cat-title::after {
-      content: ""; flex: 1; height: 1px; background: var(--line-soft);
-    }
-    .docs-list {
-      list-style: none; padding: 0; margin: 0; display: grid; gap: 8px;
-    }
-    .doc-item {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 10px 12px; background: rgba(255,255,255,.02); border: 1px solid var(--line-soft);
-    }
-    .doc-item-info { display: flex; flex-direction: column; gap: 3px; }
-    .doc-item-title { font-size: 12px; color: var(--cream); }
-    .doc-item-desc { font-size: 9px; color: var(--muted); font-family: "IBM Plex Mono", monospace; }
-    .doc-download {
-      color: var(--gold-light); border: 1px solid rgba(214,168,95,.3);
-      padding: 5px 10px; font-size: 9px; text-decoration: none;
-      font-family: "IBM Plex Mono", monospace; text-transform: uppercase;
-    }
-    .doc-download:hover { background: rgba(214,168,95,.08); }
-
     .toast {
       position: fixed; z-index: 200; right: 22px; bottom: 22px;
       max-width: 380px; background: #15171a; border: 1px solid rgba(214,168,95,.4);
@@ -928,9 +993,6 @@
       .stage-specs { grid-template-columns: 1fr; }
       .spec { border-right: 0; border-bottom: 1px solid var(--line-soft); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
       .spec-label { min-height: auto; }
-      .stage-actions { grid-template-columns: 1fr; }
-      .mini-links { border-bottom: 1px solid var(--line-soft); }
-      .open-stage { height: 46px; border-left: 0; }
       .passport-actions { grid-template-columns: 1fr; }
       .document { grid-template-columns: 90px 1fr; gap: 14px; }
       .document-paper { height: 120px; }
@@ -952,23 +1014,20 @@
 
       <nav aria-label="Основная навигация">
         <button class="active" data-scroll="stages-section">Сцены</button>
-        <button data-action="open-docs" data-stage="Основная сцена">Документы</button>
         <button data-action="open-chat">Согласование</button>
         <button data-action="open-reference">Справочник</button>
       </nav>
 
       <div class="system">
         <div class="online"><i></i> СИСТЕМА ОНЛАЙН</div>
-        <div id="clock">03.09.2026<br>14:23</div>
+        <div id="clock">03.09.2026<br>17:00</div>
       </div>
     </header>
 
     <div class="content">
       <main class="left">
         <section class="hero">
-          <!-- Роза ветров между заголовком и правым сайдбаром вызова служб -->
           <div class="hero-compass-bg" aria-hidden="true"></div>
-
           <div class="eyebrow">Технический портал · Фестиваль «Атлас»</div>
           <h1>A<span>T</span>LAS</h1>
           <div class="hero-title">Техническая система площадки</div>
@@ -976,76 +1035,68 @@
         </section>
 
         <section id="stages-section">
-          <div class="section-title">Площадки фестиваля</div>
+          <div class="section-title">Площадки фестиваля (выберите для просмотра паспорта)</div>
 
           <div class="stages">
-            <!-- КАРТОЧКА: ОСНОВНАЯ СЦЕНА -->
-            <article class="stage main-stage" data-stage="Основная сцена">
+            <!-- КНОПКА-КАРТОЧКА: ОСНОВНАЯ СЦЕНА -->
+            <button class="stage-card-btn main-stage" onclick="openStageModal('main')">
               <div class="stage-image">
                 <div class="stage-meta-wrap">
                   <div class="stage-name">Основная сцена</div>
-                  <div class="stage-type">Большой зал</div>
+                  <div class="stage-type">Большой зал · 548 мест</div>
                 </div>
               </div>
 
               <div class="stage-specs">
                 <div class="spec">
                   <div class="spec-label">Зеркало сцены</div>
-                  <div class="spec-value">12 × 7 м</div>
+                  <div class="spec-value">12.9 × 6.5 м</div>
                 </div>
                 <div class="spec">
                   <div class="spec-label">Полезная глубина</div>
-                  <div class="spec-value">14 м</div>
+                  <div class="spec-value">13.3 м</div>
                 </div>
                 <div class="spec">
                   <div class="spec-label">Штанкеты / Нагрузка</div>
-                  <div class="spec-value">32 шт · 350 кг</div>
+                  <div class="spec-value">33 шт · 300 кг</div>
                 </div>
               </div>
 
-              <div class="stage-actions">
-                <div class="mini-links">
-                  <button data-action="open-docs" data-stage="Основная сцена" data-cat="plans">▦ планы</button>
-                  <button data-action="open-docs" data-stage="Основная сцена" data-cat="light">💡 свет</button>
-                  <button data-action="open-docs" data-stage="Основная сцена" data-cat="sound">🔊 звук</button>
-                </div>
-                <button class="open-stage" data-action="start-stage" data-stage="Основная сцена">Согласовать →</button>
+              <div class="stage-action-bar">
+                <span>Технические параметры и чертежи</span>
+                <span>Открыть паспорт →</span>
               </div>
-            </article>
+            </button>
 
-            <!-- КАРТОЧКА: МАЛАЯ СЦЕНА -->
-            <article class="stage small-stage" data-stage="Малая сцена">
+            <!-- КНОПКА-КАРТОЧКА: МАЛАЯ СЦЕНА -->
+            <button class="stage-card-btn small-stage" onclick="openStageModal('small')">
               <div class="stage-image">
                 <div class="stage-meta-wrap">
                   <div class="stage-name">Малая сцена</div>
-                  <div class="stage-type">Камерный зал-трансформер</div>
+                  <div class="stage-type">Камерный зал-трансформер · 64 места</div>
                 </div>
               </div>
 
               <div class="stage-specs">
                 <div class="spec">
-                  <div class="spec-label">Планшет зала</div>
-                  <div class="spec-value">9 × 11 м</div>
+                  <div class="spec-label">Габариты зала</div>
+                  <div class="spec-value">13.0 × 9.5 м</div>
                 </div>
                 <div class="spec">
                   <div class="spec-label">Высота до ферм</div>
-                  <div class="spec-value">4,8 м</div>
+                  <div class="spec-value">5.0 м</div>
                 </div>
                 <div class="spec">
-                  <div class="spec-label">Кабинет сцены</div>
-                  <div class="spec-value">Черный трансф.</div>
+                  <div class="spec-label">LED-экран P2.6</div>
+                  <div class="spec-value">8.0 × 4.5 м</div>
                 </div>
               </div>
 
-              <div class="stage-actions">
-                <div class="mini-links">
-                  <button data-action="open-docs" data-stage="Малая сцена" data-cat="plans">▦ планы</button>
-                  <button data-action="open-docs" data-stage="Малая сцена" data-cat="light">💡 свет</button>
-                  <button data-action="open-docs" data-stage="Малая сцена" data-cat="sound">🔊 звук</button>
-                </div>
-                <button class="open-stage" data-action="start-stage" data-stage="Малая сцена">Согласовать →</button>
+              <div class="stage-action-bar">
+                <span>Технические параметры и чертежи</span>
+                <span>Открыть паспорт →</span>
               </div>
-            </article>
+            </button>
           </div>
         </section>
 
@@ -1070,7 +1121,7 @@
       </main>
 
       <aside class="right">
-        <!-- БЛОК ЭТАПОВ СОГЛАСОВАНИЯ -->
+        <!-- БЛОК ВЫЗОВА СЛУЖБ -->
         <section class="workflow">
           <div class="workflow-head">
             <div>
@@ -1147,9 +1198,26 @@
 
     <footer>
       <span>ATLAS · Фестиваль театральной России</span>
-      <span>Версия 1.2 · 2026</span>
+      <span>Версия 1.3 · 2026</span>
       <span>Координация технических служб</span>
     </footer>
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО ПАСПОРТА ПЛОЩАДКИ (12 ПАРАМЕТРОВ + ФАЙЛЫ) -->
+  <div class="modal" id="stageModal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <div class="eyebrow" style="margin:0 0 4px">ATLAS · Технический паспорт сцены</div>
+          <h2 id="stageModalTitle">Основная сцена</h2>
+        </div>
+        <button class="close" onclick="closeStageModal()" aria-label="Закрыть">×</button>
+      </div>
+
+      <div class="modal-scrollable-body" id="stageModalBody">
+        <!-- Наполняется скриптом -->
+      </div>
+    </div>
   </div>
 
   <!-- МОДАЛЬНОЕ ОКНО ЧАТА-СОГЛАСОВАНИЯ -->
@@ -1169,20 +1237,6 @@
         <input id="chatInput" autocomplete="off" placeholder="Введите ответ или уточнение..." />
         <button type="submit">Ответить</button>
       </form>
-    </div>
-  </div>
-
-  <!-- МОДАЛЬНОЕ ОКНО СПЕЦИФИКАЦИЙ -->
-  <div class="modal" id="docsModal">
-    <div class="modal-card">
-      <div class="modal-head">
-        <div>
-          <div class="eyebrow" style="margin:0 0 4px">ATLAS · База спецификаций</div>
-          <h2 id="docsModalTitle">Документы и планы</h2>
-        </div>
-        <button class="close" data-close-docs aria-label="Закрыть">×</button>
-      </div>
-      <div class="chat" id="docsModalContent"></div>
     </div>
   </div>
 
@@ -1212,7 +1266,7 @@
         <div class="chat-message assistant">
           <div class="chat-label">Разгрузка и логистика</div>
           <div class="chat-text">
-            Высота рампы служебного входа — 1.1 м. Разгрузочные ворота: 3.2 × 2.8 м. Проезд фур грузоподъёмностью свыше 10 тонн во внутренний двор требует согласования пропусков накануне заезда.
+            Параметры грузового узла Основной сцены: ворота 3100 × 2200 мм, подъёмно-опускная платформа 4500 × 2500 мм (до 2500 кг). Разгрузка Малой сцены осуществляется через зрительское фойе с подъёмом на 2 этаж по лестнице.
           </div>
         </div>
       </div>
@@ -1222,62 +1276,110 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const docsDatabase = {
-      "Основная сцена": [
-        {
-          cat: "plans",
-          catName: "🎭 Сцена, планшет и машинерия",
-          files: [
-            { name: "План и продольный разрез сцены (DWG/PDF)", desc: "Масштаб 1:50, отметки колосников и софитов, полезная глубина 14м", url: "docs/main/stage_plan.pdf" },
-            { name: "Таблица штанкетного хозяйства", desc: "32 штанкета, нагрузка 350 кг, экспликация свободных подъемов", url: "docs/main/rigging_table.pdf" },
-            { name: "Паспорт дежурной одежды сцены", desc: "Черный кабинет, поплановые кулисы, горизонт", url: "docs/main/soft_goods.pdf" }
-          ]
-        },
-        {
-          cat: "light",
-          catName: "💡 Осветительский цех",
-          files: [
-            { name: "План софитов и выносных галерей (PDF)", desc: "Развес приборов, углы раскрытия профилей и PC", url: "docs/main/light_plot.pdf" },
-            { name: "DMX-патч и сетевая карта площадки", desc: "grandMA2 / ChamSys, протоколы Art-Net, sACN, свободные юниверсы", url: "docs/main/dmx_patch.pdf" }
-          ]
-        },
-        {
-          cat: "sound",
-          catName: "🔊 Звуковой и видеоцех",
-          files: [
-            { name: "Акустический паспорт и маршрутизация Dante", desc: "Портальная система L/R + Sub, сценические мониторы", url: "docs/main/sound_passport.pdf" },
-            { name: "Микрофонный парк и интерком", desc: "Радиосистемы UHF, головные гарнитуры, служебная связь", url: "docs/main/mic_park.pdf" },
-            { name: "Спецификация проектора и экрана", desc: "Лазерный проектор 16 000 Lm, экран 10×6 м прямой проекции", url: "docs/main/video_spec.pdf" }
-          ]
-        }
-      ],
-      "Малая сцена": [
-        {
-          cat: "plans",
-          catName: "🎬 Планшет зала-трансформера",
-          files: [
-            { name: "План зала и фермовых конструкций (PDF)", desc: "Размеры 9×11 м, высота до нижнего пояса ферм 4.8 м", url: "docs/small/stage_plan.pdf" },
-            { name: "Схема точек подвеса малой сцены", desc: "Допустимые точечные нагрузки на несущие балки", url: "docs/small/load_points.pdf" }
-          ]
-        },
-        {
-          cat: "light",
-          catName: "💡 Свет (Малая сцена)",
-          files: [
-            { name: "План световых ферм и приборов", desc: "LED-профили, заливка, пульт ETC / ChamSys", url: "docs/small/light_spec.pdf" }
-          ]
-        },
-        {
-          cat: "sound",
-          catName: "🔊 Звук и проекция (Малая сцена)",
-          files: [
-            { name: "Акустика и коммутационные лючки", desc: "Точечные FOH-системы, стейджбокс 16/8, радиомикрофоны", url: "docs/small/sound_spec.pdf" },
-            { name: "Короткофокусный проектор и моторизованный экран", desc: "Лазерный проектор 7000 Lm, задник 4×3 м", url: "docs/small/video_spec.pdf" }
-          ]
-        }
-      ]
+    /* 1. БАЗА ДАННЫХ ПЛОЩАДОК (12 ПАРАМЕТРОВ И ФАЙЛЫ) */
+    const stagesData = {
+      main: {
+        title: "Основная сцена — Большой зал",
+        params: [
+          { label: "Зеркало сцены", val: "12 900 × 6 500 мм" },
+          { label: "Полезная глубина и ширина", val: "Глубина от красной линии до задника: 13 300 мм · Ширина планшета: 19 500 мм" },
+          { label: "Высота колосников / штанкетов", val: "До колосников: 16 000 мм · Верхняя точка штанкетов: 15 000 мм" },
+          { label: "Штанкетное хозяйство", val: "33 штанкета, рабочая грузоподъёмность 300 кг" },
+          { label: "Поворотный круг", val: "Стационарный отсутствует. Возможность сборки круга Ø 10 000 мм (без люков) — согласовывается отдельно" },
+          { label: "Управление светом", val: "Консоль STAGE4 TWIN LS (протоколы DMX-512, Art-Net)" },
+          { label: "Звуковой комплекс FOH", val: "Цифровая микшерная консоль DiGiCo Quantum 338 (интерфейс Dante в наличии)" },
+          { label: "Проекция: фронтальная", val: "Panasonic PT-RZ21KE (2 шт. × 20 000 Lm, разрешение 1920 × 1200)" },
+          { label: "Проекция: задняя", val: "Panasonic PT-RZ31KE (2 шт. × 30 000 Lm, разрешение 1920 × 1200)" },
+          { label: "Разгрузочный узел", val: "Ворота: 3100 × 2200 мм. Подъёмно-опускная площадка 4500 × 2500 мм (грузоподъёмность до 2500 кг, подъём с уровня борта до планшета сцены)" },
+          { label: "Вместимость зала", val: "548 зрительских мест", highlight: true },
+          { label: "Режим монтажных смен", val: "Круглосуточно (ночные смены согласуются в графике)" }
+        ],
+        files: [
+          { name: "План планшета и разрез Основной сцены", desc: "PDF / DWG векторный чертёж, масштаб 1:50", url: "docs/main/stage_plan.pdf" },
+          { name: "Таблица штанкетного хозяйства (33 штанкета)", desc: "PDF экспликация нагрузок и расстояний от нулевой линии", url: "docs/main/rigging_table.pdf" },
+          { name: "DMX-патч и карта софитов площадки", desc: "PDF спецификация парка приборов и адресации", url: "docs/main/light_plot.pdf" },
+          { name: "Райдер звукового цеха и Dante-карта (Quantum 338)", desc: "PDF таблица коммутации сценических лючков и стейджбоксов", url: "docs/main/sound_passport.pdf" }
+        ]
+      },
+      small: {
+        title: "Малая сцена — Камерный зал-трансформер",
+        params: [
+          { label: "Габариты зала-трансформера", val: "13 000 × 9 500 × 5 000 мм" },
+          { label: "Штанкетное хозяйство", val: "13 штанкетов (допустимая распределённая нагрузка 100 кг на штанкет)" },
+          { label: "Одежда сцены (кулисы)", val: "Боковая гладь 1.4 × 6.0 м (100% бархат х/б, трудновоспламеняемый) — 8 шт." },
+          { label: "Одежда сцены (падуги)", val: "Падуга гладь 9.0 × 1.0 м (100% бархат х/б, трудновоспламеняемый) — 4 шт." },
+          { label: "Одежда сцены (задник)", val: "Классика с подкладом 6.0 × 5.2 м (100% бархат х/б) — 2 шт." },
+          { label: "Управление светом", val: "Консоль ChamSys MagicQ Stadium MQ500" },
+          { label: "Звуковой комплекс", val: "Цифровая система и стейджбоксы (спецификация уточняется у инженера площадки)" },
+          { label: "Светодиодный LED-экран", val: "Физический размер: 8000 × 4500 мм · Шаг пикселя: 2.6 мм · Яркость: 800–1000 нит · Разрешение: 3072 × 1728" },
+          { label: "Условия разгрузки и заноса", val: "Пронос декораций через зрительское фойе на 2 этаж вверх по лестнице" },
+          { label: "Вместимость зала", val: "64 зрительских места", highlight: true },
+          { label: "Формат пространства", val: "Зал-трансформер свободной конфигурации" },
+          { label: "Режим монтажных смен", val: "Круглосуточно (ночные смены согласуются в графике)" }
+        ],
+        files: [
+          { name: "План планшета Малой сцены и точек подвеса", desc: "PDF габаритная схема ферм и штанкетов", url: "docs/small/stage_plan.pdf" },
+          { name: "Спецификация световых приборов (ChamSys MQ500)", desc: "PDF список стационарного и динамического парка", url: "docs/small/light_spec.pdf" },
+          { name: "Паспорт светодиодного экрана P2.6 и видеокоммутации", desc: "PDF входные сигналы, коммутация и контроллер экрана", url: "docs/small/video_spec.pdf" }
+        ]
+      }
     };
 
+    function openStageModal(key) {
+      const stage = stagesData[key];
+      document.getElementById('stageModalTitle').textContent = stage.title;
+      const body = document.getElementById('stageModalBody');
+      body.innerHTML = '';
+
+      // Таблица 12 параметров
+      const table = document.createElement('table');
+      table.className = 'stage-details-table';
+      stage.params.forEach(p => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="param-label">${p.label}</td>
+          <td class="param-val ${p.highlight ? 'highlight' : ''}">${p.val}</td>
+        `;
+        table.appendChild(row);
+      });
+      body.appendChild(table);
+
+      // Блок файлов для скачивания
+      const filesHeader = document.createElement('div');
+      filesHeader.className = 'modal-section-title';
+      filesHeader.innerHTML = `<span>📥 Техническая документация и чертежи (${stage.title.split('—')[0].trim()})</span>`;
+      body.appendChild(filesHeader);
+
+      const filesList = document.createElement('ul');
+      filesList.className = 'docs-list';
+      stage.files.forEach(f => {
+        const li = document.createElement('li');
+        li.className = 'doc-item';
+        li.innerHTML = `
+          <div class="doc-item-info">
+            <span class="doc-item-title">${f.name}</span>
+            <span class="doc-item-desc">${f.desc}</span>
+          </div>
+          <a href="${f.url}" class="doc-download" onclick="handleDocClick(event, '${f.name}')">Скачать</a>
+        `;
+        filesList.appendChild(li);
+      });
+      body.appendChild(filesList);
+
+      document.getElementById('stageModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeStageModal() {
+      document.getElementById('stageModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function handleDocClick(e, name) {
+      toast(`Загрузка файла: ${name}`);
+    }
+
+    /* 2. СОСТОЯНИЕ ЧАТА СОГЛАСОВАНИЯ */
     const appState = {
       selectedStage: "Основная сцена",
       step: 0,
@@ -1303,7 +1405,7 @@
       },
       {
         q: "Какую площадку фестиваля вы планируете задействовать для показа и монтажа?",
-        tip: "Если один коллектив привозит масштабную постановку или два спектакля, можно выбрать обе сцены.",
+        tip: "Если коллектив привозит две постановки или спектакль масштабный, можно выбрать обе сцены.",
         quick: ["Основная сцена", "Малая сцена", "Обе сцены (Основная + Малая)"],
         stepTitle: "Выбор сцены",
         apply: (val) => { 
@@ -1372,8 +1474,7 @@
     updateClock();
     setInterval(updateClock, 30000);
 
-    function openChat(targetStage = null) {
-      if (targetStage) appState.selectedStage = targetStage;
+    function openChat() {
       $("#modal").classList.add("open");
       document.body.style.overflow = "hidden";
       if (appState.step === 0 && $("#chat").children.length === 0) showQuestion(0);
@@ -1540,53 +1641,7 @@
       window.open(`https://t.me/share/url?url=&text=${message}`, "_blank");
     }
 
-    function openDocsModal(stageName, targetCategory = null) {
-      const modal = $("#docsModal");
-      $("#docsModalTitle").textContent = `Спецификации — ${stageName}`;
-      const content = $("#docsModalContent");
-      content.innerHTML = "";
-
-      const sections = docsDatabase[stageName] || docsDatabase["Основная сцена"];
-
-      sections.forEach(sec => {
-        if (targetCategory && sec.cat !== targetCategory) return;
-
-        const catBox = document.createElement("div");
-        catBox.className = "docs-category";
-
-        const title = document.createElement("div");
-        title.className = "docs-cat-title";
-        title.textContent = sec.catName;
-        catBox.appendChild(title);
-
-        const list = document.createElement("ul");
-        list.className = "docs-list";
-
-        sec.files.forEach(f => {
-          const item = document.createElement("li");
-          item.className = "doc-item";
-          item.innerHTML = `
-            <div class="doc-item-info">
-              <span class="doc-item-title">${f.name}</span>
-              <span class="doc-item-desc">${f.desc}</span>
-            </div>
-            <a href="${f.url}" class="doc-download" onclick="handleDocClick(event, '${f.name}')">📥 Скачать</a>
-          `;
-          list.appendChild(item);
-        });
-
-        catBox.appendChild(list);
-        content.appendChild(catBox);
-      });
-
-      modal.classList.add("open");
-      document.body.style.overflow = "hidden";
-    }
-
-    function handleDocClick(e, name) {
-      toast(`Загрузка файла: ${name}`);
-    }
-
+    // Слушатели навигации
     $$("[data-scroll]").forEach(btn => {
       btn.addEventListener("click", () => {
         const target = $(`#${btn.dataset.scroll}`);
@@ -1600,16 +1655,6 @@
 
     $$("[data-action='open-chat']").forEach(btn => {
       btn.addEventListener("click", () => openChat());
-    });
-
-    $$("[data-action='start-stage']").forEach(btn => {
-      btn.addEventListener("click", () => openChat(btn.dataset.stage));
-    });
-
-    $$("[data-action='open-docs']").forEach(btn => {
-      btn.addEventListener("click", () => {
-        openDocsModal(btn.dataset.stage || appState.selectedStage, btn.dataset.cat || null);
-      });
     });
 
     $$("[data-action='open-reference']").forEach(btn => {
@@ -1628,10 +1673,6 @@
     });
 
     $("#closeModal").addEventListener("click", closeChat);
-    $("[data-close-docs]").addEventListener("click", () => {
-      $("#docsModal").classList.remove("open");
-      document.body.style.overflow = "";
-    });
     $("[data-close-reference]").addEventListener("click", () => {
       $("#referenceModal").classList.remove("open");
       document.body.style.overflow = "";
@@ -1639,10 +1680,7 @@
 
     window.addEventListener("click", (e) => {
       if (e.target === $("#modal")) closeChat();
-      if (e.target === $("#docsModal")) {
-        $("#docsModal").classList.remove("open");
-        document.body.style.overflow = "";
-      }
+      if (e.target === $("#stageModal")) closeStageModal();
       if (e.target === $("#referenceModal")) {
         $("#referenceModal").classList.remove("open");
         document.body.style.overflow = "";
@@ -1652,7 +1690,7 @@
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
         closeChat();
-        $("#docsModal").classList.remove("open");
+        closeStageModal();
         $("#referenceModal").classList.remove("open");
         document.body.style.overflow = "";
       }
