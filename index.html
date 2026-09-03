@@ -9,7 +9,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -58,7 +58,7 @@
       mask-image: linear-gradient(to bottom, black, transparent 92%);
     }
 
-    button, input { font: inherit; }
+    button, input, textarea { font: inherit; }
     button { cursor: pointer; }
 
     .shell {
@@ -70,7 +70,6 @@
       position: relative;
     }
 
-    /* ---------- HEADER ---------- */
     header {
       min-height: 86px;
       display: grid;
@@ -148,7 +147,6 @@
       box-shadow: 0 0 12px rgba(237,199,127,.65);
     }
 
-    /* ---------- MAIN LAYOUT ---------- */
     .content {
       display: grid;
       grid-template-columns: minmax(0, 1fr) 475px;
@@ -159,7 +157,6 @@
       border-right: 1px solid var(--line-soft);
     }
 
-    /* Роза ветров в шапке */
     .hero {
       min-height: 400px;
       position: relative;
@@ -255,7 +252,6 @@
       background: var(--gold);
     }
 
-    /* ---------- ПОЛНОСТЬЮ КЛИКАБЕЛЬНЫЕ КАРТОЧКИ СЦЕН ---------- */
     .stages {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -380,7 +376,6 @@
       color: #fff;
     }
 
-    /* ---------- RIGHT SIDEBAR ---------- */
     .right {
       background: rgba(10,11,13,.75);
     }
@@ -504,7 +499,6 @@
     .continue:hover { background: rgba(214,168,95,.08); border-color: var(--gold); }
     .continue span:last-child { font-size: 18px; }
 
-    /* ---------- PASSPORT ---------- */
     .passport {
       padding: 31px 32px 34px;
       border-bottom: 1px solid var(--line-soft);
@@ -618,7 +612,6 @@
     }
     .passport-actions button:hover { background: rgba(255,255,255,.035); }
 
-    /* ---------- INFO STRIP ---------- */
     .info-strip {
       display: grid;
       grid-template-columns: repeat(4,1fr);
@@ -646,7 +639,6 @@
       line-height: 1.55;
     }
 
-    /* ---------- FOOTER ---------- */
     footer {
       border-top: 1px solid var(--line-soft);
       padding: 22px 28px;
@@ -660,7 +652,6 @@
       text-transform: uppercase;
     }
 
-    /* ---------- МОДАЛЬНЫЕ ОКНА ---------- */
     .modal {
       position: fixed;
       inset: 0;
@@ -675,8 +666,8 @@
     .modal.open { display: flex; }
 
     .modal-card {
-      width: min(840px, 100%);
-      max-height: min(860px, calc(100vh - 40px));
+      width: min(880px, 100%);
+      max-height: min(880px, calc(100vh - 40px));
       overflow: hidden;
       background: #101214;
       border: 1px solid rgba(214,168,95,.45);
@@ -722,7 +713,6 @@
       gap: 24px;
     }
 
-    /* Таблица параметров сцены */
     .stage-details-table {
       width: 100%;
       border-collapse: collapse;
@@ -761,7 +751,6 @@
       color: var(--gold-light);
     }
 
-    /* Блок файлов сцены */
     .modal-section-title {
       font-family: "IBM Plex Mono", monospace;
       font-size: 11px;
@@ -821,40 +810,48 @@
     }
     .doc-download:hover { background: rgba(214,168,95,.1); border-color: var(--gold); }
 
-    /* Чат согласования */
+    /* ---------- ИНТЕЛЛЕКТУАЛЬНЫЙ ЧАТ ---------- */
     .chat {
       padding: 24px;
       overflow-y: auto;
-      min-height: 340px;
+      min-height: 380px;
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
 
     .chat-message {
-      max-width: 90%;
+      max-width: 92%;
+      position: relative;
     }
+
     .chat-message.assistant {
       border-left: 2px solid var(--gold);
       padding-left: 14px;
     }
+
     .chat-message.user {
       margin-left: auto;
       border: 1px solid var(--line-soft);
-      background: rgba(214,168,95,.05);
-      padding: 10px 14px;
+      background: rgba(214,168,95,.06);
+      padding: 12px 16px;
       color: var(--cream);
-      font-size: 12px;
+      font-size: 13px;
       line-height: 1.5;
     }
+
     .chat-label {
       color: var(--gold);
       font-family: "IBM Plex Mono", monospace;
-      font-size: 8px;
+      font-size: 9px;
       letter-spacing: .12em;
       text-transform: uppercase;
       margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
+
     .chat-text { font-size: 13px; line-height: 1.6; color: #d4d0c7; }
 
     .chat-tip {
@@ -873,15 +870,94 @@
       gap: 8px;
       margin-top: 10px;
     }
+
     .chat-options button {
       border: 1px solid rgba(214,168,95,.3);
       color: var(--gold-light);
       background: transparent;
-      padding: 8px 12px;
-      font-size: 10px;
+      padding: 8px 14px;
+      font-size: 11px;
+      font-family: "IBM Plex Mono", monospace;
       transition: all .2s;
     }
-    .chat-options button:hover { background: rgba(214,168,95,.1); border-color: var(--gold); }
+
+    .chat-options button:hover { background: rgba(214,168,95,.12); border-color: var(--gold); }
+
+    .btn-edit-step {
+      background: transparent;
+      border: 0;
+      color: var(--gold);
+      font-size: 10px;
+      font-family: "IBM Plex Mono", monospace;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0 4px;
+      opacity: 0.8;
+    }
+    .btn-edit-step:hover { opacity: 1; }
+
+    /* Таблица интерактивного чек-листа цехов */
+    .services-interactive-box {
+      margin-top: 14px;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid var(--line-soft);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .service-row {
+      display: grid;
+      grid-template-columns: 28px 1fr 120px 140px;
+      gap: 10px;
+      align-items: center;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 12px;
+    }
+
+    .service-row:last-child { border-bottom: none; }
+
+    .service-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+
+    .service-row input[type="text"] {
+      background: #08090a;
+      border: 1px solid var(--line-soft);
+      color: var(--cream);
+      padding: 6px 8px;
+      font-size: 11px;
+      outline: none;
+      font-family: "IBM Plex Mono", monospace;
+    }
+
+    .service-row input[type="text"]:focus {
+      border-color: var(--gold);
+    }
+
+    .btn-confirm-services {
+      margin-top: 10px;
+      background: var(--gold);
+      color: #0b0c0e;
+      border: none;
+      padding: 10px 16px;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      align-self: flex-start;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .btn-confirm-services:hover {
+      background: var(--gold-light);
+    }
 
     .chat-form {
       border-top: 1px solid var(--line-soft);
@@ -890,23 +966,28 @@
       gap: 10px;
       background: #0c0e10;
     }
-    .chat-form input {
+
+    .chat-form textarea {
       flex: 1;
       min-width: 0;
-      height: 48px;
+      height: 52px;
       border: 1px solid var(--line-soft);
       background: #08090a;
       color: var(--cream);
-      padding: 0 14px;
+      padding: 10px 14px;
       outline: none;
       font-size: 12px;
+      resize: none;
+      line-height: 1.4;
     }
-    .chat-form input:focus { border-color: rgba(214,168,95,.55); }
+
+    .chat-form textarea:focus { border-color: rgba(214,168,95,.55); }
+
     .chat-form button {
       border: 1px solid rgba(214,168,95,.55);
       color: var(--gold-light);
       background: transparent;
-      padding: 0 20px;
+      padding: 0 24px;
       font-family: "IBM Plex Mono", monospace;
       font-size: 10px;
       text-transform: uppercase;
@@ -922,7 +1003,6 @@
     }
     .toast.show { transform: translateY(0); opacity: 1; }
 
-    /* ---------- АДАПТИВ ---------- */
     @media (max-width: 1180px) {
       header { grid-template-columns: 1fr; gap: 14px; padding: 14px 0; }
       .brand { border-right: 0; padding: 0 20px; justify-content: center; }
@@ -952,6 +1032,8 @@
       .info-item:nth-child(2) { border-right: 0; }
       .info-item:nth-child(-n+2) { border-bottom: 1px solid var(--line-soft); }
       .hero-compass-bg { width: 100%; opacity: 0.35; }
+      .service-row { grid-template-columns: 24px 1fr; }
+      .service-row input[type="text"] { grid-column: span 2; }
     }
 
     @media (max-width: 520px) {
@@ -992,7 +1074,7 @@
 
       <div class="system">
         <div class="online"><i></i> СИСТЕМА ОНЛАЙН</div>
-        <div id="clock">03.09.2026<br>17:00</div>
+        <div id="clock">03.09.2026<br>18:00</div>
       </div>
     </header>
 
@@ -1093,7 +1175,6 @@
       </main>
 
       <aside class="right">
-        <!-- БЛОК ВЫЗОВА СЛУЖБ -->
         <section class="workflow">
           <div class="workflow-head">
             <div>
@@ -1109,7 +1190,7 @@
           <ol class="steps" id="steps">
             <li class="step current" id="step-0">
               <div class="step-dot">•</div>
-              <div><div class="step-title">Коллектив и завпост</div><div class="step-detail">Театр, спектакль, телефон</div></div>
+              <div><div class="step-title">Коллектив и контакты</div><div class="step-detail">Театр, спектакль, должность, ФИО</div></div>
             </li>
             <li class="step" id="step-1">
               <div class="step-dot"></div>
@@ -1117,23 +1198,27 @@
             </li>
             <li class="step" id="step-2">
               <div class="step-dot"></div>
-              <div><div class="step-title">Заезд и сменность</div><div class="step-detail">Дата, время, ночные смены</div></div>
+              <div><div class="step-title">Транспорт и заезд</div><div class="step-detail">Точная дата, время, габариты</div></div>
             </li>
             <li class="step" id="step-3">
               <div class="step-dot"></div>
-              <div><div class="step-title">Тайминг площадки</div><div class="step-detail">Монтаж, свет, прогон, старт</div></div>
+              <div><div class="step-title">Ночные работы и смены</div><div class="step-detail">Регламент ночных задач</div></div>
             </li>
             <li class="step" id="step-4">
               <div class="step-dot"></div>
-              <div><div class="step-title">Вызов цехов театра</div><div class="step-detail">Свет, звук, механика, помреж</div></div>
+              <div><div class="step-title">Почасовой тайминг</div><div class="step-detail">Монтаж, фокус, прогон, старт</div></div>
             </li>
             <li class="step" id="step-5">
               <div class="step-dot"></div>
-              <div><div class="step-title">Быт и костюмеры</div><div class="step-detail">Гримёрки, отпариватели, реквизит</div></div>
+              <div><div class="step-title">Вызов цехов театра</div><div class="step-detail">Монтировщики, свет, звук, механика</div></div>
             </li>
             <li class="step" id="step-6">
               <div class="step-dot"></div>
-              <div><div class="step-title">Файлы райдеров</div><div class="step-detail">Ссылки на партитуры и чертежи</div></div>
+              <div><div class="step-title">Быт и костюмеры</div><div class="step-detail">Гримёрки, отпариватели, реквизит</div></div>
+            </li>
+            <li class="step" id="step-7">
+              <div class="step-dot"></div>
+              <div><div class="step-title">Райдеры и партитуры</div><div class="step-detail">Ссылки на облачные диски</div></div>
             </li>
           </ol>
 
@@ -1142,7 +1227,6 @@
           </button>
         </section>
 
-        <!-- БЛОК ПАСПОРТА -->
         <section class="passport" id="passport-card">
           <div class="passport-head">
             <div class="passport-title">Технический паспорт</div>
@@ -1161,7 +1245,7 @@
           </div>
 
           <div class="passport-actions">
-            <button data-action="download">Скачать файл</button>
+            <button data-action="download">Скачать PDF</button>
             <button data-action="telegram">Отправить в TG ↗</button>
           </div>
         </section>
@@ -1170,7 +1254,7 @@
 
     <footer>
       <span>ATLAS · Фестиваль театральной России</span>
-      <span>Версия 1.3 · 2026</span>
+      <span>Версия 1.4 · 2026</span>
       <span>Координация технических служб</span>
     </footer>
   </div>
@@ -1204,7 +1288,7 @@
       <div class="chat" id="chat"></div>
 
       <form class="chat-form" id="chatForm">
-        <input id="chatInput" autocomplete="off" placeholder="Введите ответ или уточнение..." />
+        <textarea id="chatInput" placeholder="Введите ваш ответ или отредактируйте предложенный текст..."></textarea>
         <button type="submit">Ответить</button>
       </form>
     </div>
@@ -1246,7 +1330,7 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    /* 1. БАЗА ДАННЫХ ПЛОЩАДОК (12 ПАРАМЕТРОВ И ФАЙЛЫ) */
+    /* 1. БАЗА ДАННЫХ ПЛОЩАДОК */
     const stagesData = {
       main: {
         title: "Основная сцена — Большой зал",
@@ -1301,7 +1385,6 @@
       const body = document.getElementById('stageModalBody');
       body.innerHTML = '';
 
-      // Таблица 12 параметров
       const table = document.createElement('table');
       table.className = 'stage-details-table';
       stage.params.forEach(p => {
@@ -1314,7 +1397,6 @@
       });
       body.appendChild(table);
 
-      // Блок файлов для скачивания
       const filesHeader = document.createElement('div');
       filesHeader.className = 'modal-section-title';
       filesHeader.innerHTML = `<span>📥 Техническая документация и чертежи (${stage.title.split('—')[0].trim()})</span>`;
@@ -1349,17 +1431,17 @@
       toast(`Загрузка файла: ${name}`);
     }
 
-    /* 2. СОСТОЯНИЕ ЧАТА СОГЛАСОВАНИЯ */
+    /* 2. ПЕРЕСТРОЕННЫЙ ДИАЛОГ СОГЛАСОВАНИЯ */
     const appState = {
       selectedStage: "Основная сцена",
       step: 0,
       data: {
-        theatre: "",
+        theatreInfo: "",
         scene: "Основная сцена",
-        arrival: "",
-        isNight: false,
-        timing: "",
-        services: "",
+        transportArrival: "",
+        nightWork: "",
+        dayTiming: "",
+        servicesTable: "",
         costumes: "",
         riders: ""
       }
@@ -1367,17 +1449,19 @@
 
     const questions = [
       {
-        q: "Приветствую! Я технический ассистент фестиваля «Атлас». Помогу быстро сформировать согласованный график работ на площадке и оформить вызов служб театра.<br><br><b>Укажите название вашего театра, спектакль и контакты завпоста (ФИО и телефон).</b>",
-        tip: "Например: «Театр Драмы, спектакль Маскарад, завпост Алексей +7 900 000-00-00»",
-        quick: [],
-        stepTitle: "Театр и контакты",
-        apply: (val) => { appState.data.theatre = val; }
+        stepTitle: "Коллектив и контакты",
+        q: "Приветствую! Я технический координатор фестиваля «Атлас». Помогу составить согласованный график работ на площадке.<br><br><b>Укажите: название вашего театра, спектакль, а также должность, ФИО и телефон контактного лица (завпост, техдиректор или помреж).</b>",
+        tip: "Пример: Театр Драмы, спектакль «Маскарад», завпост Иванов Алексей Сергеевич +7 900 123-45-67",
+        type: "text",
+        quickFill: [],
+        apply: (val) => { appState.data.theatreInfo = val; }
       },
       {
+        stepTitle: "Выбор площадки",
         q: "Какую площадку фестиваля вы планируете задействовать для показа и монтажа?",
-        tip: "Если коллектив привозит две постановки или спектакль масштабный, можно выбрать обе сцены.",
-        quick: ["Основная сцена", "Малая сцена", "Обе сцены (Основная + Малая)"],
-        stepTitle: "Выбор сцены",
+        tip: "Выберите нужный вариант кнопкой ниже:",
+        type: "choice",
+        options: ["Основная сцена", "Малая сцена", "Обе сцены (Основная + Малая)"],
         apply: (val) => { 
           appState.data.scene = val;
           appState.selectedStage = val.includes("Малая") && !val.includes("Основная") ? "Малая сцена" : "Основная сцена";
@@ -1385,43 +1469,71 @@
         }
       },
       {
-        q: "Когда планируется прибытие транспорта с декорациями (дата и точное время)? И важный вопрос: <b>потребуются ли ночные смены на площадке?</b>",
-        tip: "⚡ <b>Обратите внимание:</b> В нашем театре РАЗРЕШЕНЫ ночные работы, но их необходимо зафиксировать заранее, чтобы мы выставили дежурные службы в график.",
-        quick: ["Без ночных смен", "Да, потребуется ночной монтаж"],
-        stepTitle: "Заезд и ночные работы",
-        apply: (val) => { 
-          appState.data.arrival = val;
-          if (val.toLowerCase().includes("ночн") || val.toLowerCase().includes("ночь")) {
-            appState.data.isNight = true;
+        stepTitle: "Транспорт и заезд",
+        q: "<b>Когда прибывает транспорт с декорациями?</b><br>Укажите точную дату, ориентировочное время прибытия к рампе и габариты машины (фура, 5-тонник, Газель).",
+        tip: "Пример: 12 сентября к 08:30 утра, 1 еврофура (13.6м). Потребуется подъёмник к планшету сцены.",
+        type: "text",
+        quickFill: [
+          { label: "Подставить шаблон еврофуры", text: "12 сентября в 08:00, 1 еврофура (13.6 м), требуется подача на рампу" },
+          { label: "Подставить шаблон малой машины", text: "12 сентября в 09:00, Газель 5 метров, разгрузка ручная" }
+        ],
+        apply: (val) => { appState.data.transportArrival = val; }
+      },
+      {
+        stepTitle: "Ночные работы и смены",
+        q: "<b>Планируются ли ночные работы на площадке?</b><br>В театре <u>разрешены</u> ночные смены, но нам необходимо заранее знать интервалы и задачи, чтобы составить сменный график инженеров и дежурных служб.",
+        tip: "Если требуются ночные работы, обязательно напишите, с какого по какой час и для чего (монтировка, развес, репетиция).",
+        type: "text",
+        quickFill: [
+          { label: "Без ночных смен", text: "Ночные работы не требуются. Все монтажи и прогоны строго в дневную смену." },
+          { label: "Шаблон ночного монтажа декораций", text: "Да, требуется ночной монтаж: в ночь накануне показа с 00:00 до 06:00 (сборка декораций и подвес)." },
+          { label: "Шаблон ночной юстировки света", text: "Да, требуется ночная смена по свету: с 23:00 до 04:00 (юстировка и пропись световых картин)." }
+        ],
+        apply: (val) => { appState.data.nightWork = val; }
+      },
+      {
+        stepTitle: "Почасовой тайминг",
+        q: "<b>Опишите базовый тайминг дня спектакля.</b><br>Укажите время начала монтировки, время на фокус света и проверку звука, время репетиции/прогона и время начала спектакля.",
+        tip: "Нажмите на один из шаблонов ниже, чтобы подставить его в поле ввода и отредактировать ваши точные часы:",
+        type: "text",
+        quickFill: [
+          { 
+            label: "Вставить стандартный 1-дневный тайминг", 
+            text: "08:00–12:00 — монтаж декораций на планшете\n12:00–14:00 — фокус света и настройка звукового тракта\n14:00–15:00 — технический перерыв / обед служб\n15:00–18:00 — репетиция и прогон спектакля\n18:00–18:30 — уборка сцены и проверка систем\n19:00 — спектакль" 
+          },
+          { 
+            label: "Вставить 2-дневный тайминг (монтаж накануне)", 
+            text: "День 1 (накануне): 14:00–22:00 монтаж декораций, подвес и настройка света.\nДень 2 (показ): 10:00–13:00 репетиция, 14:00–17:00 генеральный прогон, 17:00–18:00 уборка, 19:00 спектакль." 
           }
-        }
+        ],
+        apply: (val) => { appState.data.dayTiming = val; }
       },
       {
-        q: "Опишите базовый тайминг дня (время начала монтажа декораций, фокус света, репетиции и начало спектакля).",
-        tip: "Пример: «08:00 заезд, 09:00–13:00 монтировка, 13:00–15:00 свет/звук, 16:00 прогон, 19:00 спектакль».",
-        quick: ["Стандартный 1-дневный график", "Заезд накануне вечером"],
-        stepTitle: "Тайминг площадки",
-        apply: (val) => { appState.data.timing = val; }
-      },
-      {
-        q: "Какие <b>технические службы нашего театра</b> вам потребуются и в какие часы?",
-        tip: "Доступные цеха:<br>• <b>Монтировщики сцены</b><br>• <b>Оператор механооборудования (штанкеты / круг)</b><br>• <b>Осветители (планшетные + художник по свету)</b><br>• <b>Звукоцех</b><br>• <b>Видеоцех / проекция</b><br>• <b>Помощник режиссёра (помреж)</b><br>• <b>Дежурный завпост</b><br>• <b>Дежурные электрик и механик</b><br>• <b>Уборка сцены (до и после прогона)</b>",
-        quick: ["Полный вызов всех служб", "Монтировщики + свет + звук + уборка"],
         stepTitle: "Вызов цехов театра",
-        apply: (val) => { appState.data.services = val; }
+        q: "<b>Сформируйте заявку на службы театра.</b><br>Отметьте необходимые цеха, укажите количество людей и точное время их работы на площадке:",
+        tip: "Заполните форму ниже и нажмите «Подтвердить состав служб»:",
+        type: "interactive_services",
+        apply: (val) => { appState.data.servicesTable = val; }
       },
       {
-        q: "Есть ли у вас запросы к <b>костюмерам, гримёрам или реквизиторам</b> театра? (Отпариватели, гладильные доски, доп. зеркала, гримваген).",
-        tip: "Опишите в свободной форме или напишите «Без запросов», если всё привозите с собой.",
-        quick: ["Нужны отпариватели и гладильная", "Без запросов к бытовым службам"],
         stepTitle: "Бытовые службы",
+        q: "<b>Запросы к бытовым цехам театра</b> (костюмеры, гримёры, реквизит):<br>Требуются ли отпариватели, гладильные доски, дополнительный свет для гримвагенов или холодильник для реквизита?",
+        tip: "Опишите потребности в свободной форме или воспользуйтесь быстрой кнопкой:",
+        type: "text",
+        quickFill: [
+          { label: "Без запросов к бытовым цехам", text: "Свои костюмеры, гримёры и реквизиторы. Бытовые службы театра не требуются, гримёрных комнат достаточно." },
+          { label: "Нужны отпариватели и гладильная", text: "Требуется: 2 отпаривателя, 1 гладильная доска с утюгом в гримёрный блок." }
+        ],
         apply: (val) => { appState.data.costumes = val; }
       },
       {
-        q: "Финальный шаг: прикрепите <b>ссылку на облачный диск</b> (Яндекс.Диск, Google Drive) с вашими световыми партитурами, райдером и планом расстановки декораций.",
-        tip: "Если ссылка пока не готова, напишите «Передадим при заезде».",
-        quick: ["Ссылка на Яндекс.Диск", "Передадим на площадке"],
         stepTitle: "Райдеры и партитуры",
+        q: "<b>Финальный шаг: укажите ссылку на облачный диск</b> (Яндекс.Диск, Google Drive, Облако Mail.ru) с вашим техническим райдером, световыми партитурами и чертежами расстановки.",
+        tip: "⚠️ Вставьте прямую ссылку на открытую папку в поле ниже. Если материалов пока нет, нажмите «Передадим при заезде»:",
+        type: "text",
+        quickFill: [
+          { label: "Передадим лично при заезде", text: "Материалы передадим на флеш-накопителе лично техническому директору Руслану в день заезда." }
+        ],
         apply: (val) => { appState.data.riders = val; }
       }
     ];
@@ -1434,7 +1546,7 @@
       el.textContent = msg;
       el.classList.add("show");
       clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => el.classList.remove("show"), 2800);
+      window.__toastTimer = setTimeout(() => el.classList.remove("show"), 3000);
     }
 
     function updateClock() {
@@ -1447,7 +1559,9 @@
     function openChat() {
       $("#modal").classList.add("open");
       document.body.style.overflow = "hidden";
-      if (appState.step === 0 && $("#chat").children.length === 0) showQuestion(0);
+      if (appState.step === 0 && $("#chat").children.length === 0) {
+        showQuestion(0);
+      }
       setTimeout(() => $("#chatInput").focus(), 80);
     }
 
@@ -1462,35 +1576,158 @@
 
       const msg = document.createElement("div");
       msg.className = "chat-message assistant";
-      
-      let quickHtml = "";
-      if (stepData.quick && stepData.quick.length > 0) {
-        quickHtml = `<div class="chat-options">` + 
-          stepData.quick.map(btn => `<button type="button" onclick="submitAnswer('${btn.replace(/'/g, "\\'")}')">${btn}</button>`).join('') + 
+      msg.id = `chat-q-${idx}`;
+
+      let interactiveHtml = "";
+
+      // Если это шаг с интерактивным вызовом цехов
+      if (stepData.type === "interactive_services") {
+        interactiveHtml = `
+          <div class="services-interactive-box" id="servicesBox">
+            <div class="service-row">
+              <input type="checkbox" id="srv_mach" checked>
+              <label for="srv_mach"><b>Монтировщики сцены</b></label>
+              <input type="text" id="srv_mach_cnt" placeholder="Кол-во чел." value="4 человека">
+              <input type="text" id="srv_mach_time" placeholder="Часы работы" value="с 08:00 до 22:00">
+            </div>
+            <div class="service-row">
+              <input type="checkbox" id="srv_mech" checked>
+              <label for="srv_mech"><b>Оператор механики (штанкеты/круг)</b></label>
+              <input type="text" id="srv_mech_cnt" placeholder="Кол-во чел." value="1 специалист">
+              <input type="text" id="srv_mech_time" placeholder="Часы работы" value="с 09:00 до 22:00">
+            </div>
+            <div class="service-row">
+              <input type="checkbox" id="srv_light" checked>
+              <label for="srv_light"><b>Осветители (планшет + оператор)</b></label>
+              <input type="text" id="srv_light_cnt" placeholder="Кол-во чел." value="2 специалиста">
+              <input type="text" id="srv_light_time" placeholder="Часы работы" value="с 10:00 до 22:00">
+            </div>
+            <div class="service-row">
+              <input type="checkbox" id="srv_sound" checked>
+              <label for="srv_sound"><b>Звукоцех площадки</b></label>
+              <input type="text" id="srv_sound_cnt" placeholder="Кол-во чел." value="1 звукорежиссёр">
+              <input type="text" id="srv_sound_time" placeholder="Часы работы" value="с 10:00 до 22:00">
+            </div>
+            <div class="service-row">
+              <input type="checkbox" id="srv_video">
+              <label for="srv_video"><b>Видеоцех / проекция</b></label>
+              <input type="text" id="srv_video_cnt" placeholder="Кол-во чел." value="1 видеоинженер">
+              <input type="text" id="srv_video_time" placeholder="Часы работы" value="с 11:00 до 22:00">
+            </div>
+            <div class="service-row">
+              <input type="checkbox" id="srv_pomrezh" checked>
+              <label for="srv_pomrezh"><b>Помощник режиссёра / Завпост</b></label>
+              <input type="text" id="srv_pomrezh_cnt" placeholder="Кол-во чел." value="1 дежурный">
+              <input type="text" id="srv_pomrezh_time" placeholder="Часы работы" value="с 08:00 до 22:00">
+            </div>
+            <div class="service-row">
+              <input type="checkbox" id="srv_clean" checked>
+              <label for="srv_clean"><b>Уборка сцены (клининг планшета)</b></label>
+              <input type="text" id="srv_clean_cnt" placeholder="Кол-во чел." value="Дежурная группа">
+              <input type="text" id="srv_clean_time" placeholder="Часы работы" value="перед прогоном и в 18:00">
+            </div>
+            <div class="service-row">
+              <input type="checkbox" id="srv_eng">
+              <label for="srv_eng"><b>Дежурный электрик / механик</b></label>
+              <input type="text" id="srv_eng_cnt" placeholder="Кол-во чел." value="1 инженер">
+              <input type="text" id="srv_eng_time" placeholder="Часы работы" value="по требованию">
+            </div>
+            <button type="button" class="btn-confirm-services" onclick="confirmServicesForm()">✓ Подтвердить состав служб</button>
+          </div>
+        `;
+      }
+
+      // Если это шаг с прямым выбором (кнопками)
+      let choicesHtml = "";
+      if (stepData.type === "choice" && stepData.options) {
+        choicesHtml = `<div class="chat-options">` + 
+          stepData.options.map(opt => `<button type="button" onclick="submitDirectChoice('${opt.replace(/'/g, "\\'")}')">${opt}</button>`).join('') + 
+          `</div>`;
+      }
+
+      // Кнопки быстрой подстановки в поле ввода
+      let quickFillHtml = "";
+      if (stepData.quickFill && stepData.quickFill.length > 0) {
+        quickFillHtml = `<div class="chat-options" style="margin-top:10px;">` + 
+          stepData.quickFill.map(qf => `<button type="button" onclick="fillInputDraft('${encodeURIComponent(qf.text)}')">✎ ${qf.label}</button>`).join('') + 
           `</div>`;
       }
 
       msg.innerHTML = `
-        <div class="chat-label">Этап 0${idx + 1} из 07 · ${stepData.stepTitle}</div>
+        <div class="chat-label">
+          <span>Этап 0${idx + 1} из 08 · ${stepData.stepTitle}</span>
+        </div>
         <div class="chat-text">${stepData.q}</div>
         ${stepData.tip ? `<div class="chat-tip">${stepData.tip}</div>` : ""}
-        ${quickHtml}
+        ${interactiveHtml}
+        ${choicesHtml}
+        ${quickFillHtml}
       `;
 
       chat.appendChild(msg);
       chat.scrollTop = chat.scrollHeight;
+
+      // Скрываем форму ввода, если на шаге используется интерактивная таблица чек-боксов
+      $("#chatForm").style.display = (stepData.type === "interactive_services") ? "none" : "flex";
     }
 
-    function submitAnswer(text) {
+    // Подстановка шаблона в поле ввода без закрытия вопроса
+    function fillInputDraft(encodedText) {
+      const decoded = decodeURIComponent(encodedText);
+      const input = $("#chatInput");
+      input.value = decoded;
+      input.focus();
+      toast("Текст вставлен в поле ввода. Вы можете скорректировать его и нажать «Ответить».");
+    }
+
+    // Обработка прямого выбора кнопки (например, сцены)
+    function submitDirectChoice(text) {
+      handleStepSubmission(text);
+    }
+
+    // Сбор интерактивной таблицы служб
+    function confirmServicesForm() {
+      const rows = $$("#servicesBox .service-row");
+      const selectedServices = [];
+
+      rows.forEach(r => {
+        const chk = r.querySelector('input[type="checkbox"]');
+        if (chk && chk.checked) {
+          const name = r.querySelector('label').innerText.trim();
+          const cnt = r.querySelectorAll('input[type="text"]')[0].value.trim();
+          const time = r.querySelectorAll('input[type="text"]')[1].value.trim();
+          selectedServices.push(`• ${name}: ${cnt || "согласовано"} (${time || "по графику"})`);
+        }
+      });
+
+      if (selectedServices.length === 0) {
+        toast("Отметьте хотя бы одну службу театра.");
+        return;
+      }
+
+      const resultText = selectedServices.join("\n");
+      handleStepSubmission(resultText);
+    }
+
+    // Универсальное сохранение ответа и переход к следующему вопросу
+    function handleStepSubmission(text) {
       const chat = $("#chat");
+      const currentIdx = appState.step;
+
       const userMsg = document.createElement("div");
       userMsg.className = "chat-message user";
-      userMsg.textContent = text;
+      userMsg.id = `chat-ans-${currentIdx}`;
+      userMsg.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+          <span style="white-space:pre-wrap;">${escapeHtml(text)}</span>
+          <button type="button" class="btn-edit-step" onclick="rollbackToStep(${currentIdx})">✎ Изменить</button>
+        </div>
+      `;
       chat.appendChild(userMsg);
 
-      questions[appState.step].apply(text);
+      questions[currentIdx].apply(text);
 
-      const currentStepEl = $(`#step-${appState.step}`);
+      const currentStepEl = $(`#step-${currentIdx}`);
       if (currentStepEl) {
         currentStepEl.classList.remove("current");
         currentStepEl.classList.add("done");
@@ -1498,7 +1735,7 @@
       }
 
       appState.step++;
-      const progressPercent = Math.round((appState.step / 7) * 100);
+      const progressPercent = Math.round((appState.step / questions.length) * 100);
       $("#progressValue").textContent = `${progressPercent}%`;
 
       if (appState.step < questions.length) {
@@ -1508,9 +1745,10 @@
           nextStepEl.querySelector(".step-dot").textContent = "•";
         }
         $("#btnContinueLabel").textContent = "Продолжить согласование";
-        setTimeout(() => showQuestion(appState.step), 400);
+        setTimeout(() => showQuestion(appState.step), 350);
       } else {
-        $("#passportStatus").textContent = "Готов к сдаче";
+        $("#chatForm").style.display = "none";
+        $("#passportStatus").textContent = "Готов к печати";
         $("#passportStatus").style.borderColor = "var(--gold)";
         $("#btnContinueLabel").textContent = "Согласование завершено";
         
@@ -1518,14 +1756,14 @@
           const finalMsg = document.createElement("div");
           finalMsg.className = "chat-message assistant";
           finalMsg.innerHTML = `
-            <div class="chat-label">Финал согласования</div>
+            <div class="chat-label"><span>Финал согласования</span></div>
             <div class="chat-text">
-              ✅ <b>Паспорт технического согласования успешно сформирован!</b><br>
-              Все параметры зафиксированы. Вы можете скачать сформированный текстовый паспорт или сразу отправить его техническому директору фестиваля в Telegram.
+              ✅ <b>Паспорт технического согласования сформирован!</b><br>
+              Все 8 разделов заполнены. Теперь вы можете сохранить выверенный печатный документ (A4 PDF) или передать данные техническому директору в Telegram.
             </div>
             <div class="chat-options">
-              <button type="button" onclick="downloadPassport()">💾 Скачать паспорт (.txt)</button>
-              <button type="button" onclick="sendTelegram()">✈️ Отправить в Telegram</button>
+              <button type="button" onclick="downloadPassport()">📄 Скачать официальный PDF-паспорт</button>
+              <button type="button" onclick="sendTelegram()">✈️ Передать директору в Telegram</button>
             </div>
           `;
           chat.appendChild(finalMsg);
@@ -1534,84 +1772,318 @@
       }
     }
 
+    // Возможность вернуться и отредактировать любой ответ
+    function rollbackToStep(targetIdx) {
+      for (let i = targetIdx; i < questions.length; i++) {
+        const qEl = document.getElementById(`chat-q-${i}`);
+        const aEl = document.getElementById(`chat-ans-${i}`);
+        if (qEl) qEl.remove();
+        if (aEl) aEl.remove();
+
+        const stepEl = document.getElementById(`step-${i}`);
+        if (stepEl) {
+          stepEl.classList.remove("done", "current");
+          stepEl.querySelector(".step-dot").textContent = "";
+        }
+      }
+
+      appState.step = targetIdx;
+      const targetStepEl = document.getElementById(`step-${targetIdx}`);
+      if (targetStepEl) {
+        targetStepEl.classList.add("current");
+        targetStepEl.querySelector(".step-dot").textContent = "•";
+      }
+
+      const progressPercent = Math.round((appState.step / questions.length) * 100);
+      $("#progressValue").textContent = `${progressPercent}%`;
+      $("#passportStatus").textContent = "Редактирование";
+      $("#btnContinueLabel").textContent = "Продолжить согласование";
+
+      showQuestion(targetIdx);
+      toast(`Вы вернулись к этапу: ${questions[targetIdx].stepTitle}`);
+    }
+
     $("#chatForm").addEventListener("submit", (e) => {
       e.preventDefault();
       const input = $("#chatInput");
       const val = input.value.trim();
-      if (!val) return;
-      if (appState.step >= questions.length) {
-        toast("Все этапы уже заполнены. Вы можете скачать паспорт.");
-        input.value = "";
+      if (!val) {
+        toast("Введите информацию перед отправкой.");
         return;
       }
-      submitAnswer(val);
+      handleStepSubmission(val);
       input.value = "";
     });
 
-    function generatePassportText() {
-      return [
-        "==================================================",
-        "ATLAS — ПАСПОРТ ТЕХНИЧЕСКОГО СОГЛАСОВАНИЯ ПЛОЩАДКИ",
-        "Фестиваль «Атлас театральной России»",
-        "==================================================",
-        `ДАТА ФОРМИРОВАНИЯ: ${new Date().toLocaleString('ru-RU')}`,
-        `ВЫБРАННАЯ ПЛОЩАДКА: ${appState.data.scene || appState.selectedStage}`,
-        "",
-        "1. КОЛЛЕКТИВ И КОНТАКТЫ ЗАВПОСТА:",
-        appState.data.theatre || "Не указано",
-        "",
-        "2. ЗАЕЗД И НОЧНОЙ РЕГЛАМЕНТ:",
-        `График прибытия: ${appState.data.arrival || "Не указано"}`,
-        `Ночные работы: ${appState.data.isNight ? "ТРЕБУЮТСЯ (разрешены регламентом площадки)" : "Не требуются"}`,
-        "",
-        "3. ПОЧАСОВОЙ ТАЙМИНГ ПЛОЩАДКИ:",
-        appState.data.timing || "Не указано",
-        "",
-        "4. ВЫЗОВ СЛУЖБ ТЕАТРА (Монтировщики, свет, звук, помреж, уборка):",
-        appState.data.services || "Не указано",
-        "",
-        "5. ЗАПРОСЫ К БЫТОВЫМ ЦЕХАМ (Гримёрки, костюмеры, реквизит):",
-        appState.data.costumes || "Без особых запросов",
-        "",
-        "6. ССЫЛКИ НА ОБЛАКО (Партитуры света, райдер, чертежи):",
-        appState.data.riders || "Не прикреплено",
-        "",
-        "==================================================",
-        "Технический директор фестиваля «Атлас»: Руслан (+7 902 876-57-92)",
-        "Дежурный администратор: Оксана (+7 963 655-40-21)",
-        "Документ сгенерирован техническим порталом ATLAS."
-      ].join("\n");
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     }
 
+    /* 3. ГЕНЕРАЦИЯ ДИЗАЙНЕРСКОГО PDF-ПАСПОРТА */
     function downloadPassport() {
-      if (appState.step === 0) {
-        toast("Сначала пройдите согласование в диалоге.");
+      if (appState.step < questions.length) {
+        toast("Сначала завершите все этапы согласования в чате.");
         openChat();
         return;
       }
-      const text = generatePassportText();
-      const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `Atlas_TechPassport_${Date.now()}.txt`;
-      a.click();
-      URL.revokeObjectURL(url);
-      toast("Паспорт сформирован и скачан.");
+
+      const printWindow = window.open('', '_blank');
+      const docHtml = `
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Технический паспорт — ${escapeHtml(appState.data.theatreInfo.split(',')[0])}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    @page { size: A4 portrait; margin: 16mm 14mm; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #121418;
+      background: #fff;
+      padding: 0;
+      line-height: 1.45;
+      font-size: 11pt;
+    }
+    .passport-border {
+      border: 2px solid #b89758;
+      padding: 24px;
+      position: relative;
+      min-height: 260mm;
+    }
+    .passport-border::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border: 1px solid rgba(184, 151, 88, 0.4);
+      pointer-events: none;
+    }
+    .doc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #b89758;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+    .logo-box {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .logo-main {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 28pt;
+      letter-spacing: 0.18em;
+      color: #947132;
+      line-height: 1;
+      font-weight: 700;
+    }
+    .logo-sub {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 8pt;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #555;
+    }
+    .doc-meta {
+      text-align: right;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 8pt;
+      color: #444;
+      line-height: 1.6;
+    }
+    .doc-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 20pt;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-align: center;
+      color: #1a1a1a;
+      margin-bottom: 20px;
+    }
+    .section-block {
+      margin-bottom: 16px;
+      page-break-inside: avoid;
+    }
+    .section-head {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9pt;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #947132;
+      border-bottom: 1px solid #d4c29d;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+    }
+    .section-content {
+      font-size: 9.5pt;
+      color: #222;
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .signatures-block {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      page-break-inside: avoid;
+    }
+    .sign-col {
+      border-top: 1px dashed #777;
+      padding-top: 8px;
+      font-size: 8.5pt;
+      color: #333;
+      font-family: 'IBM Plex Mono', monospace;
+      line-height: 1.6;
+    }
+    @media print {
+      body { background: transparent; }
+      .passport-border { border-color: #000; }
+      .logo-main, .section-head { color: #000; }
+    }
+  </style>
+</head>
+<body>
+  <div class="passport-border">
+    <div class="doc-header">
+      <div class="logo-box">
+        <div class="logo-main">ATLAS</div>
+        <div class="logo-sub">Фестиваль театральной России</div>
+      </div>
+      <div class="doc-meta">
+        <div><b>АКТ ТЕХНИЧЕСКОГО СОГЛАСОВАНИЯ</b></div>
+        <div>Дата: ${new Date().toLocaleDateString('ru-RU')}</div>
+        <div>Площадка: ${escapeHtml(appState.data.scene)}</div>
+      </div>
+    </div>
+
+    <div class="doc-title">Паспорт работы коллектива на площадке</div>
+
+    <div class="section-block">
+      <div class="section-head">1. Коллектив, спектакль и контакты</div>
+      <div class="section-content">${escapeHtml(appState.data.theatreInfo)}</div>
+    </div>
+
+    <div class="grid-2col">
+      <div class="section-block">
+        <div class="section-head">2. График прибытия транспорта</div>
+        <div class="section-content">${escapeHtml(appState.data.transportArrival)}</div>
+      </div>
+      <div class="section-block">
+        <div class="section-head">3. Ночной регламент и смены</div>
+        <div class="section-content">${escapeHtml(appState.data.nightWork)}</div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-head">4. Почасовой тайминг (монтаж / репетиции / спектакль)</div>
+      <div class="section-content">${escapeHtml(appState.data.dayTiming)}</div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-head">5. Заявка на вызов цехов и специалистов театра</div>
+      <div class="section-content">${escapeHtml(appState.data.servicesTable)}</div>
+    </div>
+
+    <div class="grid-2col">
+      <div class="section-block">
+        <div class="section-head">6. Запросы к костюмерам и реквизиту</div>
+        <div class="section-content">${escapeHtml(appState.data.costumes)}</div>
+      </div>
+      <div class="section-block">
+        <div class="section-head">7. Доступ к райдерам и партитурам</div>
+        <div class="section-content">${escapeHtml(appState.data.riders)}</div>
+      </div>
+    </div>
+
+    <div class="signatures-block">
+      <div class="sign-col">
+        <b>Согласовано от фестиваля «Атлас»:</b><br>
+        Технический директор: Руслан<br>
+        Телефон: +7 902 876-57-92<br>
+        Подпись: __________________ / М.П.
+      </div>
+      <div class="sign-col">
+        <b>Представитель театра / завпост:</b><br>
+        Ответственное лицо: __________________<br>
+        Телефон: __________________<br>
+        Подпись: __________________ / М.П.
+      </div>
+    </div>
+  </div>
+  <script>
+    window.onload = () => { window.print(); };
+  <\/script>
+</body>
+</html>
+      `;
+
+      printWindow.document.open();
+      printWindow.document.write(docHtml);
+      printWindow.document.close();
+      toast("Открыто окно формирования официального PDF-документа.");
     }
 
+    /* 4. ОТПРАВКА В TELEGRAM ЧЕРЕЗ БУФЕР ОБМЕНА (БЕЗ 400 BAD REQUEST) */
     function sendTelegram() {
-      if (appState.step === 0) {
-        toast("Сначала заполните данные согласования.");
+      if (appState.step < questions.length) {
+        toast("Сначала завершите согласование.");
         openChat();
         return;
       }
-      const text = generatePassportText();
-      const message = encodeURIComponent(`Заявка технического согласования (Фестиваль «Атлас»):\n\n` + text);
-      window.open(`https://t.me/share/url?url=&text=${message}`, "_blank");
+
+      const text = [
+        "🎭 ТЕХНИЧЕСКИЙ ПАСПОРТ СПЕКТАКЛЯ — ФЕСТИВАЛЬ «АТЛАС»",
+        `Площадка: ${appState.data.scene}`,
+        `Дата: ${new Date().toLocaleDateString('ru-RU')}`,
+        "--------------------------------------------------",
+        "1. КОЛЛЕКТИВ И КОНТАКТЫ:",
+        appState.data.theatreInfo,
+        "",
+        "2. ЗАЕЗД ТРАНСПОРТА:",
+        appState.data.transportArrival,
+        "",
+        "3. НОЧНЫЕ РАБОТЫ:",
+        appState.data.nightWork,
+        "",
+        "4. ПОЧАСОВОЙ ТАЙМИНГ:",
+        appState.data.dayTiming,
+        "",
+        "5. ВЫЗОВ СЛУЖБ ТЕАТРА:",
+        appState.data.servicesTable,
+        "",
+        "6. БЫТ И КОСТЮМЕРЫ:",
+        appState.data.costumes,
+        "",
+        "7. ССЫЛКИ НА РАЙДЕРЫ:",
+        appState.data.riders,
+        "--------------------------------------------------",
+        "Сформировано на портале ATLAS"
+      ].join("\n");
+
+      // Копируем полный текст в буфер обмена
+      navigator.clipboard.writeText(text).then(() => {
+        toast("Полный паспорт скопирован в буфер обмена! Переходим в Telegram к Руслану...");
+        setTimeout(() => {
+          // Открываем прямой чат с Русланом (номер +79028765792)
+          window.open("https://t.me/+79028765792", "_blank");
+        }, 900);
+      }).catch(() => {
+        window.open("https://t.me/+79028765792", "_blank");
+      });
     }
 
-    // Слушатели навигации
     $$("[data-scroll]").forEach(btn => {
       btn.addEventListener("click", () => {
         const target = $(`#${btn.dataset.scroll}`);
