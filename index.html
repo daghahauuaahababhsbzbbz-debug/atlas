@@ -12,35 +12,46 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
+    /* Токены согласно разделу 4 и Цветовой таблице Брендбука ATLAS 2026 */
     :root {
       --bg: #090A0C;
       --panel: #111316;
-      --panel-dark: #17191D;
-      --cream: #F2EEE5;
+      --panel-2: #17191D;
+      --text: #F2EEE5;
       --muted: #B8B1A4;
       --gold: #D6A85F;
       --gold-dark: #6F5630;
-      --green: #AABF9A;
-
-      --line: rgba(214, 168, 95, 0.24);
+      --status: #AABF9A;
+      --line: rgba(214, 168, 95, 0.22);
       --line-soft: rgba(242, 238, 229, 0.08);
       --shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
-      --radius: 2px;
       --max: 1540px;
+    }
+
+    body[data-theme="light"] {
+      --bg: #F2EEE5;
+      --panel: #FAF8F3;
+      --panel-2: #E8E3D8;
+      --text: #111316;
+      --muted: #625E57;
+      --gold: #B8863B;
+      --gold-dark: #80622E;
+      --status: #71885F;
+      --line: rgba(184, 134, 59, 0.28);
+      --line-soft: rgba(17, 19, 22, 0.09);
+      --shadow: 0 20px 60px rgba(98, 94, 87, 0.16);
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      background:
-        radial-gradient(circle at 70% 16%, rgba(214, 168, 95, 0.06), transparent 28%),
-        radial-gradient(circle at 15% 80%, rgba(242, 238, 229, 0.02), transparent 25%),
-        var(--bg);
-      color: var(--cream);
+      background: var(--bg);
+      color: var(--text);
       font-family: "Manrope", Arial, sans-serif;
       min-height: 100vh;
       overflow-x: hidden;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
 
     body::before {
@@ -48,10 +59,10 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      opacity: 0.18;
+      opacity: 0.16;
       background-image:
-        linear-gradient(rgba(242, 238, 229, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(242, 238, 229, 0.03) 1px, transparent 1px);
+        linear-gradient(var(--line-soft) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
       background-size: 64px 64px;
       mask-image: linear-gradient(to bottom, black, transparent 92%);
     }
@@ -63,7 +74,7 @@
       width: min(calc(100% - 28px), var(--max));
       margin: 14px auto 0;
       border: 1px solid var(--line-soft);
-      background: rgba(9, 10, 12, 0.92);
+      background: var(--bg);
       box-shadow: var(--shadow);
       position: relative;
     }
@@ -74,7 +85,8 @@
       grid-template-columns: auto 1fr auto;
       align-items: center;
       border-bottom: 1px solid var(--line-soft);
-      background: rgba(17, 19, 22, 0.85);
+      background: var(--panel);
+      transition: background-color 0.25s ease;
     }
 
     .brand {
@@ -91,7 +103,11 @@
       max-width: 320px;
       object-fit: contain;
       display: block;
-      filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.6));
+      filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.4));
+    }
+
+    body[data-theme="light"] .brand-logo-img {
+      filter: invert(0.88) hue-rotate(180deg) contrast(1.1);
     }
 
     nav {
@@ -105,7 +121,7 @@
       border: 0;
       background: transparent;
       color: var(--muted);
-      padding: 0 25px;
+      padding: 0 22px;
       position: relative;
       letter-spacing: .08em;
       font-size: 11px;
@@ -114,25 +130,62 @@
       transition: color .2s;
     }
 
-    nav button:hover, nav button.active { color: var(--cream); }
+    nav button:hover, nav button.active { color: var(--text); }
     nav button.active::after {
       content: "";
       position: absolute;
-      left: 25px;
-      right: 25px;
+      left: 22px;
+      right: 22px;
       bottom: 0;
       height: 2px;
       background: var(--gold);
-      box-shadow: 0 0 16px rgba(214, 168, 95, 0.45);
+      box-shadow: 0 0 16px var(--gold);
     }
 
-    .system {
-      height: 86px;
+    .header-aside {
       display: flex;
       align-items: center;
-      gap: 28px;
-      padding: 0 28px;
+      height: 86px;
       border-left: 1px solid var(--line-soft);
+    }
+
+    /* Архитектурный сегментированный переключатель темы (Раздел 4) */
+    .theme-switcher {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding: 0 20px;
+      height: 100%;
+      border-right: 1px solid var(--line-soft);
+    }
+
+    .theme-switcher button {
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      font-family: "IBM Plex Mono", Consolas, monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      transition: all 0.2s ease;
+    }
+
+    .theme-switcher button:hover {
+      color: var(--text);
+    }
+
+    .theme-switcher button.active {
+      color: var(--gold);
+      border-color: var(--line);
+      background: var(--panel-2);
+    }
+
+    .system-status {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 24px;
       font-family: "IBM Plex Mono", Consolas, monospace;
       font-size: 10px;
       letter-spacing: .08em;
@@ -140,11 +193,20 @@
       white-space: nowrap;
     }
 
-    .online { color: var(--green); display: flex; align-items: center; gap: 9px; }
-    .online i {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 12px rgba(170, 191, 154, 0.7);
+    /* Статус строго по разделу 6 брендбука: «СИСТЕМА АКТИВНА» */
+    .status-badge {
+      color: var(--status);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-badge i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--status);
+      box-shadow: 0 0 10px var(--status);
     }
 
     .content {
@@ -185,6 +247,11 @@
       z-index: 1;
     }
 
+    body[data-theme="light"] .hero-compass-bg {
+      opacity: 0.22;
+      filter: contrast(1.15);
+    }
+
     .eyebrow {
       font-family: "IBM Plex Mono", Consolas, monospace;
       font-size: 10px;
@@ -205,8 +272,8 @@
       font-size: clamp(84px, 11vw, 150px);
       line-height: .72;
       letter-spacing: .12em;
-      color: var(--cream);
-      text-shadow: 0 10px 45px rgba(0, 0, 0, 0.85);
+      color: var(--text);
+      text-shadow: 0 10px 45px rgba(0, 0, 0, 0.4);
     }
 
     .hero h1 span { color: var(--gold); }
@@ -215,12 +282,11 @@
       position: relative;
       z-index: 2;
       margin-top: 36px;
-      color: var(--cream);
+      color: var(--text);
       font-family: "Cormorant Garamond", Georgia, serif;
       font-size: 20px;
       letter-spacing: .22em;
       text-transform: uppercase;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
     }
 
     .hero-subtitle {
@@ -231,7 +297,6 @@
       font-family: "IBM Plex Mono", Consolas, monospace;
       font-size: 10.5px;
       letter-spacing: .12em;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
     }
 
     .section-title {
@@ -240,7 +305,7 @@
       gap: 14px;
       padding: 26px 52px 18px;
       font-family: "IBM Plex Mono", Consolas, monospace;
-      color: var(--cream);
+      color: var(--text);
       font-size: 11px;
       letter-spacing: .16em;
       text-transform: uppercase;
@@ -277,7 +342,7 @@
     .stage-card-btn:hover {
       transform: translateY(-4px);
       border-color: var(--gold);
-      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.65);
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.35);
     }
 
     .stage-image {
@@ -292,14 +357,14 @@
 
     .stage-card-btn.main-stage .stage-image {
       background-image: 
-        linear-gradient(to top, rgba(9, 10, 12, 0.96) 0%, rgba(9, 10, 12, 0.35) 50%, rgba(9, 10, 12, 0.15) 100%),
+        linear-gradient(to top, rgba(9, 10, 12, 0.95) 0%, rgba(9, 10, 12, 0.35) 50%, rgba(9, 10, 12, 0.15) 100%),
         url('img/main_stage_real.jpg'),
         url('main_stage_real.jpg');
     }
 
     .stage-card-btn.small-stage .stage-image {
       background-image: 
-        linear-gradient(to top, rgba(9, 10, 12, 0.96) 0%, rgba(9, 10, 12, 0.35) 50%, rgba(9, 10, 12, 0.15) 100%),
+        linear-gradient(to top, rgba(9, 10, 12, 0.95) 0%, rgba(9, 10, 12, 0.35) 50%, rgba(9, 10, 12, 0.15) 100%),
         url('img/small_stage_real.jpg'),
         url('small_stage_real.jpg');
     }
@@ -315,7 +380,7 @@
       font-family: "Cormorant Garamond", Georgia, serif;
       font-size: 30px;
       letter-spacing: .08em;
-      color: var(--cream);
+      color: #F2EEE5;
       line-height: 1.1;
       text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9);
     }
@@ -334,7 +399,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       border-top: 1px solid var(--line-soft);
-      background: var(--panel-dark);
+      background: var(--panel-2);
       width: 100%;
     }
 
@@ -354,7 +419,7 @@
     }
     .spec-value {
       margin-top: 6px;
-      color: var(--cream);
+      color: var(--text);
       font-family: "IBM Plex Mono", Consolas, monospace;
       font-size: 11px;
     }
@@ -376,11 +441,11 @@
 
     .stage-card-btn:hover .stage-action-bar {
       background: rgba(214, 168, 95, 0.08);
-      color: var(--cream);
+      color: var(--text);
     }
 
     .right {
-      background: rgba(17, 19, 22, 0.85);
+      background: var(--panel);
     }
 
     .workflow {
@@ -400,7 +465,7 @@
       font-family: "Cormorant Garamond", Georgia, serif;
       font-size: 24px;
       letter-spacing: .07em;
-      color: var(--cream);
+      color: var(--text);
     }
 
     .workflow-kicker {
@@ -433,7 +498,7 @@
       top: 27px;
       bottom: 28px;
       width: 1px;
-      background: var(--gold-dark);
+      background: var(--line);
     }
 
     .step {
@@ -448,7 +513,7 @@
     .step-dot {
       width: 23px;
       height: 23px;
-      border: 1px solid #4b4d51;
+      border: 1px solid var(--line-soft);
       border-radius: 50%;
       background: var(--bg);
       display: grid;
@@ -461,21 +526,21 @@
     .step.done .step-dot {
       border-color: var(--gold);
       color: var(--gold);
-      background: var(--panel-dark);
+      background: var(--panel-2);
     }
 
     .step.current .step-dot {
       border-color: var(--gold);
-      box-shadow: 0 0 0 5px rgba(214, 168, 95, 0.1);
+      box-shadow: 0 0 0 4px rgba(214, 168, 95, 0.12);
     }
 
     .step-title {
-      color: #777a7f;
+      color: var(--muted);
       font-size: 11px;
       padding-top: 3px;
     }
 
-    .step.done .step-title, .step.current .step-title { color: var(--cream); }
+    .step.done .step-title, .step.current .step-title { color: var(--text); }
     .step-detail {
       color: var(--gold);
       font-family: "IBM Plex Mono", Consolas, monospace;
@@ -520,7 +585,7 @@
       font-family: "Cormorant Garamond", Georgia, serif;
       font-size: 22px;
       letter-spacing: .07em;
-      color: var(--cream);
+      color: var(--text);
     }
 
     .status {
@@ -545,7 +610,7 @@
       border: 1px solid var(--line);
       background:
         linear-gradient(135deg, transparent 0 80%, rgba(214, 168, 95, 0.12) 80% 80.7%, transparent 80.7%),
-        var(--panel-dark);
+        var(--panel-2);
       position: relative;
       padding: 21px 15px;
     }
@@ -574,13 +639,13 @@
     .doc-lines i {
       display: block;
       height: 1px;
-      background: rgba(242, 238, 229, 0.16);
+      background: var(--line-soft);
     }
     .doc-lines i:nth-child(2) { width: 75%; }
     .doc-lines i:nth-child(3) { width: 55%; }
 
     .doc-name {
-      color: var(--cream);
+      color: var(--text);
       font-size: 14px;
       line-height: 1.45;
     }
@@ -604,7 +669,7 @@
       height: 48px;
       background: transparent;
       border: 1px solid var(--line-soft);
-      color: var(--cream);
+      color: var(--text);
       font-family: "IBM Plex Mono", Consolas, monospace;
       font-size: 9px;
       letter-spacing: .08em;
@@ -617,7 +682,7 @@
       color: var(--gold);
     }
     .passport-actions button:hover {
-      background: rgba(242, 238, 229, 0.04);
+      background: rgba(214, 168, 95, 0.06);
       border-color: var(--gold);
     }
 
@@ -643,7 +708,7 @@
     }
     .info-value {
       margin-top: 10px;
-      color: var(--cream);
+      color: var(--text);
       font-size: 11.5px;
       line-height: 1.55;
     }
@@ -654,18 +719,19 @@
       display: flex;
       justify-content: space-between;
       gap: 20px;
-      color: var(--muted-2);
+      color: var(--muted);
       font-family: "IBM Plex Mono", Consolas, monospace;
       font-size: 8px;
       letter-spacing: .08em;
       text-transform: uppercase;
     }
 
+    /* ---------- МОДАЛЬНЫЕ ОКНА ---------- */
     .modal {
       position: fixed;
       inset: 0;
       z-index: 100;
-      background: rgba(9, 10, 12, 0.88);
+      background: rgba(9, 10, 12, 0.85);
       backdrop-filter: blur(8px);
       display: none;
       align-items: center;
@@ -680,7 +746,7 @@
       overflow: hidden;
       background: var(--panel);
       border: 1px solid var(--line);
-      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.75);
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.65);
       display: grid;
       grid-template-rows: auto 1fr auto;
     }
@@ -730,7 +796,7 @@
     }
 
     .stage-details-table tr {
-      border-bottom: 1px solid rgba(242, 238, 229, 0.05);
+      border-bottom: 1px solid var(--line-soft);
     }
 
     .stage-details-table tr:last-child { border-bottom: none; }
@@ -750,7 +816,7 @@
     }
 
     .stage-details-table .param-val {
-      color: var(--cream);
+      color: var(--text);
       font-weight: 500;
     }
 
@@ -790,7 +856,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 12px 14px;
-      background: rgba(242, 238, 229, 0.02);
+      background: var(--panel-2);
       border: 1px solid var(--line-soft);
       gap: 12px;
     }
@@ -801,7 +867,7 @@
       gap: 3px;
     }
 
-    .doc-item-title { font-size: 12px; color: var(--cream); font-weight: 500; }
+    .doc-item-title { font-size: 12px; color: var(--text); font-weight: 500; }
     .doc-item-desc { font-size: 9px; color: var(--muted); font-family: "IBM Plex Mono", Consolas, monospace; }
 
     .doc-download {
@@ -841,7 +907,7 @@
       border: 1px solid var(--line-soft);
       background: rgba(214, 168, 95, 0.06);
       padding: 12px 16px;
-      color: var(--cream);
+      color: var(--text);
       font-size: 13px;
       line-height: 1.5;
     }
@@ -859,16 +925,22 @@
     }
 
     .chat-text { font-size: 13px; line-height: 1.6; color: var(--muted); }
-    .chat-text b { color: var(--cream); }
+    .chat-text b { color: var(--text); }
 
     .chat-tip {
       margin-top: 8px;
       padding: 8px 12px;
       background: rgba(214, 168, 95, 0.08);
       border-left: 2px solid var(--gold);
-      color: var(--cream);
+      color: var(--text);
       font-size: 11px;
       line-height: 1.45;
+    }
+
+    .chat-tip.danger {
+      background: rgba(192, 57, 43, 0.12);
+      border-left: 2px solid #c0392b;
+      color: var(--text);
     }
 
     .chat-options {
@@ -903,10 +975,9 @@
     }
     .btn-edit-step:hover { opacity: 1; }
 
-    /* ---------- ИНТЕРАКТИВНЫЕ МОДУЛИ ---------- */
     .services-interactive-box {
       margin-top: 14px;
-      background: rgba(9, 10, 12, 0.7);
+      background: var(--panel-2);
       border: 1px solid var(--line-soft);
       padding: 16px;
       display: flex;
@@ -920,7 +991,7 @@
       gap: 10px;
       align-items: center;
       padding-bottom: 8px;
-      border-bottom: 1px solid rgba(242, 238, 229, 0.04);
+      border-bottom: 1px solid var(--line-soft);
       font-size: 12px;
     }
 
@@ -933,7 +1004,6 @@
       background: var(--bg);
       border: 1px solid var(--line-soft);
       padding: 2px 4px;
-      border-radius: 2px;
     }
 
     .counter-btn {
@@ -956,13 +1026,13 @@
       text-align: center;
       font-family: "IBM Plex Mono", monospace;
       font-weight: 600;
-      color: var(--cream);
+      color: var(--text);
     }
 
     .service-row-item input[type="text"], .service-row-item select {
       background: var(--bg);
       border: 1px solid var(--line-soft);
-      color: var(--cream);
+      color: var(--text);
       padding: 6px 8px;
       font-size: 11px;
       outline: none;
@@ -974,8 +1044,8 @@
     }
 
     .cleaning-section {
-      background: rgba(242, 238, 229, 0.02);
-      border: 1px dashed var(--line-soft);
+      background: var(--bg);
+      border: 1px dashed var(--line);
       padding: 10px 12px;
       margin-top: 4px;
     }
@@ -1010,12 +1080,12 @@
       font-size: 14px;
       padding: 0 4px;
     }
-    .btn-del-cleaning:hover { color: #e74c3c; }
+    .btn-del-cleaning:hover { color: #c0392b; }
 
     .extra-needs-area {
       margin-top: 10px;
       padding-top: 10px;
-      border-top: 1px solid rgba(242, 238, 229, 0.06);
+      border-top: 1px solid var(--line-soft);
     }
 
     .extra-needs-area textarea {
@@ -1023,7 +1093,7 @@
       height: 64px;
       background: var(--bg);
       border: 1px solid var(--line-soft);
-      color: var(--cream);
+      color: var(--text);
       padding: 8px 10px;
       font-size: 11px;
       resize: vertical;
@@ -1036,7 +1106,7 @@
     .btn-confirm-services {
       margin-top: 12px;
       background: var(--gold);
-      color: var(--bg);
+      color: var(--panel);
       border: none;
       padding: 11px 18px;
       font-weight: 700;
@@ -1046,10 +1116,10 @@
       font-family: "IBM Plex Mono", Consolas, monospace;
       align-self: flex-start;
       cursor: pointer;
-      transition: background .2s;
+      transition: opacity .2s;
     }
 
-    .btn-confirm-services:hover { background: #e3c187; }
+    .btn-confirm-services:hover { opacity: 0.9; }
 
     .file-upload-zone {
       margin-top: 12px;
@@ -1085,7 +1155,7 @@
       text-align: left;
       font-size: 11px;
       font-family: "IBM Plex Mono", monospace;
-      color: var(--cream);
+      color: var(--text);
       display: flex;
       flex-direction: column;
       gap: 4px;
@@ -1097,7 +1167,7 @@
       padding: 14px;
       display: flex;
       gap: 10px;
-      background: var(--panel-dark);
+      background: var(--panel);
     }
 
     .chat-form textarea {
@@ -1106,7 +1176,7 @@
       height: 58px;
       border: 1px solid var(--line-soft);
       background: var(--bg);
-      color: var(--cream);
+      color: var(--text);
       padding: 10px 14px;
       outline: none;
       font-size: 12px;
@@ -1129,13 +1199,13 @@
     }
     .chat-form button:hover {
       background: var(--gold);
-      color: var(--bg);
+      color: var(--panel);
     }
 
     .toast {
       position: fixed; z-index: 200; right: 22px; bottom: 22px;
-      max-width: 380px; background: var(--panel-dark); border: 1px solid var(--gold);
-      color: var(--cream); padding: 14px 17px; box-shadow: var(--shadow);
+      max-width: 380px; background: var(--panel); border: 1px solid var(--gold);
+      color: var(--text); padding: 14px 17px; box-shadow: var(--shadow);
       transform: translateY(20px); opacity: 0; pointer-events: none;
       transition: .25s ease; font-size: 12px;
     }
@@ -1144,7 +1214,7 @@
     @media (max-width: 1180px) {
       header { grid-template-columns: 1fr; gap: 14px; padding: 14px 0; }
       .brand { border-right: 0; padding: 0 20px; justify-content: center; }
-      .system { display: none; }
+      .header-aside { border-left: 0; justify-content: space-between; padding: 0 20px; }
       .content { grid-template-columns: 1fr; }
       .left { border-right: 0; }
       .right { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line-soft); }
@@ -1157,8 +1227,9 @@
       .shell { width: calc(100% - 12px); margin-top: 6px; }
       header { min-height: auto; display: block; }
       nav { height: 52px; border-top: 1px solid var(--line-soft); overflow-x: auto; padding: 0; justify-content: center; }
-      nav button { padding: 0 18px; white-space: nowrap; }
-      nav button.active::after { left: 18px; right: 18px; }
+      nav button { padding: 0 16px; white-space: nowrap; }
+      nav button.active::after { left: 16px; right: 16px; }
+      .header-aside { height: 48px; border-top: 1px solid var(--line-soft); }
       .hero { padding: 42px 26px 80px; min-height: 340px; }
       .hero h1 { font-size: clamp(68px, 18vw, 110px); }
       .hero-title { font-size: 12px; letter-spacing: .19em; }
@@ -1210,9 +1281,19 @@
         <button data-action="open-reference">Справочник</button>
       </nav>
 
-      <div class="system">
-        <div class="online"><i></i> СИСТЕМА ОНЛАЙН</div>
-        <div id="clock">04.09.2026<br>12:00</div>
+      <div class="header-aside">
+        <!-- Трёхпозиционный архитектурный переключатель согласно Разделу 4 Брендбука -->
+        <div class="theme-switcher" role="group" aria-label="Переключение темы оформления">
+          <button type="button" data-theme-set="system" id="btnThemeSystem" class="active">Системная</button>
+          <button type="button" data-theme-set="light" id="btnThemeLight">Светлая</button>
+          <button type="button" data-theme-set="dark" id="btnThemeDark">Тёмная</button>
+        </div>
+
+        <div class="system-status">
+          <!-- Формулировка статуса строго по разделу 6 брендбука -->
+          <div class="status-badge"><i></i> СИСТЕМА АКТИВНА</div>
+          <div id="clock">04.09.2026<br>12:20</div>
+        </div>
       </div>
     </header>
 
@@ -1400,7 +1481,7 @@
 
     <footer>
       <span>ATLAS · Портал координации технических служб</span>
-      <span>Версия 2.0 · 2026</span>
+      <span>Версия 2.1 · 2026</span>
       <span>Взаимодействие постановочных групп</span>
     </footer>
   </div>
@@ -1583,7 +1664,45 @@
       toast(`Загрузка файла: ${name}`);
     }
 
-    /* 2. СОСТОЯНИЕ И ВОПРОСЫ ОПРОСНИКА */
+    /* 2. ПЕРЕКЛЮЧАТЕЛЬ ТЕМ (Разделы 4, 12, 13 Брендбука) */
+    const themeButtons = {
+      system: document.getElementById('btnThemeSystem'),
+      light: document.getElementById('btnThemeLight'),
+      dark: document.getElementById('btnThemeDark')
+    };
+
+    function applyTheme(mode) {
+      let activeVisualTheme = mode;
+      if (mode === 'system') {
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        activeVisualTheme = systemPrefersDark ? 'dark' : 'light';
+        document.body.setAttribute('data-theme', activeVisualTheme);
+      } else {
+        document.body.setAttribute('data-theme', mode);
+      }
+
+      Object.keys(themeButtons).forEach(key => {
+        if (themeButtons[key]) themeButtons[key].classList.toggle('active', key === mode);
+      });
+
+      localStorage.setItem('atlas_theme_preference', mode);
+    }
+
+    Object.keys(themeButtons).forEach(mode => {
+      if (themeButtons[mode]) {
+        themeButtons[mode].addEventListener('click', () => applyTheme(mode));
+      }
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      const saved = localStorage.getItem('atlas_theme_preference') || 'system';
+      if (saved === 'system') applyTheme('system');
+    });
+
+    const initialTheme = localStorage.getItem('atlas_theme_preference') || 'system';
+    applyTheme(initialTheme);
+
+    /* 3. СОСТОЯНИЕ И ВОПРОСЫ ОПРОСНИКА */
     const appState = {
       selectedStage: "Основная сцена",
       step: 0,
@@ -1754,501 +1873,6 @@
       document.body.style.overflow = "";
     }
 
-    /* Модуль счётчиков персонала */
-    function changeCounter(id, delta, minVal = 0) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      let val = parseInt(el.textContent, 10) || 0;
-      val = Math.max(minVal, val + delta);
-      el.textContent = val;
-    }
-
-    /* Модуль динамических уборок */
-    let cleaningCounter = 1;
-    function addCleaningRow() {
-      cleaningCounter++;
-      const container = document.getElementById('cleaningEntriesContainer');
-      const row = document.createElement('div');
-      row.className = 'cleaning-entry-row';
-      row.id = `clean_row_${cleaningCounter}`;
-      row.innerHTML = `
-        <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--gold); min-width:80px;">Уборка №${cleaningCounter}:</span>
-        <input type="text" class="clean-time-input" placeholder="Время (напр. 17:30)" value="в 18:00" style="flex:1;">
-        <input type="text" class="clean-task-input" placeholder="Задача (напр. влажная уборка планшета)" value="влажная уборка планшета" style="flex:1.2;">
-        <button type="button" class="btn-del-cleaning" onclick="deleteCleaningRow('clean_row_${cleaningCounter}')" title="Удалить уборку">×</button>
-      `;
-      container.appendChild(row);
-    }
-
-    function deleteCleaningRow(rowId) {
-      const row = document.getElementById(rowId);
-      if (row) row.remove();
-    }
-
-    /* Модуль выбора файлов на устройстве */
-    function handleFileSelection(e) {
-      const files = Array.from(e.target.files);
-      if (!files.length) return;
-      appState.uploadedFiles = files;
-      const display = document.getElementById('selectedFilesListDisplay');
-      display.innerHTML = files.map((f, i) => `<div>📄 <b>${f.name}</b> (${Math.round(f.size / 1024)} Кб)</div>`).join('');
-      toast(`Выбрано файлов: ${files.length}. Нажмите «Ответить» для сохранения.`);
-    }
-
-    /* Переключение режима ночных работ */
-    function toggleNightOptions(hasNight) {
-      const formBlock = document.getElementById('nightOptionsContainer');
-      if (formBlock) {
-        formBlock.style.display = hasNight ? 'flex' : 'none';
-      }
-    }
-
-    /* Подтверждение модуля ночных работ */
-    function confirmNightServicesForm() {
-      const noNightRadio = document.getElementById('night_opt_none');
-      if (noNightRadio && noNightRadio.checked) {
-        handleStepSubmission("Ночные работы не требуются. Все монтажи, настройки и репетиции строго в дневную смену.");
-        return;
-      }
-
-      const tasks = [];
-      if (document.getElementById('night_task_mach').checked) {
-        const cnt = document.getElementById('cnt_night_mach').textContent;
-        const time = document.getElementById('time_night_mach').value.trim();
-        tasks.push(`• Монтаж декораций на планшете / подвес: монтировщики — ${cnt} чел. (${time})`);
-      }
-      if (document.getElementById('night_task_light').checked) {
-        const cnt = document.getElementById('cnt_night_light').textContent;
-        const time = document.getElementById('time_night_light').value.trim();
-        tasks.push(`• Юстировка и пропись световых картин: осветители — ${cnt} чел. (${time})`);
-      }
-      if (document.getElementById('night_task_sound').checked) {
-        const cnt = document.getElementById('cnt_night_sound').textContent;
-        const time = document.getElementById('time_night_sound').value.trim();
-        tasks.push(`• Настройка акустики / саундчек / Dante: звукоцех — ${cnt} чел. (${time})`);
-      }
-      if (document.getElementById('night_task_video').checked) {
-        const cnt = document.getElementById('cnt_night_video').textContent;
-        const time = document.getElementById('time_night_video').value.trim();
-        tasks.push(`• Сведение проекции / тестирование LED-экрана: видеоинженер — ${cnt} чел. (${time})`);
-      }
-      if (document.getElementById('night_task_mech').checked) {
-        const cnt = document.getElementById('cnt_night_mech').textContent;
-        const time = document.getElementById('time_night_mech').value.trim();
-        tasks.push(`• Ночные подъёмно-опускные работы: оператор механики — ${cnt} чел. (${time})`);
-      }
-      if (document.getElementById('night_task_rehearsal').checked) {
-        const time = document.getElementById('time_night_rehearsal').value.trim();
-        tasks.push(`• Ночная сценическая репетиция коллектива (${time})`);
-      }
-
-      const dutyStaff = [];
-      if (document.getElementById('night_duty_pomrezh').checked) dutyStaff.push("дежурный завпост/помреж площадки");
-      if (document.getElementById('night_duty_electr').checked) dutyStaff.push("дежурный электрик площадки");
-      if (dutyStaff.length) {
-        tasks.push(`• Обязательные дежурные службы площадки: ${dutyStaff.join(', ')}`);
-      }
-
-      const extra = document.getElementById('night_extra_comment').value.trim();
-      if (extra) {
-        tasks.push(`• Примечание по ночной смене: ${extra}`);
-      }
-
-      if (tasks.length === 0) {
-        toast("Выберите хотя бы одно направление ночных работ или отметьте «Ночные работы не требуются».");
-        return;
-      }
-
-      const resultText = `ТРЕБУЮТСЯ НОЧНЫЕ РАБОТЫ НА ПЛОЩАДКЕ:\n` + tasks.join('\n');
-      handleStepSubmission(resultText);
-    }
-
-    function showQuestion(idx) {
-      const stepData = questions[idx];
-      const chat = $("#chat");
-
-      const msg = document.createElement("div");
-      msg.className = "chat-message assistant";
-      msg.id = `chat-q-${idx}`;
-
-      let interactiveHtml = "";
-
-      /* Мультивыбор ночных работ (Шаг 5) */
-      if (stepData.type === "interactive_night_services") {
-        interactiveHtml = `
-          <div class="services-interactive-box" id="nightBox">
-            <div style="display:flex; gap:18px; margin-bottom:10px; font-size:12px;">
-              <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
-                <input type="radio" name="night_choice" id="night_opt_needed" checked onchange="toggleNightOptions(true)">
-                <b style="color:var(--gold);">Да, требуются ночные работы</b>
-              </label>
-              <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
-                <input type="radio" name="night_choice" id="night_opt_none" onchange="toggleNightOptions(false)">
-                <span>Ночные работы не нужны</span>
-              </label>
-            </div>
-
-            <div id="nightOptionsContainer" style="display:flex; flex-direction:column; gap:10px;">
-              <div style="font-size:10px; font-family:'IBM Plex Mono',monospace; color:var(--muted); text-transform:uppercase;">
-                Выберите направления и укажите часы (можно накидать несколько задач сразу):
-              </div>
-
-              <!-- Декорации -->
-              <div class="service-row-item">
-                <input type="checkbox" id="night_task_mach" checked>
-                <label for="night_task_mach"><b>Монтаж декораций / сборка</b></label>
-                <div class="counter-control">
-                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_mach', -1, 1)">−</button>
-                  <span class="counter-val" id="cnt_night_mach">2</span>
-                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_mach', 1, 1)">+</button>
-                </div>
-                <input type="text" id="time_night_mach" placeholder="Часы" value="00:00 — 06:00">
-              </div>
-
-              <!-- Свет -->
-              <div class="service-row-item">
-                <input type="checkbox" id="night_task_light" checked>
-                <label for="night_task_light"><b>Световые работы (развес/юстировка)</b></label>
-                <div class="counter-control">
-                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_light', -1, 1)">−</button>
-                  <span class="counter-val" id="cnt_night_light">1</span>
-                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_light', 1, 1)">+</button>
-                </div>
-                <input type="text" id="time_night_light" placeholder="Часы" value="23:00 — 04:00">
-              </div>
-
-              <!-- Звук -->
-              <div class="service-row-item">
-                <input type="checkbox" id="night_task_sound">
-                <label for="night_task_sound"><b>Звуковой тракт / саундчек / Dante</b></label>
-                <div class="counter-control">
-                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_sound', -1, 1)">−</button>
-                  <span class="counter-val" id="cnt_night_sound">1</span>
-                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_sound', 1, 1)">+</button>
-                </div>
-                <input type="text" id="time_night_sound" placeholder="Часы" value="00:00 — 04:00">
-              </div>
-
-              <!-- Видео -->
-              <div class="service-row-item">
-                <input type="checkbox" id="night_task_video">
-                <label for="night_task_video"><b>Видео / проекция / LED-экран</b></label>
-                <div class="counter-control">
-                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_video', -1, 1)">−</button>
-                  <span class="counter-val" id="cnt_night_video">1</span>
-                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_video', 1, 1)">+</button>
-                </div>
-                <input type="text" id="time_night_video" placeholder="Часы" value="00:00 — 03:00">
-              </div>
-
-              <!-- Механика -->
-              <div class="service-row-item">
-                <input type="checkbox" id="night_task_mech">
-                <label for="night_task_mech"><b>Механика (штанкеты / лебёдки)</b></label>
-                <div class="counter-control">
-                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_mech', -1, 1)">−</button>
-                  <span class="counter-val" id="cnt_night_mech">1</span>
-                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_mech', 1, 1)">+</button>
-                </div>
-                <input type="text" id="time_night_mech" placeholder="Часы" value="00:00 — 06:00">
-              </div>
-
-              <!-- Ночная репетиция -->
-              <div class="service-row-item" style="grid-template-columns:24px 1fr auto 130px;">
-                <input type="checkbox" id="night_task_rehearsal">
-                <label for="night_task_rehearsal"><b>Ночная сценическая репетиция</b></label>
-                <span style="font-size:10px; color:var(--gold); font-family:'IBM Plex Mono',monospace;">Труппа</span>
-                <input type="text" id="time_night_rehearsal" placeholder="Часы" value="00:00 — 03:00">
-              </div>
-
-              <!-- Дежурные службы площадки на ночь -->
-              <div style="background:rgba(242,238,229,0.02); border:1px solid var(--line-soft); padding:8px 10px; display:flex; flex-direction:column; gap:6px;">
-                <b style="font-size:10px; color:var(--gold); font-family:'IBM Plex Mono',monospace; text-transform:uppercase;">Дежурные инженеры площадки на ночь:</b>
-                <label style="display:flex; align-items:center; gap:8px; font-size:11px;">
-                  <input type="checkbox" id="night_duty_pomrezh" checked> Дежурный завпост / помреж площадки (координация ночной смены)
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; font-size:11px;">
-                  <input type="checkbox" id="night_duty_electr" checked> Дежурный электрик площадки (безопасность силовых сетей)
-                </label>
-              </div>
-
-              <div style="margin-top:4px;">
-                <input type="text" id="night_extra_comment" placeholder="Дополнительные детали или пожелания по ночным работам..." style="width:100%;">
-              </div>
-            </div>
-
-            <button type="button" class="btn-confirm-services" onclick="confirmNightServicesForm()">✓ Подтвердить ночные работы</button>
-          </div>
-        `;
-      }
-
-      /* Продвинутая таблица служб дневной смены (Шаг 8) */
-      if (stepData.type === "interactive_services_advanced") {
-        interactiveHtml = `
-          <div class="services-interactive-box" id="servicesBox">
-            <div style="font-size:10px; font-family:'IBM Plex Mono',monospace; color:var(--gold); text-transform:uppercase; margin-bottom:4px;">
-              Дневная смена площадки (09:00 — 23:00):
-            </div>
-
-            <!-- Монтировщики (минимум 1) -->
-            <div class="service-row-item">
-              <input type="checkbox" id="srv_mach" checked disabled title="Минимум 1 монтировщик обязателен">
-              <label for="srv_mach"><b>Монтировщики сцены</b> <small style="color:var(--gold);">(мин. 1 чел)</small></label>
-              <div class="counter-control">
-                <button type="button" class="counter-btn" onclick="changeCounter('cnt_mach', -1, 1)">−</button>
-                <span class="counter-val" id="cnt_mach">4</span>
-                <button type="button" class="counter-btn" onclick="changeCounter('cnt_mach', 1, 1)">+</button>
-              </div>
-              <input type="text" id="srv_mach_time" placeholder="Время (09:00-23:00)" value="09:00 — 23:00">
-            </div>
-
-            <!-- Оператор механики (минимум 1) -->
-            <div class="service-row-item">
-              <input type="checkbox" id="srv_mech" checked disabled title="Минимум 1 специалист обязателен">
-              <label for="srv_mech"><b>Оператор механики (штанкеты)</b> <small style="color:var(--gold);">(мин. 1 чел)</small></label>
-              <div class="counter-control">
-                <button type="button" class="counter-btn" onclick="changeCounter('cnt_mech', -1, 1)">−</button>
-                <span class="counter-val" id="cnt_mech">1</span>
-                <button type="button" class="counter-btn" onclick="changeCounter('cnt_mech', 1, 1)">+</button>
-              </div>
-              <input type="text" id="srv_mech_time" placeholder="Время" value="09:00 — 23:00">
-            </div>
-
-            <!-- Механик сцены с выбором задач -->
-            <div class="service-row-item" style="grid-template-columns: 24px 1fr 1fr 110px;">
-              <input type="checkbox" id="srv_stage_mech" checked>
-              <label for="srv_stage_mech"><b>Механик сцены</b></label>
-              <select id="srv_stage_mech_task">
-                <option value="Установка индивидуальных точечных подвесов">Задача: Установка индивидуальных точечных подвесов</option>
-                <option value="Подвес и коммутация цепных электролебёдок">Задача: Подвес и коммутация цепных электролебёдок</option>
-                <option value="Монтаж вспомогательного подъёмного оборудования">Задача: Монтаж вспомогательного подъёмного оборудования</option>
-                <option value="Юстировка блочных систем и выносных блоков">Задача: Юстировка блочных систем и выносных блоков</option>
-                <option value="Сборка и пусконаладка сборного поворотного круга">Задача: Сборка и пусконаладка сборного поворотного круга</option>
-                <option value="Дежурство и оперативный контроль такелажа">Задача: Дежурство и оперативный контроль такелажа</option>
-              </select>
-              <input type="text" id="srv_stage_mech_time" placeholder="Время" value="09:00 — 23:00">
-            </div>
-
-            <!-- Осветители -->
-            <div class="service-row-item">
-              <input type="checkbox" id="srv_light" checked>
-              <label for="srv_light"><b>Осветители (планшет + оператор)</b></label>
-              <div class="counter-control">
-                <button type="button" class="counter-btn" onclick="changeCounter('cnt_light', -1, 0)">−</button>
-                <span class="counter-val" id="cnt_light">2</span>
-                <button type="button" class="counter-btn" onclick="changeCounter('cnt_light', 1, 0)">+</button>
-              </div>
-              <input type="text" id="srv_light_time" placeholder="Время" value="10:00 — 23:00">
-            </div>
-
-            <!-- Звукоцех -->
-            <div class="service-row-item">
-              <input type="checkbox" id="srv_sound" checked>
-              <label for="srv_sound"><b>Звукоцех площадки</b></label>
-              <div class="counter-control">
-                <button type="button" class="counter-btn" onclick="changeCounter('cnt_sound', -1, 0)">−</button>
-                <span class="counter-val" id="cnt_sound">1</span>
-                <button type="button" class="counter-btn" onclick="changeCounter('cnt_sound', 1, 0)">+</button>
-              </div>
-              <input type="text" id="srv_sound_time" placeholder="Время" value="10:00 — 23:00">
-            </div>
-
-            <!-- Видеоцех -->
-            <div class="service-row-item">
-              <input type="checkbox" id="srv_video">
-              <label for="srv_video"><b>Видеоцех / проекция</b></label>
-              <div class="counter-control">
-                <button type="button" class="counter-btn" onclick="changeCounter('cnt_video', -1, 0)">−</button>
-                <span class="counter-val" id="cnt_video">1</span>
-                <button type="button" class="counter-btn" onclick="changeCounter('cnt_video', 1, 0)">+</button>
-              </div>
-              <input type="text" id="srv_video_time" placeholder="Время" value="11:00 — 22:30">
-            </div>
-
-            <!-- Помреж / Завпост -->
-            <div class="service-row-item">
-              <input type="checkbox" id="srv_pomrezh" checked>
-              <label for="srv_pomrezh"><b>Помощник режиссёра / Завпост</b></label>
-              <div class="counter-control">
-                <button type="button" class="counter-btn" onclick="changeCounter('cnt_pomrezh', -1, 0)">−</button>
-                <span class="counter-val" id="cnt_pomrezh">1</span>
-                <button type="button" class="counter-btn" onclick="changeCounter('cnt_pomrezh', 1, 0)">+</button>
-              </div>
-              <input type="text" id="srv_pomrezh_time" placeholder="Время" value="09:00 — 23:00">
-            </div>
-
-            <!-- Дежурный электрик (всегда 1 по умолчанию) -->
-            <div class="service-row-item">
-              <input type="checkbox" id="srv_eng" checked disabled title="Дежурный электрик включён по умолчанию">
-              <label for="srv_eng"><b>Дежурный электрик площадки</b> <small style="color:var(--gold);">(включён в смену)</small></label>
-              <div class="counter-control">
-                <span class="counter-val" style="padding:0 8px;">1 чел.</span>
-              </div>
-              <input type="text" id="srv_eng_time" placeholder="Время" value="09:00 — 23:00" readonly>
-            </div>
-
-            <!-- Блок динамического добавления уборок -->
-            <div class="cleaning-section">
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <b style="font-size:11px; color:var(--cream);">Уборка планшета сцены (клининг):</b>
-                <button type="button" class="btn-add-cleaning" onclick="addCleaningRow()">+ Добавить ещё уборку</button>
-              </div>
-              <div id="cleaningEntriesContainer">
-                <div class="cleaning-entry-row" id="clean_row_1">
-                  <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--gold); min-width:80px;">Уборка №1:</span>
-                  <input type="text" class="clean-time-input" placeholder="Время" value="перед репетицией (13:30)" style="flex:1;">
-                  <input type="text" class="clean-task-input" placeholder="Задача" value="влажная уборка планшета" style="flex:1.2;">
-                  <span style="width:20px;"></span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Дополнительные потребности и ранний выезд -->
-            <div class="extra-needs-area">
-              <b style="font-size:11px; color:var(--gold);">Дополнительная заявка (ранний вызов до 09:00 / нестандартные задачи):</b>
-              <textarea id="srv_extra_needs" placeholder="Если требуются службы ранее 09:00, дополнительный такелаж или специфические условия — подробно опишите здесь..."></textarea>
-            </div>
-
-            <button type="button" class="btn-confirm-services" onclick="confirmAdvancedServicesForm()">✓ Подтвердить состав дневных служб</button>
-          </div>
-        `;
-      }
-
-      /* Загрузчик файлов и ввод ссылки (Шаг 10) */
-      if (stepData.type === "files_or_url") {
-        interactiveHtml = `
-          <div class="file-upload-zone">
-            <div style="font-size:12px; color:var(--cream);"><b>Загрузите файлы напрямую с компьютера</b> (PDF, DWG, ZIP, DOCX):</div>
-            <label class="btn-select-files">
-              📁 Выбрать файлы на устройстве
-              <input type="file" multiple id="fileUploadInput" onchange="handleFileSelection(event)">
-            </label>
-            <div class="selected-files-list" id="selectedFilesListDisplay">
-              ${appState.uploadedFiles.length ? appState.uploadedFiles.map(f => `<div>📄 <b>${f.name}</b> (${Math.round(f.size / 1024)} Кб)</div>`).join('') : '<span style="color:var(--muted); font-size:10px;">Файлы ещё не выбраны</span>'}
-            </div>
-          </div>
-        `;
-      }
-
-      let choicesHtml = "";
-      if (stepData.type === "choice" && stepData.options) {
-        choicesHtml = `<div class="chat-options">` + 
-          stepData.options.map(opt => `<button type="button" onclick="submitDirectChoice('${opt.replace(/'/g, "\\'")}')">${opt}</button>`).join('') + 
-          `</div>`;
-      }
-
-      let quickFillHtml = "";
-      if (stepData.quickFill && stepData.quickFill.length > 0) {
-        quickFillHtml = `<div class="chat-options" style="margin-top:10px;">` + 
-          stepData.quickFill.map(qf => `<button type="button" onclick="fillInputDraft('${encodeURIComponent(qf.text)}')">✎ ${qf.label}</button>`).join('') + 
-          `</div>`;
-      }
-
-      let tipClass = "chat-tip";
-      if (stepData.stepTitle.includes("Безопасность") || stepData.stepTitle.includes("Транспорт")) {
-        tipClass += " danger";
-      }
-
-      msg.innerHTML = `
-        <div class="chat-label">
-          <span>Этап 0${idx + 1} из 10 · ${stepData.stepTitle}</span>
-        </div>
-        <div class="chat-text">${stepData.q}</div>
-        ${stepData.tip ? `<div class="${tipClass}">${stepData.tip}</div>` : ""}
-        ${interactiveHtml}
-        ${choicesHtml}
-        ${quickFillHtml}
-      `;
-
-      chat.appendChild(msg);
-      chat.scrollTop = chat.scrollHeight;
-
-      const isInteractiveStep = (stepData.type === "interactive_services_advanced" || stepData.type === "interactive_night_services");
-      $("#chatForm").style.display = isInteractiveStep ? "none" : "flex";
-
-      if (stepData.type === "files_or_url") {
-        $("#chatInput").placeholder = "Вставьте ссылку на облачный диск (если применимо) или напишите комментарий к прикреплённым файлам...";
-      } else {
-        $("#chatInput").placeholder = "Введите ваш ответ или скорректируйте предложенный текст...";
-      }
-    }
-
-    function fillInputDraft(encodedText) {
-      const decoded = decodeURIComponent(encodedText);
-      const input = $("#chatInput");
-      input.value = decoded;
-      input.focus();
-      toast("Шаблон вставлен в поле ввода. Вы можете скорректировать его перед отправкой.");
-    }
-
-    function submitDirectChoice(text) {
-      handleStepSubmission(text);
-    }
-
-    /* Подтверждение продвинутой таблицы дневных служб */
-    function confirmAdvancedServicesForm() {
-      const resultParts = [];
-
-      const machCnt = document.getElementById('cnt_mach').textContent;
-      const machTime = document.getElementById('srv_mach_time').value.trim();
-      resultParts.push(`• Монтировщики сцены: ${machCnt} чел. (${machTime})`);
-
-      const mechCnt = document.getElementById('cnt_mech').textContent;
-      const mechTime = document.getElementById('srv_mech_time').value.trim();
-      resultParts.push(`• Оператор механики (штанкеты): ${mechCnt} чел. (${mechTime})`);
-
-      const stageMechChk = document.getElementById('srv_stage_mech').checked;
-      if (stageMechChk) {
-        const task = document.getElementById('srv_stage_mech_task').value;
-        const time = document.getElementById('srv_stage_mech_time').value.trim();
-        resultParts.push(`• Механик сцены (1 специалист, ${time}): ${task}`);
-      }
-
-      if (document.getElementById('srv_light').checked) {
-        const cnt = document.getElementById('cnt_light').textContent;
-        const time = document.getElementById('srv_light_time').value.trim();
-        resultParts.push(`• Осветители (планшет + пульт): ${cnt} чел. (${time})`);
-      }
-
-      if (document.getElementById('srv_sound').checked) {
-        const cnt = document.getElementById('cnt_sound').textContent;
-        const time = document.getElementById('srv_sound_time').value.trim();
-        resultParts.push(`• Звуковой цех площадки: ${cnt} чел. (${time})`);
-      }
-
-      if (document.getElementById('srv_video').checked) {
-        const cnt = document.getElementById('cnt_video').textContent;
-        const time = document.getElementById('srv_video_time').value.trim();
-        resultParts.push(`• Видеоцех / проекция: ${cnt} чел. (${time})`);
-      }
-
-      if (document.getElementById('srv_pomrezh').checked) {
-        const cnt = document.getElementById('cnt_pomrezh').textContent;
-        const time = document.getElementById('srv_pomrezh_time').value.trim();
-        resultParts.push(`• Помощник режиссёра / Завпост: ${cnt} чел. (${time})`);
-      }
-
-      resultParts.push(`• Дежурный электрик площадки: 1 специалист (09:00 — 23:00, включён в смену)`);
-
-      const cleanRows = $$("#cleaningEntriesContainer .cleaning-entry-row");
-      const cleanDetails = [];
-      cleanRows.forEach((r, idx) => {
-        const t = r.querySelector('.clean-time-input').value.trim();
-        const task = r.querySelector('.clean-task-input').value.trim();
-        cleanDetails.push(`  - Уборка ${idx + 1}: ${t} (${task})`);
-      });
-      if (cleanDetails.length) {
-        resultParts.push(`• Клининг планшета сцены (всего ${cleanDetails.length} сессии):\n${cleanDetails.join('\n')}`);
-      }
-
-      const extra = document.getElementById('srv_extra_needs').value.trim();
-      if (extra) {
-        resultParts.push(`• Дополнительные требования / ранний вызов (до 09:00):\n  ${extra}`);
-      }
-
-      handleStepSubmission(resultParts.join('\n\n'));
-    }
-
     function handleStepSubmission(text) {
       const currentIdx = appState.step;
       const stepData = questions[currentIdx];
@@ -2376,7 +2000,7 @@
       return (str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     }
 
-    /* 3. ГЕНЕРАЦИЯ ОФИЦИАЛЬНОЙ ЗАЯВКИ ТЕХНИЧЕСКОГО СОГЛАСОВАНИЯ (A4 PDF) */
+    /* 4. ГЕНЕРАЦИЯ ОФИЦИАЛЬНОЙ ЗАЯВКИ ТЕХНИЧЕСКОГО СОГЛАСОВАНИЯ (A4 PDF) */
     function downloadPassport() {
       if (appState.step < questions.length) {
         toast("Сначала завершите все этапы диалога в чате.");
@@ -2611,7 +2235,7 @@
       toast("Сформирован макет заявки A4. Открыто окно печати/сохранения в PDF.");
     }
 
-    /* 4. ОТПРАВКА ЗАЯВКИ В TELEGRAM */
+    /* 5. ОТПРАВКА ЗАЯВКИ В TELEGRAM */
     function sendTelegram() {
       if (appState.step < questions.length) {
         toast("Сначала завершите диалог согласования.");
