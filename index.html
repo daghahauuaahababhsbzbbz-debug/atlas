@@ -903,7 +903,7 @@
     }
     .btn-edit-step:hover { opacity: 1; }
 
-    /* ---------- ИНТЕРАКТИВНЫЙ БЛОК ЦЕХОВ И УБОРОК ---------- */
+    /* ---------- ИНТЕРАКТИВНЫЕ МОДУЛИ ---------- */
     .services-interactive-box {
       margin-top: 14px;
       background: rgba(9, 10, 12, 0.7);
@@ -973,7 +973,6 @@
       border-color: var(--gold);
     }
 
-    /* Блок динамических уборок */
     .cleaning-section {
       background: rgba(242, 238, 229, 0.02);
       border: 1px dashed var(--line-soft);
@@ -1052,7 +1051,6 @@
 
     .btn-confirm-services:hover { background: #e3c187; }
 
-    /* Файловый аплоадер (Шаг 10) */
     .file-upload-zone {
       margin-top: 12px;
       border: 1px dashed var(--line);
@@ -1214,7 +1212,7 @@
 
       <div class="system">
         <div class="online"><i></i> СИСТЕМА ОНЛАЙН</div>
-        <div id="clock">04.09.2026<br>11:51</div>
+        <div id="clock">04.09.2026<br>12:00</div>
       </div>
     </header>
 
@@ -1346,7 +1344,7 @@
             </li>
             <li class="step" id="step-4">
               <div class="step-dot"></div>
-              <div><div class="step-title">Ночные работы и смены</div><div class="step-detail">Время и конкретные службы на ночь</div></div>
+              <div><div class="step-title">Ночные работы и службы</div><div class="step-detail">Монтаж, свет, звук, видео, механика</div></div>
             </li>
             <li class="step" id="step-5">
               <div class="step-dot"></div>
@@ -1402,7 +1400,7 @@
 
     <footer>
       <span>ATLAS · Портал координации технических служб</span>
-      <span>Версия 1.9 · 2026</span>
+      <span>Версия 2.0 · 2026</span>
       <span>Взаимодействие постановочных групп</span>
     </footer>
   </div>
@@ -1663,15 +1661,10 @@
         apply: (val) => { appState.data.transportArrival = val; }
       },
       {
-        stepTitle: "Ночные работы и вызов служб на ночь",
-        q: "<b>Планируются ли ночные работы на площадке?</b><br><br>В театре разрешены ночные смены, но они требуют отдельной оплаты и заблаговременного составления сменного графика. Если ночные работы требуются — обязательно напишите <b>точные часы (с скольки до скольки) и перечислите конкретные службы площадки</b>, которые должны дежурить в эту ночь (например: монтировщики 2 чел, свет 1 чел, дежурный завпост).",
-        tip: "Если ночные работы не планируются, выберите «Без ночных смен»:",
-        type: "text",
-        quickFill: [
-          { label: "Без ночных смен", text: "Ночные работы не требуются. Все монтажи и прогоны строго в дневную смену." },
-          { label: "Шаблон: Ночной монтаж декораций", text: "Да, требуется ночной монтаж: в ночь накануне показа с 00:00 до 06:00.\nВызов служб площадки на ночь: монтировщики — 3 чел., оператор механики (штанкеты) — 1 чел., дежурный завпост — 1 чел." },
-          { label: "Шаблон: Ночная настройка света", text: "Да, требуется ночная смена по свету: с 23:00 до 04:00.\nВызов служб площадки на ночь: осветитель площадки — 1 чел., дежурный электрик — 1 чел." }
-        ],
+        stepTitle: "Ночные работы и службы",
+        q: "<b>Планируются ли ночные работы на площадке?</b><br><br>Ночные смены разрешены, но тарифицируются отдельно и требуют заблаговременного составления графика. Ночью коллектив может проводить любые необходимые работы: монтаж декораций, подвес, световую юстировку, настройку звука, сведение видеоконтента или ночную репетицию.<br><br>Отметьте нужные направления работ (можно выбрать несколько сразу), укажите точные часы и дежурные службы:",
+        tip: "Настройте чек-боксы, счётчики и время, затем нажмите «Подтвердить ночные работы»:",
+        type: "interactive_night_services",
         apply: (val) => { appState.data.nightWork = val; }
       },
       {
@@ -1792,7 +1785,7 @@
       if (row) row.remove();
     }
 
-    /* Модуль выбора файлов на устройстве (Шаг 10) */
+    /* Модуль выбора файлов на устройстве */
     function handleFileSelection(e) {
       const files = Array.from(e.target.files);
       if (!files.length) return;
@@ -1800,6 +1793,74 @@
       const display = document.getElementById('selectedFilesListDisplay');
       display.innerHTML = files.map((f, i) => `<div>📄 <b>${f.name}</b> (${Math.round(f.size / 1024)} Кб)</div>`).join('');
       toast(`Выбрано файлов: ${files.length}. Нажмите «Ответить» для сохранения.`);
+    }
+
+    /* Переключение режима ночных работ */
+    function toggleNightOptions(hasNight) {
+      const formBlock = document.getElementById('nightOptionsContainer');
+      if (formBlock) {
+        formBlock.style.display = hasNight ? 'flex' : 'none';
+      }
+    }
+
+    /* Подтверждение модуля ночных работ */
+    function confirmNightServicesForm() {
+      const noNightRadio = document.getElementById('night_opt_none');
+      if (noNightRadio && noNightRadio.checked) {
+        handleStepSubmission("Ночные работы не требуются. Все монтажи, настройки и репетиции строго в дневную смену.");
+        return;
+      }
+
+      const tasks = [];
+      if (document.getElementById('night_task_mach').checked) {
+        const cnt = document.getElementById('cnt_night_mach').textContent;
+        const time = document.getElementById('time_night_mach').value.trim();
+        tasks.push(`• Монтаж декораций на планшете / подвес: монтировщики — ${cnt} чел. (${time})`);
+      }
+      if (document.getElementById('night_task_light').checked) {
+        const cnt = document.getElementById('cnt_night_light').textContent;
+        const time = document.getElementById('time_night_light').value.trim();
+        tasks.push(`• Юстировка и пропись световых картин: осветители — ${cnt} чел. (${time})`);
+      }
+      if (document.getElementById('night_task_sound').checked) {
+        const cnt = document.getElementById('cnt_night_sound').textContent;
+        const time = document.getElementById('time_night_sound').value.trim();
+        tasks.push(`• Настройка акустики / саундчек / Dante: звукоцех — ${cnt} чел. (${time})`);
+      }
+      if (document.getElementById('night_task_video').checked) {
+        const cnt = document.getElementById('cnt_night_video').textContent;
+        const time = document.getElementById('time_night_video').value.trim();
+        tasks.push(`• Сведение проекции / тестирование LED-экрана: видеоинженер — ${cnt} чел. (${time})`);
+      }
+      if (document.getElementById('night_task_mech').checked) {
+        const cnt = document.getElementById('cnt_night_mech').textContent;
+        const time = document.getElementById('time_night_mech').value.trim();
+        tasks.push(`• Ночные подъёмно-опускные работы: оператор механики — ${cnt} чел. (${time})`);
+      }
+      if (document.getElementById('night_task_rehearsal').checked) {
+        const time = document.getElementById('time_night_rehearsal').value.trim();
+        tasks.push(`• Ночная сценическая репетиция коллектива (${time})`);
+      }
+
+      const dutyStaff = [];
+      if (document.getElementById('night_duty_pomrezh').checked) dutyStaff.push("дежурный завпост/помреж площадки");
+      if (document.getElementById('night_duty_electr').checked) dutyStaff.push("дежурный электрик площадки");
+      if (dutyStaff.length) {
+        tasks.push(`• Обязательные дежурные службы площадки: ${dutyStaff.join(', ')}`);
+      }
+
+      const extra = document.getElementById('night_extra_comment').value.trim();
+      if (extra) {
+        tasks.push(`• Примечание по ночной смене: ${extra}`);
+      }
+
+      if (tasks.length === 0) {
+        toast("Выберите хотя бы одно направление ночных работ или отметьте «Ночные работы не требуются».");
+        return;
+      }
+
+      const resultText = `ТРЕБУЮТСЯ НОЧНЫЕ РАБОТЫ НА ПЛОЩАДКЕ:\n` + tasks.join('\n');
+      handleStepSubmission(resultText);
     }
 
     function showQuestion(idx) {
@@ -1811,6 +1872,115 @@
       msg.id = `chat-q-${idx}`;
 
       let interactiveHtml = "";
+
+      /* Мультивыбор ночных работ (Шаг 5) */
+      if (stepData.type === "interactive_night_services") {
+        interactiveHtml = `
+          <div class="services-interactive-box" id="nightBox">
+            <div style="display:flex; gap:18px; margin-bottom:10px; font-size:12px;">
+              <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                <input type="radio" name="night_choice" id="night_opt_needed" checked onchange="toggleNightOptions(true)">
+                <b style="color:var(--gold);">Да, требуются ночные работы</b>
+              </label>
+              <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                <input type="radio" name="night_choice" id="night_opt_none" onchange="toggleNightOptions(false)">
+                <span>Ночные работы не нужны</span>
+              </label>
+            </div>
+
+            <div id="nightOptionsContainer" style="display:flex; flex-direction:column; gap:10px;">
+              <div style="font-size:10px; font-family:'IBM Plex Mono',monospace; color:var(--muted); text-transform:uppercase;">
+                Выберите направления и укажите часы (можно накидать несколько задач сразу):
+              </div>
+
+              <!-- Декорации -->
+              <div class="service-row-item">
+                <input type="checkbox" id="night_task_mach" checked>
+                <label for="night_task_mach"><b>Монтаж декораций / сборка</b></label>
+                <div class="counter-control">
+                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_mach', -1, 1)">−</button>
+                  <span class="counter-val" id="cnt_night_mach">2</span>
+                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_mach', 1, 1)">+</button>
+                </div>
+                <input type="text" id="time_night_mach" placeholder="Часы" value="00:00 — 06:00">
+              </div>
+
+              <!-- Свет -->
+              <div class="service-row-item">
+                <input type="checkbox" id="night_task_light" checked>
+                <label for="night_task_light"><b>Световые работы (развес/юстировка)</b></label>
+                <div class="counter-control">
+                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_light', -1, 1)">−</button>
+                  <span class="counter-val" id="cnt_night_light">1</span>
+                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_light', 1, 1)">+</button>
+                </div>
+                <input type="text" id="time_night_light" placeholder="Часы" value="23:00 — 04:00">
+              </div>
+
+              <!-- Звук -->
+              <div class="service-row-item">
+                <input type="checkbox" id="night_task_sound">
+                <label for="night_task_sound"><b>Звуковой тракт / саундчек / Dante</b></label>
+                <div class="counter-control">
+                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_sound', -1, 1)">−</button>
+                  <span class="counter-val" id="cnt_night_sound">1</span>
+                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_sound', 1, 1)">+</button>
+                </div>
+                <input type="text" id="time_night_sound" placeholder="Часы" value="00:00 — 04:00">
+              </div>
+
+              <!-- Видео -->
+              <div class="service-row-item">
+                <input type="checkbox" id="night_task_video">
+                <label for="night_task_video"><b>Видео / проекция / LED-экран</b></label>
+                <div class="counter-control">
+                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_video', -1, 1)">−</button>
+                  <span class="counter-val" id="cnt_night_video">1</span>
+                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_video', 1, 1)">+</button>
+                </div>
+                <input type="text" id="time_night_video" placeholder="Часы" value="00:00 — 03:00">
+              </div>
+
+              <!-- Механика -->
+              <div class="service-row-item">
+                <input type="checkbox" id="night_task_mech">
+                <label for="night_task_mech"><b>Механика (штанкеты / лебёдки)</b></label>
+                <div class="counter-control">
+                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_mech', -1, 1)">−</button>
+                  <span class="counter-val" id="cnt_night_mech">1</span>
+                  <button type="button" class="counter-btn" onclick="changeCounter('cnt_night_mech', 1, 1)">+</button>
+                </div>
+                <input type="text" id="time_night_mech" placeholder="Часы" value="00:00 — 06:00">
+              </div>
+
+              <!-- Ночная репетиция -->
+              <div class="service-row-item" style="grid-template-columns:24px 1fr auto 130px;">
+                <input type="checkbox" id="night_task_rehearsal">
+                <label for="night_task_rehearsal"><b>Ночная сценическая репетиция</b></label>
+                <span style="font-size:10px; color:var(--gold); font-family:'IBM Plex Mono',monospace;">Труппа</span>
+                <input type="text" id="time_night_rehearsal" placeholder="Часы" value="00:00 — 03:00">
+              </div>
+
+              <!-- Дежурные службы площадки на ночь -->
+              <div style="background:rgba(242,238,229,0.02); border:1px solid var(--line-soft); padding:8px 10px; display:flex; flex-direction:column; gap:6px;">
+                <b style="font-size:10px; color:var(--gold); font-family:'IBM Plex Mono',monospace; text-transform:uppercase;">Дежурные инженеры площадки на ночь:</b>
+                <label style="display:flex; align-items:center; gap:8px; font-size:11px;">
+                  <input type="checkbox" id="night_duty_pomrezh" checked> Дежурный завпост / помреж площадки (координация ночной смены)
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:11px;">
+                  <input type="checkbox" id="night_duty_electr" checked> Дежурный электрик площадки (безопасность силовых сетей)
+                </label>
+              </div>
+
+              <div style="margin-top:4px;">
+                <input type="text" id="night_extra_comment" placeholder="Дополнительные детали или пожелания по ночным работам..." style="width:100%;">
+              </div>
+            </div>
+
+            <button type="button" class="btn-confirm-services" onclick="confirmNightServicesForm()">✓ Подтвердить ночные работы</button>
+          </div>
+        `;
+      }
 
       /* Продвинутая таблица служб дневной смены (Шаг 8) */
       if (stepData.type === "interactive_services_advanced") {
@@ -1993,7 +2163,9 @@
       chat.appendChild(msg);
       chat.scrollTop = chat.scrollHeight;
 
-      $("#chatForm").style.display = (stepData.type === "interactive_services_advanced") ? "none" : "flex";
+      const isInteractiveStep = (stepData.type === "interactive_services_advanced" || stepData.type === "interactive_night_services");
+      $("#chatForm").style.display = isInteractiveStep ? "none" : "flex";
+
       if (stepData.type === "files_or_url") {
         $("#chatInput").placeholder = "Вставьте ссылку на облачный диск (если применимо) или напишите комментарий к прикреплённым файлам...";
       } else {
@@ -2017,17 +2189,14 @@
     function confirmAdvancedServicesForm() {
       const resultParts = [];
 
-      // 1. Обязательные монтировщики
       const machCnt = document.getElementById('cnt_mach').textContent;
       const machTime = document.getElementById('srv_mach_time').value.trim();
       resultParts.push(`• Монтировщики сцены: ${machCnt} чел. (${machTime})`);
 
-      // 2. Обязательный оператор механики
       const mechCnt = document.getElementById('cnt_mech').textContent;
       const mechTime = document.getElementById('srv_mech_time').value.trim();
       resultParts.push(`• Оператор механики (штанкеты): ${mechCnt} чел. (${mechTime})`);
 
-      // 3. Механик сцены
       const stageMechChk = document.getElementById('srv_stage_mech').checked;
       if (stageMechChk) {
         const task = document.getElementById('srv_stage_mech_task').value;
@@ -2035,38 +2204,32 @@
         resultParts.push(`• Механик сцены (1 специалист, ${time}): ${task}`);
       }
 
-      // 4. Осветители
       if (document.getElementById('srv_light').checked) {
         const cnt = document.getElementById('cnt_light').textContent;
         const time = document.getElementById('srv_light_time').value.trim();
         resultParts.push(`• Осветители (планшет + пульт): ${cnt} чел. (${time})`);
       }
 
-      // 5. Звукоцех
       if (document.getElementById('srv_sound').checked) {
         const cnt = document.getElementById('cnt_sound').textContent;
         const time = document.getElementById('srv_sound_time').value.trim();
         resultParts.push(`• Звуковой цех площадки: ${cnt} чел. (${time})`);
       }
 
-      // 6. Видеоцех
       if (document.getElementById('srv_video').checked) {
         const cnt = document.getElementById('cnt_video').textContent;
         const time = document.getElementById('srv_video_time').value.trim();
         resultParts.push(`• Видеоцех / проекция: ${cnt} чел. (${time})`);
       }
 
-      // 7. Помреж / Завпост
       if (document.getElementById('srv_pomrezh').checked) {
         const cnt = document.getElementById('cnt_pomrezh').textContent;
         const time = document.getElementById('srv_pomrezh_time').value.trim();
         resultParts.push(`• Помощник режиссёра / Завпост: ${cnt} чел. (${time})`);
       }
 
-      // 8. Дежурный электрик (всегда 1)
       resultParts.push(`• Дежурный электрик площадки: 1 специалист (09:00 — 23:00, включён в смену)`);
 
-      // 9. Все назначенные уборки
       const cleanRows = $$("#cleaningEntriesContainer .cleaning-entry-row");
       const cleanDetails = [];
       cleanRows.forEach((r, idx) => {
@@ -2078,7 +2241,6 @@
         resultParts.push(`• Клининг планшета сцены (всего ${cleanDetails.length} сессии):\n${cleanDetails.join('\n')}`);
       }
 
-      // 10. Дополнительные потребности / ранний выезд
       const extra = document.getElementById('srv_extra_needs').value.trim();
       if (extra) {
         resultParts.push(`• Дополнительные требования / ранний вызов (до 09:00):\n  ${extra}`);
@@ -2091,7 +2253,6 @@
       const currentIdx = appState.step;
       const stepData = questions[currentIdx];
 
-      // Валидация на шаге 10 (файлы или ссылка)
       if (stepData.type === "files_or_url") {
         const hasUrl = /^(http|https):\/\/[^ "]+$/.test(text.trim());
         const hasFiles = appState.uploadedFiles && appState.uploadedFiles.length > 0;
