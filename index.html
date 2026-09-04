@@ -7,12 +7,16 @@
   <meta name="description" content="ATLAS — портал координации технических служб площадки." />
   <title>ATLAS — Портал координации технических служб</title>
 
+  <!-- Фирменный знак ATLAS во вкладке браузера -->
+  <link rel="icon" type="image/png" href="img/atlas_symbol.png">
+  <link rel="apple-touch-icon" href="img/atlas_symbol.png">
+  <link rel="alternate icon" href="atlas_symbol.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* Токены согласно разделу 4 и Цветовой таблице Брендбука ATLAS 2026 */
     :root {
       --bg: #090A0C;
       --panel: #111316;
@@ -149,7 +153,6 @@
       border-left: 1px solid var(--line-soft);
     }
 
-    /* Архитектурный сегментированный переключатель темы (Раздел 4) */
     .theme-switcher {
       display: flex;
       align-items: center;
@@ -193,7 +196,6 @@
       white-space: nowrap;
     }
 
-    /* Статус строго по разделу 6 брендбука: «СИСТЕМА АКТИВНА» */
     .status-badge {
       color: var(--status);
       display: flex;
@@ -975,6 +977,7 @@
     }
     .btn-edit-step:hover { opacity: 1; }
 
+    /* ---------- ИНТЕРАКТИВНЫЕ МОДУЛИ ---------- */
     .services-interactive-box {
       margin-top: 14px;
       background: var(--panel-2);
@@ -1282,7 +1285,6 @@
       </nav>
 
       <div class="header-aside">
-        <!-- Трёхпозиционный архитектурный переключатель согласно Разделу 4 Брендбука -->
         <div class="theme-switcher" role="group" aria-label="Переключение темы оформления">
           <button type="button" data-theme-set="system" id="btnThemeSystem" class="active">Системная</button>
           <button type="button" data-theme-set="light" id="btnThemeLight">Светлая</button>
@@ -1290,7 +1292,6 @@
         </div>
 
         <div class="system-status">
-          <!-- Формулировка статуса строго по разделу 6 брендбука -->
           <div class="status-badge"><i></i> СИСТЕМА АКТИВНА</div>
           <div id="clock">04.09.2026<br>12:20</div>
         </div>
@@ -1481,7 +1482,7 @@
 
     <footer>
       <span>ATLAS · Портал координации технических служб</span>
-      <span>Версия 2.1 · 2026</span>
+      <span>Версия 2.2 · 2026</span>
       <span>Взаимодействие постановочных групп</span>
     </footer>
   </div>
@@ -1664,7 +1665,7 @@
       toast(`Загрузка файла: ${name}`);
     }
 
-    /* 2. ПЕРЕКЛЮЧАТЕЛЬ ТЕМ (Разделы 4, 12, 13 Брендбука) */
+    /* 2. ПЕРЕКЛЮЧАТЕЛЬ ТЕМ */
     const themeButtons = {
       system: document.getElementById('btnThemeSystem'),
       light: document.getElementById('btnThemeLight'),
@@ -1702,175 +1703,172 @@
     const initialTheme = localStorage.getItem('atlas_theme_preference') || 'system';
     applyTheme(initialTheme);
 
-    /* 3. СОСТОЯНИЕ И ВОПРОСЫ ОПРОСНИКА */
-    const appState = {
-      selectedStage: "Основная сцена",
-      step: 0,
-      uploadedFiles: [],
-      data: {
-        theatreInfo: "",
-        parsedTheatre: "",
-        parsedPlay: "",
-        parsedRole: "",
-        parsedName: "",
-        parsedPhone: "",
-        deptContacts: "",
-        scene: "Основная сцена",
-        transportArrival: "",
-        nightWork: "",
-        dayTiming: "",
-        flightAndPyro: "",
-        servicesTable: "",
-        costumes: "",
-        riders: ""
-      }
-    };
-
-    const questions = [
-      {
-        stepTitle: "Театр, спектакль и завпост",
-        q: "Приветствую! Я технический координатор портала «Атлас». Это опрос для формирования предварительной заявки технического согласования спектакля.<br><br><b>Введите, пожалуйста, полное официальное название вашего театра, название спектакля, а также должность, ФИО и телефон ответственного лица (завпост / технический руководитель).</b>",
-        tip: "Пример: ГАУК МО «Московский областной театр драмы», спектакль «Маскарад», завпост Иванов Алексей Сергеевич, +7 900 123-45-67",
-        type: "text",
-        quickFill: [],
-        apply: (val) => {
-          appState.data.theatreInfo = val;
-          const parts = val.split(/[,;\n]+/).map(p => p.trim()).filter(Boolean);
-          appState.data.parsedTheatre = parts[0] || "Театр-участник";
-          appState.data.parsedPlay = parts[1] || "Спектакль";
-          appState.data.parsedRole = parts[2] || "Завпост";
-          appState.data.parsedName = parts[3] || "Ответственное лицо";
-          appState.data.parsedPhone = parts[4] || "";
-        }
-      },
-      {
-        stepTitle: "Контакты цехов коллектива",
-        q: "<b>Укажите прямые контакты специалистов вашего коллектива</b> (звукорежиссёр, художник/оператор по свету, видеоинженер).<br><br>Это необходимо, чтобы службы площадки могли напрямую связаться с вашими специалистами и заблаговременно обсудить партитуры и патчи.",
-        tip: "Укажите имя и телефон для каждого цеха:",
-        type: "text",
-        quickFill: [
-          {
-            label: "Вставить шаблон контактов специалистов",
-            text: "Звукорежиссёр: Сергей (+7 900 000-11-22)\nХудожник по свету: Дмитрий (+7 900 000-33-44)\nВидеоинженер: Андрей (+7 900 000-55-66)"
-          }
-        ],
-        apply: (val) => { appState.data.deptContacts = val; }
-      },
-      {
-        stepTitle: "Выбор площадки",
-        q: "Какую сцену площадки вы планируете задействовать для показа и монтажа?",
-        tip: "Выберите нужную сцену кнопкой ниже:",
-        type: "choice",
-        options: ["Основная сцена", "Малая сцена", "Обе сцены (Основная + Малая)"],
-        apply: (val) => { 
-          appState.data.scene = val;
-          appState.selectedStage = val.includes("Малая") && !val.includes("Основная") ? "Малая сцена" : "Основная сцена";
-          document.getElementById('docMeta').innerHTML = `${val}<br>Версия 1.0 · ${new Date().toLocaleDateString('ru-RU')}`;
-        }
-      },
-      {
-        stepTitle: "Транспорт и заезд (кузов до 7м)",
-        q: "<b>Когда прибывает транспорт с декорациями?</b><br><br>⚠️ <b>КРИТИЧЕСКИ ВАЖНО ПО ЛОГИСТИКЕ:</b> Заезд грузового транспорта на площадку осуществляется строго с дублёра Новинского бульвара. Из-за геометрии дорожного поворота заезд длинномерных машин с длиной кузова <b>более 7 метров</b> крайне осложнён и физически невозможен без опасного маневрирования на встречную полосу. Заезд еврофур исключён. Транспорт коллектива должен иметь длину кузова строго <b>до 7 метров</b>.<br><br>Укажите дату, время подачи машины к рампе и точную длину кузова:",
-        tip: "Пример: 12 сентября к 08:30 утра, 5-тонник (кузов 6.2 м), подача к рампе с подъёмником.",
-        type: "text",
-        quickFill: [
-          { label: "Шаблон: 5-тонник (кузов до 7м)", text: "12 сентября в 08:30, 5-тонник (длина кузова 6.5 м), подача к рампе с грузовым подъёмником" },
-          { label: "Шаблон: фургон / Газель (до 5м)", text: "12 сентября в 09:00, удлинённая Газель (длина 5.0 м), подача к служебному входу" }
-        ],
-        apply: (val) => { appState.data.transportArrival = val; }
-      },
-      {
-        stepTitle: "Ночные работы и службы",
-        q: "<b>Планируются ли ночные работы на площадке?</b><br><br>Ночные смены разрешены, но тарифицируются отдельно и требуют заблаговременного составления графика. Ночью коллектив может проводить любые необходимые работы: монтаж декораций, подвес, световую юстировку, настройку звука, сведение видеоконтента или ночную репетицию.<br><br>Отметьте нужные направления работ (можно выбрать несколько сразу), укажите точные часы и дежурные службы:",
-        tip: "Настройте чек-боксы, счётчики и время, затем нажмите «Подтвердить ночные работы»:",
-        type: "interactive_night_services",
-        apply: (val) => { appState.data.nightWork = val; }
-      },
-      {
-        stepTitle: "Почасовой тайминг (включая демонтаж)",
-        q: "<b>Опишите базовый почасовой тайминг дня спектакля.</b><br>Укажите время начала монтировки, время на фокус света и настройку звука, репетицию, начало спектакля, а также <b>время на демонтаж и погрузку декораций</b> после показа.",
-        tip: "Нажмите на один из шаблонов ниже, чтобы подставить его в поле ввода и отредактировать ваши часы:",
-        type: "text",
-        quickFill: [
-          { 
-            label: "Шаблон: 1-дневный график (с демонтажем)", 
-            text: "08:00–12:00 — монтаж декораций на планшете сцены\n12:00–14:00 — фокус света и настройка звукового тракта\n14:00–15:00 — технический перерыв / обед служб\n15:00–18:00 — репетиция и генеральный прогон\n18:00–18:30 — уборка планшета сцены и проверка систем\n19:00–21:30 — спектакль\n21:30–01:00 — демонтаж декораций, разбор подвесов и погрузка в транспорт" 
-          },
-          { 
-            label: "Шаблон: 2-дневный график (монтаж накануне + демонтаж)", 
-            text: "День 1 (накануне): 14:00–22:00 монтаж декораций, развес и юстировка света.\nДень 2 (день показа): 11:00–13:00 саундчек, 14:00–17:00 прогон, 17:00–18:00 уборка планшета, 19:00–21:30 спектакль, 22:00–01:00 демонтаж и ночная погрузка." 
-          }
-        ],
-        apply: (val) => { appState.data.dayTiming = val; }
-      },
-      {
-        stepTitle: "Полёты, трюки, безопасность",
-        q: "<b>Полёты, пиротехника и противопожарный регламент площадки:</b><br><br>1. <b>Полёты и трюки:</b> Используются ли в спектакле полёты артистов или декораций? Если да — имеется ли официальный паспорт трюка, привозите ли вы собственное сертифицированное полётное устройство или привлекается лицензированный подрядчик?<br>2. <b>Пиротехника:</b> Используется ли пиротехника, конфетти, дым или спецэффекты?<br>3. ⚠️ <b>СТРОГИЙ ЗАПРЕТ:</b> Использование открытого огня, свечей, факелов, а также <u>курение табачных изделий</u> (сигарет, папирос) на сцене и в зрительном зале <b>категорически запрещено</b>. Разрешены исключительно электронные сигареты (испарители).",
-        tip: "Опишите наличие трюков/полётов или выберите готовый ответ:",
-        type: "text",
-        quickFill: [
-          { label: "Без полётов, без огня и без пиротехники", text: "Полёты и трюковые подвесы отсутствуют. Открытый огонь, пиротехника и табакокурение не используются. Регламент площадки принят к неукоснительному исполнению." },
-          { label: "Шаблон: Используется полёт (свой паспорт трюка)", text: "В спектакле используется полёт артиста. Привозим своё сертифицированное полётное устройство, паспорт трюка и акт освидетельствования предоставим в файлах. Табачные изделия и открытый огонь не используются." }
-        ],
-        apply: (val) => { appState.data.flightAndPyro = val; }
-      },
-      {
-        stepTitle: "Вызов цехов площадки (09:00-23:00)",
-        q: "<b>Сформируйте дневную заявку на службы площадки.</b><br><br>⏰ <b>РЕГЛАМЕНТ ДНЕВНОЙ СМЕНЫ:</b> Рабочее время дневных служб площадки — строго <b>с 09:00 до 23:00</b>.<br>• Для монтировщиков и оператора механики (штанкеты) минимальное количество — <b>не менее 1 специалиста</b>.<br>• <b>Дежурный электрик</b> площадки включён в смену по умолчанию (1 специалист).<br>• Для механика сцены выберите конкретную техническую задачу из списка.<br>• Если требуется провести уборку сцены несколько раз (например, до прогона, после монтажа и перед спектаклем) — добавьте нужное количество уборок кнопкой «+ Добавить уборку».<br>• Если вам требуется ранний вызов (до 09:00) или доп. персонал — укажите это в поле дополнительной заявки ниже.",
-        tip: "Настройте количество сотрудников кнопками «+ / −», выберите задачи и подтвердите заявку:",
-        type: "interactive_services_advanced",
-        apply: (val) => { appState.data.servicesTable = val; }
-      },
-      {
-        stepTitle: "Бытовые службы",
-        q: "<b>Запросы к бытовым цехам площадки</b> (костюмеры, гримёры, реквизит):<br>Требуются ли отпариватели, гладильные доски, дополнительный свет для гримвагенов или холодильник для реквизита?",
-        tip: "Опишите потребности в свободной форме или воспользуйтесь быстрой кнопкой:",
-        type: "text",
-        quickFill: [
-          { label: "Без запросов к бытовым цехам", text: "Свои костюмеры, гримёры и реквизиторы. Бытовые службы площадки не требуются, гримёрных комнат достаточно." },
-          { label: "Нужны отпариватели и гладильная", text: "Требуется: 2 отпаривателя, 1 гладильная доска с утюгом в гримёрный блок." }
-        ],
-        apply: (val) => { appState.data.costumes = val; }
-      },
-      {
-        stepTitle: "Райдер, планы, файлы / ссылка",
-        q: "<b>Финальный шаг: предоставление технической документации.</b><br><br>Райдер спектакля подлежит предварительному рассмотрению. Вы можете <b>вставить ссылку на облачный диск</b> (Яндекс.Диск, Google Drive) ИЛИ <b>выбрать и прикрепить файлы напрямую со своего устройства</b> (PDF, DWG, DOCX, ZIP).<br><br>В пакете документов обязательно должны быть:<br>• Технический райдер (звук, свет, видео)<br>• План-схема расстановки декораций и развеса по штанкетам<br>• <u>Сканы актов огнезащитной обработки</u> декораций и тканей<br>• Копия приказа о назначении ответственного за ПБ и ОТ",
-        tip: "Введите ссылку в поле ввода и/или прикрепите файлы кнопкой ниже, затем нажмите «Ответить»:",
-        type: "files_or_url",
-        apply: (val) => { appState.data.riders = val; }
-      }
-    ];
-
-    const $ = (s) => document.querySelector(s);
-    const $$ = (s) => [...document.querySelectorAll(s)];
-
-    function toast(msg) {
-      const el = $("#toast");
-      el.textContent = msg;
-      el.classList.add("show");
-      clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => el.classList.remove("show"), 3200);
+    /* 3. ДИАЛОГ СОГЛАСОВАНИЯ И ИНТЕРАКТИВ */
+    function changeCounter(id, delta, minVal = 0) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      let val = parseInt(el.textContent, 10) || 0;
+      val = Math.max(minVal, val + delta);
+      el.textContent = val;
     }
 
-    function updateClock() {
-      const now = new Date();
-      $("#clock").innerHTML = `${now.toLocaleDateString("ru-RU")}<br>${now.toLocaleTimeString("ru-RU", {hour:"2-digit", minute:"2-digit"})}`;
+    let cleaningCounter = 1;
+    function addCleaningRow() {
+      cleaningCounter++;
+      const container = document.getElementById('cleaningEntriesContainer');
+      const row = document.createElement('div');
+      row.className = 'cleaning-entry-row';
+      row.id = `clean_row_${cleaningCounter}`;
+      row.innerHTML = `
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--gold); min-width:80px;">Уборка №${cleaningCounter}:</span>
+        <input type="text" class="clean-time-input" placeholder="Время (напр. 17:30)" value="в 18:00" style="flex:1;">
+        <input type="text" class="clean-task-input" placeholder="Задача (напр. влажная уборка планшета)" value="влажная уборка планшета" style="flex:1.2;">
+        <button type="button" class="btn-del-cleaning" onclick="deleteCleaningRow('clean_row_${cleaningCounter}')" title="Удалить уборку">×</button>
+      `;
+      container.appendChild(row);
     }
-    updateClock();
-    setInterval(updateClock, 30000);
 
-    function openChat() {
-      $("#modal").classList.add("open");
-      document.body.style.overflow = "hidden";
-      if (appState.step === 0 && $("#chat").children.length === 0) {
-        showQuestion(0);
+    function deleteCleaningRow(rowId) {
+      const row = document.getElementById(rowId);
+      if (row) row.remove();
+    }
+
+    function handleFileSelection(e) {
+      const files = Array.from(e.target.files);
+      if (!files.length) return;
+      appState.uploadedFiles = files;
+      const display = document.getElementById('selectedFilesListDisplay');
+      display.innerHTML = files.map((f) => `<div>📄 <b>${f.name}</b> (${Math.round(f.size / 1024)} Кб)</div>`).join('');
+      toast(`Выбрано файлов: ${files.length}. Нажмите «Ответить» для сохранения.`);
+    }
+
+    function toggleNightOptions(hasNight) {
+      const formBlock = document.getElementById('nightOptionsContainer');
+      if (formBlock) {
+        formBlock.style.display = hasNight ? 'flex' : 'none';
       }
-      setTimeout(() => $("#chatInput").focus(), 80);
     }
 
-    function closeChat() {
-      $("#modal").classList.remove("open");
-      document.body.style.overflow = "";
+    function confirmNightServicesForm() {
+      const noNightRadio = document.getElementById('night_opt_none');
+      if (noNightRadio && noNightRadio.checked) {
+        handleStepSubmission("Ночные работы не требуются. Все монтажи, настройки и репетиции строго в дневную смену.");
+        return;
+      }
+
+      const tasks = [];
+      if (document.getElementById('night_task_mach').checked) {
+        const cnt = document.getElementById('cnt_night_mach').textContent;
+        const time = document.getElementById('time_night_mach').value.trim();
+        tasks.push(`• Монтаж декораций на планшете / подвес: монтировщики — ${cnt} чел. (${time})`);
+      }
+      if (document.getElementById('night_task_light').checked) {
+        const cnt = document.getElementById('cnt_night_light').textContent;
+        const time = document.getElementById('time_night_light').value.trim();
+        tasks.push(`• Юстировка и пропись световых картин: осветители — ${cnt} чел. (${time})`);
+      }
+      if (document.getElementById('night_task_sound').checked) {
+        const cnt = document.getElementById('cnt_night_sound').textContent;
+        const time = document.getElementById('time_night_sound').value.trim();
+        tasks.push(`• Настройка акустики / саундчек / Dante: звукоцех — ${cnt} чел. (${time})`);
+      }
+      if (document.getElementById('night_task_video').checked) {
+        const cnt = document.getElementById('cnt_night_video').textContent;
+        const time = document.getElementById('time_night_video').value.trim();
+        tasks.push(`• Сведение проекции / тестирование LED-экрана: видеоинженер — ${cnt} чел. (${time})`);
+      }
+      if (document.getElementById('night_task_mech').checked) {
+        const cnt = document.getElementById('cnt_night_mech').textContent;
+        const time = document.getElementById('time_night_mech').value.trim();
+        tasks.push(`• Ночные подъёмно-опускные работы: оператор механики — ${cnt} чел. (${time})`);
+      }
+      if (document.getElementById('night_task_rehearsal').checked) {
+        const time = document.getElementById('time_night_rehearsal').value.trim();
+        tasks.push(`• Ночная сценическая репетиция коллектива (${time})`);
+      }
+
+      const dutyStaff = [];
+      if (document.getElementById('night_duty_pomrezh').checked) dutyStaff.push("дежурный завпост/помреж площадки");
+      if (document.getElementById('night_duty_electr').checked) dutyStaff.push("дежурный электрик площадки");
+      if (dutyStaff.length) {
+        tasks.push(`• Обязательные дежурные службы площадки: ${dutyStaff.join(', ')}`);
+      }
+
+      const extra = document.getElementById('night_extra_comment').value.trim();
+      if (extra) {
+        tasks.push(`• Примечание по ночной смене: ${extra}`);
+      }
+
+      if (tasks.length === 0) {
+        toast("Выберите хотя бы одно направление ночных работ или отметьте «Ночные работы не требуются».");
+        return;
+      }
+
+      const resultText = `ТРЕБУЮТСЯ НОЧНЫЕ РАБОТЫ НА ПЛОЩАДКЕ:\n` + tasks.join('\n');
+      handleStepSubmission(resultText);
+    }
+
+    function confirmAdvancedServicesForm() {
+      const resultParts = [];
+
+      const machCnt = document.getElementById('cnt_mach').textContent;
+      const machTime = document.getElementById('srv_mach_time').value.trim();
+      resultParts.push(`• Монтировщики сцены: ${machCnt} чел. (${machTime})`);
+
+      const mechCnt = document.getElementById('cnt_mech').textContent;
+      const mechTime = document.getElementById('srv_mech_time').value.trim();
+      resultParts.push(`• Оператор механики (штанкеты): ${mechCnt} чел. (${mechTime})`);
+
+      const stageMechChk = document.getElementById('srv_stage_mech').checked;
+      if (stageMechChk) {
+        const task = document.getElementById('srv_stage_mech_task').value;
+        const time = document.getElementById('srv_stage_mech_time').value.trim();
+        resultParts.push(`• Механик сцены (1 специалист, ${time}): ${task}`);
+      }
+
+      if (document.getElementById('srv_light').checked) {
+        const cnt = document.getElementById('cnt_light').textContent;
+        const time = document.getElementById('srv_light_time').value.trim();
+        resultParts.push(`• Осветители (планшет + пульт): ${cnt} чел. (${time})`);
+      }
+
+      if (document.getElementById('srv_sound').checked) {
+        const cnt = document.getElementById('cnt_sound').textContent;
+        const time = document.getElementById('srv_sound_time').value.trim();
+        resultParts.push(`• Звуковой цех площадки: ${cnt} чел. (${time})`);
+      }
+
+      if (document.getElementById('srv_video').checked) {
+        const cnt = document.getElementById('cnt_video').textContent;
+        const time = document.getElementById('srv_video_time').value.trim();
+        resultParts.push(`• Видеоцех / проекция: ${cnt} чел. (${time})`);
+      }
+
+      if (document.getElementById('srv_pomrezh').checked) {
+        const cnt = document.getElementById('cnt_pomrezh').textContent;
+        const time = document.getElementById('srv_pomrezh_time').value.trim();
+        resultParts.push(`• Помощник режиссёра / Завпост: ${cnt} чел. (${time})`);
+      }
+
+      resultParts.push(`• Дежурный электрик площадки: 1 специалист (09:00 — 23:00, включён в смену)`);
+
+      const cleanRows = $$("#cleaningEntriesContainer .cleaning-entry-row");
+      const cleanDetails = [];
+      cleanRows.forEach((r, idx) => {
+        const t = r.querySelector('.clean-time-input').value.trim();
+        const task = r.querySelector('.clean-task-input').value.trim();
+        cleanDetails.push(`  - Уборка ${idx + 1}: ${t} (${task})`);
+      });
+      if (cleanDetails.length) {
+        resultParts.push(`• Клининг планшета сцены (всего ${cleanDetails.length} сессии):\n${cleanDetails.join('\n')}`);
+      }
+
+      const extra = document.getElementById('srv_extra_needs').value.trim();
+      if (extra) {
+        resultParts.push(`• Дополнительные требования / ранний вызов (до 09:00):\n  ${extra}`);
+      }
+
+      handleStepSubmission(resultParts.join('\n\n'));
     }
 
     function handleStepSubmission(text) {
@@ -1941,7 +1939,7 @@
             <div class="chat-label"><span>Заявка сформирована</span></div>
             <div class="chat-text">
               ✅ <b>Заявка технического согласования сформирована!</b><br>
-              Все 10 разделов зафиксированы (включая детальный график служб, мульти-уборки и пакет райдера). Теперь вы можете распечатать/сохранить заявку в формате A4 (PDF) или передать данные техническому директору в Telegram для начала диалога.
+              Все 10 разделов зафиксированы. Теперь вы можете распечатать/сохранить заявку в формате A4 (PDF) или передать данные техническому директору в Telegram для начала диалога.
             </div>
             <div class="chat-options">
               <button type="button" onclick="downloadPassport()">📄 Скачать PDF-заявку (A4)</button>
