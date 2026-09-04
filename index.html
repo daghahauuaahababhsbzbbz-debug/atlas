@@ -13,15 +13,14 @@
 
   <style>
     :root {
-      /* Палитра строго по разделу 03 Брендбука ATLAS 2026 */
-      --bg: #090A0C;             /* ATLAS Black */
-      --panel: #111316;          /* Graphite */
-      --panel-dark: #17191D;     /* Deep Graphite */
-      --cream: #F2EEE5;          /* Ivory */
-      --muted: #B8B1A4;          /* Muted Ivory */
-      --gold: #D6A85F;           /* ATLAS Gold */
-      --gold-dark: #6F5630;      /* Dark Gold */
-      --green: #AABF9A;          /* Soft Green */
+      --bg: #090A0C;
+      --panel: #111316;
+      --panel-dark: #17191D;
+      --cream: #F2EEE5;
+      --muted: #B8B1A4;
+      --gold: #D6A85F;
+      --gold-dark: #6F5630;
+      --green: #AABF9A;
 
       --line: rgba(214, 168, 95, 0.24);
       --line-soft: rgba(242, 238, 229, 0.08);
@@ -39,12 +38,11 @@
         radial-gradient(circle at 15% 80%, rgba(242, 238, 229, 0.02), transparent 25%),
         var(--bg);
       color: var(--cream);
-      font-family: "Manrope", Arial, sans-serif; /* UI Font */
+      font-family: "Manrope", Arial, sans-serif;
       min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* Декоративная картографическая сетка (Раздел 05 Брендбука) */
     body::before {
       content: "";
       position: fixed;
@@ -58,7 +56,7 @@
       mask-image: linear-gradient(to bottom, black, transparent 92%);
     }
 
-    button, input, textarea { font: inherit; }
+    button, input, textarea, select { font: inherit; }
     button { cursor: pointer; }
 
     .shell {
@@ -70,7 +68,6 @@
       position: relative;
     }
 
-    /* ---------- ШАПКА ---------- */
     header {
       min-height: 86px;
       display: grid;
@@ -112,7 +109,7 @@
       position: relative;
       letter-spacing: .08em;
       font-size: 11px;
-      font-family: "IBM Plex Mono", Consolas, monospace; /* Technical */
+      font-family: "IBM Plex Mono", Consolas, monospace;
       text-transform: uppercase;
       transition: color .2s;
     }
@@ -150,7 +147,6 @@
       box-shadow: 0 0 12px rgba(170, 191, 154, 0.7);
     }
 
-    /* ---------- ОСНОВНАЯ СЕТКА ---------- */
     .content {
       display: grid;
       grid-template-columns: minmax(0, 1fr) 475px;
@@ -161,7 +157,6 @@
       border-right: 1px solid var(--line-soft);
     }
 
-    /* Героический блок: роза ветров в центрально-правой верхней зоне (Разделы 05, 07) */
     .hero {
       min-height: 400px;
       position: relative;
@@ -205,7 +200,7 @@
       margin: 0;
       position: relative;
       z-index: 2;
-      font-family: "Cormorant Garamond", Georgia, serif; /* Display */
+      font-family: "Cormorant Garamond", Georgia, serif;
       font-weight: 600;
       font-size: clamp(84px, 11vw, 150px);
       line-height: .72;
@@ -258,7 +253,6 @@
       background: var(--gold);
     }
 
-    /* ---------- КАРТОЧКИ ПЛОЩАДОК (Раздел 08 Брендбука) ---------- */
     .stages {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -385,7 +379,6 @@
       color: var(--cream);
     }
 
-    /* ---------- ПРАВЫЙ САЙДБАР ---------- */
     .right {
       background: rgba(17, 19, 22, 0.85);
     }
@@ -668,7 +661,6 @@
       text-transform: uppercase;
     }
 
-    /* ---------- МОДАЛЬНЫЕ ОКНА ---------- */
     .modal {
       position: fixed;
       inset: 0;
@@ -683,7 +675,7 @@
     .modal.open { display: flex; }
 
     .modal-card {
-      width: min(880px, 100%);
+      width: min(920px, 100%);
       max-height: min(880px, calc(100vh - 40px));
       overflow: hidden;
       background: var(--panel);
@@ -825,7 +817,6 @@
     }
     .doc-download:hover { background: rgba(214, 168, 95, 0.1); border-color: var(--gold); }
 
-    /* ---------- ДИАЛОГ СОГЛАСОВАНИЯ ---------- */
     .chat {
       padding: 24px;
       overflow-y: auto;
@@ -836,7 +827,7 @@
     }
 
     .chat-message {
-      max-width: 92%;
+      max-width: 94%;
       position: relative;
     }
 
@@ -880,12 +871,6 @@
       line-height: 1.45;
     }
 
-    .chat-tip.danger {
-      background: rgba(192, 57, 43, 0.15);
-      border-left: 2px solid var(--danger);
-      color: #f9d5d2;
-    }
-
     .chat-options {
       display: flex;
       flex-wrap: wrap;
@@ -918,19 +903,20 @@
     }
     .btn-edit-step:hover { opacity: 1; }
 
+    /* ---------- ИНТЕРАКТИВНЫЙ БЛОК ЦЕХОВ И УБОРОК ---------- */
     .services-interactive-box {
       margin-top: 14px;
-      background: rgba(9, 10, 12, 0.6);
+      background: rgba(9, 10, 12, 0.7);
       border: 1px solid var(--line-soft);
-      padding: 14px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
-    .service-row {
+    .service-row-item {
       display: grid;
-      grid-template-columns: 28px 1fr 120px 140px;
+      grid-template-columns: 24px 1fr auto 130px;
       gap: 10px;
       align-items: center;
       padding-bottom: 8px;
@@ -938,16 +924,42 @@
       font-size: 12px;
     }
 
-    .service-row:last-child { border-bottom: none; }
+    .service-row-item:last-child { border-bottom: none; }
 
-    .service-row input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
-      accent-color: var(--gold);
-      cursor: pointer;
+    .counter-control {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg);
+      border: 1px solid var(--line-soft);
+      padding: 2px 4px;
+      border-radius: 2px;
     }
 
-    .service-row input[type="text"] {
+    .counter-btn {
+      background: transparent;
+      border: none;
+      color: var(--gold);
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 14px;
+    }
+
+    .counter-btn:hover { background: rgba(214, 168, 95, 0.15); }
+
+    .counter-val {
+      min-width: 20px;
+      text-align: center;
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 600;
+      color: var(--cream);
+    }
+
+    .service-row-item input[type="text"], .service-row-item select {
       background: var(--bg);
       border: 1px solid var(--line-soft);
       color: var(--cream);
@@ -957,16 +969,77 @@
       font-family: "IBM Plex Mono", Consolas, monospace;
     }
 
-    .service-row input[type="text"]:focus {
+    .service-row-item input[type="text"]:focus, .service-row-item select:focus {
       border-color: var(--gold);
     }
 
-    .btn-confirm-services {
+    /* Блок динамических уборок */
+    .cleaning-section {
+      background: rgba(242, 238, 229, 0.02);
+      border: 1px dashed var(--line-soft);
+      padding: 10px 12px;
+      margin-top: 4px;
+    }
+
+    .cleaning-entry-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 6px;
+    }
+
+    .btn-add-cleaning {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--gold);
+      padding: 4px 10px;
+      font-size: 10px;
+      font-family: "IBM Plex Mono", monospace;
+      margin-top: 8px;
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-add-cleaning:hover { background: rgba(214, 168, 95, 0.1); }
+
+    .btn-del-cleaning {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 0 4px;
+    }
+    .btn-del-cleaning:hover { color: #e74c3c; }
+
+    .extra-needs-area {
       margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(242, 238, 229, 0.06);
+    }
+
+    .extra-needs-area textarea {
+      width: 100%;
+      height: 64px;
+      background: var(--bg);
+      border: 1px solid var(--line-soft);
+      color: var(--cream);
+      padding: 8px 10px;
+      font-size: 11px;
+      resize: vertical;
+      outline: none;
+      margin-top: 6px;
+    }
+
+    .extra-needs-area textarea:focus { border-color: var(--gold); }
+
+    .btn-confirm-services {
+      margin-top: 12px;
       background: var(--gold);
       color: var(--bg);
       border: none;
-      padding: 10px 16px;
+      padding: 11px 18px;
       font-weight: 700;
       font-size: 11px;
       letter-spacing: .08em;
@@ -977,8 +1050,48 @@
       transition: background .2s;
     }
 
-    .btn-confirm-services:hover {
-      background: #e3c187;
+    .btn-confirm-services:hover { background: #e3c187; }
+
+    /* Файловый аплоадер (Шаг 10) */
+    .file-upload-zone {
+      margin-top: 12px;
+      border: 1px dashed var(--line);
+      background: rgba(214, 168, 95, 0.03);
+      padding: 16px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .file-upload-zone input[type="file"] {
+      display: none;
+    }
+
+    .btn-select-files {
+      align-self: center;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 8px 16px;
+      font-size: 11px;
+      font-family: "IBM Plex Mono", monospace;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-select-files:hover { background: rgba(214, 168, 95, 0.1); }
+
+    .selected-files-list {
+      text-align: left;
+      font-size: 11px;
+      font-family: "IBM Plex Mono", monospace;
+      color: var(--cream);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 6px;
     }
 
     .chat-form {
@@ -1059,8 +1172,8 @@
       .info-item:nth-child(2) { border-right: 0; }
       .info-item:nth-child(-n+2) { border-bottom: 1px solid var(--line-soft); }
       .hero-compass-bg { width: 100%; opacity: 0.35; }
-      .service-row { grid-template-columns: 24px 1fr; }
-      .service-row input[type="text"] { grid-column: span 2; }
+      .service-row-item { grid-template-columns: 24px 1fr; }
+      .service-row-item .counter-control, .service-row-item input[type="text"], .service-row-item select { grid-column: span 2; }
     }
 
     @media (max-width: 520px) {
@@ -1101,7 +1214,7 @@
 
       <div class="system">
         <div class="online"><i></i> СИСТЕМА ОНЛАЙН</div>
-        <div id="clock">04.09.2026<br>10:00</div>
+        <div id="clock">04.09.2026<br>11:51</div>
       </div>
     </header>
 
@@ -1119,7 +1232,7 @@
           <div class="section-title">Сценические площадки (выберите для просмотра паспорта)</div>
 
           <div class="stages">
-            <!-- КНОПКА-КАРТОЧКА: ОСНОВНАЯ СЦЕНА -->
+            <!-- КАРТОЧКА: ОСНОВНАЯ СЦЕНА -->
             <button class="stage-card-btn main-stage" onclick="openStageModal('main')">
               <div class="stage-image">
                 <div class="stage-meta-wrap">
@@ -1149,7 +1262,7 @@
               </div>
             </button>
 
-            <!-- КНОПКА-КАРТОЧКА: МАЛАЯ СЦЕНА -->
+            <!-- КАРТОЧКА: МАЛАЯ СЦЕНА -->
             <button class="stage-card-btn small-stage" onclick="openStageModal('small')">
               <div class="stage-image">
                 <div class="stage-meta-wrap">
@@ -1245,7 +1358,7 @@
             </li>
             <li class="step" id="step-7">
               <div class="step-dot"></div>
-              <div><div class="step-title">Вызов цехов театра</div><div class="step-detail">Монтировщики, свет, звук, механика</div></div>
+              <div><div class="step-title">Вызов цехов площадки (09:00-23:00)</div><div class="step-detail">Счётчики, механика, уборки сцены</div></div>
             </li>
             <li class="step" id="step-8">
               <div class="step-dot"></div>
@@ -1253,7 +1366,7 @@
             </li>
             <li class="step" id="step-9">
               <div class="step-dot"></div>
-              <div><div class="step-title">Райдер, планы, акты ОЗ</div><div class="step-detail">Ссылка на облачный архив</div></div>
+              <div><div class="step-title">Райдер, планы, файлы / ссылка</div><div class="step-detail">Загрузка документов или облако</div></div>
             </li>
           </ol>
 
@@ -1289,12 +1402,12 @@
 
     <footer>
       <span>ATLAS · Портал координации технических служб</span>
-      <span>Версия 1.8 · 2026</span>
+      <span>Версия 1.9 · 2026</span>
       <span>Взаимодействие постановочных групп</span>
     </footer>
   </div>
 
-  <!-- МОДАЛЬНОЕ ОКНО ПАСПОРТА ПЛОЩАДКИ (12 ПАРАМЕТРОВ + ФАЙЛЫ) -->
+  <!-- МОДАЛЬНОЕ ОКНО ПАСПОРТА ПЛОЩАДКИ -->
   <div class="modal" id="stageModal">
     <div class="modal-card">
       <div class="modal-head">
@@ -1359,9 +1472,9 @@
           </div>
         </div>
         <div class="chat-message assistant">
-          <div class="chat-label">Ночные монтажи и смены</div>
+          <div class="chat-label">Регламент дневных смен (09:00 — 23:00)</div>
           <div class="chat-text">
-            Площадка поддерживает круглосуточную готовность. Ночные работы (монтировка, развес, юстировка света) <b>разрешены</b>, но оплачиваются и тарифицируются отдельно, требуя предварительной фиксации конкретных специалистов в графике.
+            Стандартное время работы дневных технических служб площадки — <b>с 09:00 до 23:00</b>. Вызовы служб ранее 09:00 или работы после 23:00 требуют оформления дополнительной заявки на ранний/ночной вызов.
           </div>
         </div>
       </div>
@@ -1476,6 +1589,7 @@
     const appState = {
       selectedStage: "Основная сцена",
       step: 0,
+      uploadedFiles: [],
       data: {
         theatreInfo: "",
         parsedTheatre: "",
@@ -1515,7 +1629,7 @@
       {
         stepTitle: "Контакты цехов коллектива",
         q: "<b>Укажите прямые контакты специалистов вашего коллектива</b> (звукорежиссёр, художник/оператор по свету, видеоинженер).<br><br>Это необходимо, чтобы службы площадки могли напрямую связаться с вашими специалистами и заблаговременно обсудить партитуры и патчи.",
-        tip: "Укажите имя и телефон для каждого цеха. Если один человек совмещает несколько ролей — отметьте это:",
+        tip: "Укажите имя и телефон для каждого цеха:",
         type: "text",
         quickFill: [
           {
@@ -1584,15 +1698,15 @@
         type: "text",
         quickFill: [
           { label: "Без полётов, без огня и без пиротехники", text: "Полёты и трюковые подвесы отсутствуют. Открытый огонь, пиротехника и табакокурение не используются. Регламент площадки принят к неукоснительному исполнению." },
-          { label: "Шаблон: Используется полёт (свой паспорт трюка)", text: "В спектакле используется полёт артиста. Привозим своё сертифицированное полётное устройство, паспорт трюка и акт освидетельствования предоставим в облаке. Табачные изделия и открытый огонь не используются." }
+          { label: "Шаблон: Используется полёт (свой паспорт трюка)", text: "В спектакле используется полёт артиста. Привозим своё сертифицированное полётное устройство, паспорт трюка и акт освидетельствования предоставим в файлах. Табачные изделия и открытый огонь не используются." }
         ],
         apply: (val) => { appState.data.flightAndPyro = val; }
       },
       {
-        stepTitle: "Вызов цехов площадки (дневная смена)",
-        q: "<b>Сформируйте дневную заявку на службы площадки.</b><br>Отметьте необходимые цеха, укажите количество людей и часы их работы:",
-        tip: "Заполните форму ниже и нажмите «Подтвердить состав служб»:",
-        type: "interactive_services",
+        stepTitle: "Вызов цехов площадки (09:00-23:00)",
+        q: "<b>Сформируйте дневную заявку на службы площадки.</b><br><br>⏰ <b>РЕГЛАМЕНТ ДНЕВНОЙ СМЕНЫ:</b> Рабочее время дневных служб площадки — строго <b>с 09:00 до 23:00</b>.<br>• Для монтировщиков и оператора механики (штанкеты) минимальное количество — <b>не менее 1 специалиста</b>.<br>• <b>Дежурный электрик</b> площадки включён в смену по умолчанию (1 специалист).<br>• Для механика сцены выберите конкретную техническую задачу из списка.<br>• Если требуется провести уборку сцены несколько раз (например, до прогона, после монтажа и перед спектаклем) — добавьте нужное количество уборок кнопкой «+ Добавить уборку».<br>• Если вам требуется ранний вызов (до 09:00) или доп. персонал — укажите это в поле дополнительной заявки ниже.",
+        tip: "Настройте количество сотрудников кнопками «+ / −», выберите задачи и подтвердите заявку:",
+        type: "interactive_services_advanced",
         apply: (val) => { appState.data.servicesTable = val; }
       },
       {
@@ -1607,11 +1721,10 @@
         apply: (val) => { appState.data.costumes = val; }
       },
       {
-        stepTitle: "Райдер, планы, акты ОЗ",
-        q: "<b>Финальный шаг: ссылка на техническую документацию.</b><br><br>Райдер спектакля подлежит предварительному рассмотрению и согласованию. В день заезда передача материалов не допускается.<br><br><b>Предоставьте прямую ссылку на облачный диск</b> (Яндекс.Диск, Google Drive, Облако Mail.ru), в котором обязательно размещены:<br>• Технический райдер спектакля (звук, свет, видео)<br>• План-схема расстановки декораций на планшете<br>• План развеса мягких декораций по штанкетам<br>• <u>Сканы актов огнезащитной обработки</u> мягких декораций и бутафории<br>• Копия приказа театра о назначении ответственного за противопожарную безопасность и охрану труда",
-        tip: "⚠️ Вставьте ссылку на открытую папку. Без предоставления полного пакета документов заявка не может быть принята к согласованию.",
-        type: "strict_url",
-        quickFill: [],
+        stepTitle: "Райдер, планы, файлы / ссылка",
+        q: "<b>Финальный шаг: предоставление технической документации.</b><br><br>Райдер спектакля подлежит предварительному рассмотрению. Вы можете <b>вставить ссылку на облачный диск</b> (Яндекс.Диск, Google Drive) ИЛИ <b>выбрать и прикрепить файлы напрямую со своего устройства</b> (PDF, DWG, DOCX, ZIP).<br><br>В пакете документов обязательно должны быть:<br>• Технический райдер (звук, свет, видео)<br>• План-схема расстановки декораций и развеса по штанкетам<br>• <u>Сканы актов огнезащитной обработки</u> декораций и тканей<br>• Копия приказа о назначении ответственного за ПБ и ОТ",
+        tip: "Введите ссылку в поле ввода и/или прикрепите файлы кнопкой ниже, затем нажмите «Ответить»:",
+        type: "files_or_url",
         apply: (val) => { appState.data.riders = val; }
       }
     ];
@@ -1648,6 +1761,47 @@
       document.body.style.overflow = "";
     }
 
+    /* Модуль счётчиков персонала */
+    function changeCounter(id, delta, minVal = 0) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      let val = parseInt(el.textContent, 10) || 0;
+      val = Math.max(minVal, val + delta);
+      el.textContent = val;
+    }
+
+    /* Модуль динамических уборок */
+    let cleaningCounter = 1;
+    function addCleaningRow() {
+      cleaningCounter++;
+      const container = document.getElementById('cleaningEntriesContainer');
+      const row = document.createElement('div');
+      row.className = 'cleaning-entry-row';
+      row.id = `clean_row_${cleaningCounter}`;
+      row.innerHTML = `
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--gold); min-width:80px;">Уборка №${cleaningCounter}:</span>
+        <input type="text" class="clean-time-input" placeholder="Время (напр. 17:30)" value="в 18:00" style="flex:1;">
+        <input type="text" class="clean-task-input" placeholder="Задача (напр. влажная уборка планшета)" value="влажная уборка планшета" style="flex:1.2;">
+        <button type="button" class="btn-del-cleaning" onclick="deleteCleaningRow('clean_row_${cleaningCounter}')" title="Удалить уборку">×</button>
+      `;
+      container.appendChild(row);
+    }
+
+    function deleteCleaningRow(rowId) {
+      const row = document.getElementById(rowId);
+      if (row) row.remove();
+    }
+
+    /* Модуль выбора файлов на устройстве (Шаг 10) */
+    function handleFileSelection(e) {
+      const files = Array.from(e.target.files);
+      if (!files.length) return;
+      appState.uploadedFiles = files;
+      const display = document.getElementById('selectedFilesListDisplay');
+      display.innerHTML = files.map((f, i) => `<div>📄 <b>${f.name}</b> (${Math.round(f.size / 1024)} Кб)</div>`).join('');
+      toast(`Выбрано файлов: ${files.length}. Нажмите «Ответить» для сохранения.`);
+    }
+
     function showQuestion(idx) {
       const stepData = questions[idx];
       const chat = $("#chat");
@@ -1658,58 +1812,150 @@
 
       let interactiveHtml = "";
 
-      if (stepData.type === "interactive_services") {
+      /* Продвинутая таблица служб дневной смены (Шаг 8) */
+      if (stepData.type === "interactive_services_advanced") {
         interactiveHtml = `
           <div class="services-interactive-box" id="servicesBox">
-            <div class="service-row">
-              <input type="checkbox" id="srv_mach" checked>
-              <label for="srv_mach"><b>Монтировщики сцены</b></label>
-              <input type="text" id="srv_mach_cnt" placeholder="Кол-во чел." value="4 человека">
-              <input type="text" id="srv_mach_time" placeholder="Часы работы" value="с 08:00 до 01:00">
+            <div style="font-size:10px; font-family:'IBM Plex Mono',monospace; color:var(--gold); text-transform:uppercase; margin-bottom:4px;">
+              Дневная смена площадки (09:00 — 23:00):
             </div>
-            <div class="service-row">
-              <input type="checkbox" id="srv_mech" checked>
-              <label for="srv_mech"><b>Оператор механики (штанкеты/круг)</b></label>
-              <input type="text" id="srv_mech_cnt" placeholder="Кол-во чел." value="1 специалист">
-              <input type="text" id="srv_mech_time" placeholder="Часы работы" value="с 09:00 до 01:00">
+
+            <!-- Монтировщики (минимум 1) -->
+            <div class="service-row-item">
+              <input type="checkbox" id="srv_mach" checked disabled title="Минимум 1 монтировщик обязателен">
+              <label for="srv_mach"><b>Монтировщики сцены</b> <small style="color:var(--gold);">(мин. 1 чел)</small></label>
+              <div class="counter-control">
+                <button type="button" class="counter-btn" onclick="changeCounter('cnt_mach', -1, 1)">−</button>
+                <span class="counter-val" id="cnt_mach">4</span>
+                <button type="button" class="counter-btn" onclick="changeCounter('cnt_mach', 1, 1)">+</button>
+              </div>
+              <input type="text" id="srv_mach_time" placeholder="Время (09:00-23:00)" value="09:00 — 23:00">
             </div>
-            <div class="service-row">
+
+            <!-- Оператор механики (минимум 1) -->
+            <div class="service-row-item">
+              <input type="checkbox" id="srv_mech" checked disabled title="Минимум 1 специалист обязателен">
+              <label for="srv_mech"><b>Оператор механики (штанкеты)</b> <small style="color:var(--gold);">(мин. 1 чел)</small></label>
+              <div class="counter-control">
+                <button type="button" class="counter-btn" onclick="changeCounter('cnt_mech', -1, 1)">−</button>
+                <span class="counter-val" id="cnt_mech">1</span>
+                <button type="button" class="counter-btn" onclick="changeCounter('cnt_mech', 1, 1)">+</button>
+              </div>
+              <input type="text" id="srv_mech_time" placeholder="Время" value="09:00 — 23:00">
+            </div>
+
+            <!-- Механик сцены с выбором задач -->
+            <div class="service-row-item" style="grid-template-columns: 24px 1fr 1fr 110px;">
+              <input type="checkbox" id="srv_stage_mech" checked>
+              <label for="srv_stage_mech"><b>Механик сцены</b></label>
+              <select id="srv_stage_mech_task">
+                <option value="Установка индивидуальных точечных подвесов">Задача: Установка индивидуальных точечных подвесов</option>
+                <option value="Подвес и коммутация цепных электролебёдок">Задача: Подвес и коммутация цепных электролебёдок</option>
+                <option value="Монтаж вспомогательного подъёмного оборудования">Задача: Монтаж вспомогательного подъёмного оборудования</option>
+                <option value="Юстировка блочных систем и выносных блоков">Задача: Юстировка блочных систем и выносных блоков</option>
+                <option value="Сборка и пусконаладка сборного поворотного круга">Задача: Сборка и пусконаладка сборного поворотного круга</option>
+                <option value="Дежурство и оперативный контроль такелажа">Задача: Дежурство и оперативный контроль такелажа</option>
+              </select>
+              <input type="text" id="srv_stage_mech_time" placeholder="Время" value="09:00 — 23:00">
+            </div>
+
+            <!-- Осветители -->
+            <div class="service-row-item">
               <input type="checkbox" id="srv_light" checked>
               <label for="srv_light"><b>Осветители (планшет + оператор)</b></label>
-              <input type="text" id="srv_light_cnt" placeholder="Кол-во чел." value="2 специалиста">
-              <input type="text" id="srv_light_time" placeholder="Часы работы" value="с 10:00 до 00:00">
+              <div class="counter-control">
+                <button type="button" class="counter-btn" onclick="changeCounter('cnt_light', -1, 0)">−</button>
+                <span class="counter-val" id="cnt_light">2</span>
+                <button type="button" class="counter-btn" onclick="changeCounter('cnt_light', 1, 0)">+</button>
+              </div>
+              <input type="text" id="srv_light_time" placeholder="Время" value="10:00 — 23:00">
             </div>
-            <div class="service-row">
+
+            <!-- Звукоцех -->
+            <div class="service-row-item">
               <input type="checkbox" id="srv_sound" checked>
               <label for="srv_sound"><b>Звукоцех площадки</b></label>
-              <input type="text" id="srv_sound_cnt" placeholder="Кол-во чел." value="1 звукорежиссёр">
-              <input type="text" id="srv_sound_time" placeholder="Часы работы" value="с 10:00 до 23:00">
+              <div class="counter-control">
+                <button type="button" class="counter-btn" onclick="changeCounter('cnt_sound', -1, 0)">−</button>
+                <span class="counter-val" id="cnt_sound">1</span>
+                <button type="button" class="counter-btn" onclick="changeCounter('cnt_sound', 1, 0)">+</button>
+              </div>
+              <input type="text" id="srv_sound_time" placeholder="Время" value="10:00 — 23:00">
             </div>
-            <div class="service-row">
+
+            <!-- Видеоцех -->
+            <div class="service-row-item">
               <input type="checkbox" id="srv_video">
               <label for="srv_video"><b>Видеоцех / проекция</b></label>
-              <input type="text" id="srv_video_cnt" placeholder="Кол-во чел." value="1 видеоинженер">
-              <input type="text" id="srv_video_time" placeholder="Часы работы" value="с 11:00 до 22:30">
+              <div class="counter-control">
+                <button type="button" class="counter-btn" onclick="changeCounter('cnt_video', -1, 0)">−</button>
+                <span class="counter-val" id="cnt_video">1</span>
+                <button type="button" class="counter-btn" onclick="changeCounter('cnt_video', 1, 0)">+</button>
+              </div>
+              <input type="text" id="srv_video_time" placeholder="Время" value="11:00 — 22:30">
             </div>
-            <div class="service-row">
+
+            <!-- Помреж / Завпост -->
+            <div class="service-row-item">
               <input type="checkbox" id="srv_pomrezh" checked>
               <label for="srv_pomrezh"><b>Помощник режиссёра / Завпост</b></label>
-              <input type="text" id="srv_pomrezh_cnt" placeholder="Кол-во чел." value="1 дежурный">
-              <input type="text" id="srv_pomrezh_time" placeholder="Часы работы" value="с 08:00 до 01:00">
+              <div class="counter-control">
+                <button type="button" class="counter-btn" onclick="changeCounter('cnt_pomrezh', -1, 0)">−</button>
+                <span class="counter-val" id="cnt_pomrezh">1</span>
+                <button type="button" class="counter-btn" onclick="changeCounter('cnt_pomrezh', 1, 0)">+</button>
+              </div>
+              <input type="text" id="srv_pomrezh_time" placeholder="Время" value="09:00 — 23:00">
             </div>
-            <div class="service-row">
-              <input type="checkbox" id="srv_clean" checked>
-              <label for="srv_clean"><b>Уборка сцены (клининг планшета)</b></label>
-              <input type="text" id="srv_clean_cnt" placeholder="Кол-во чел." value="Дежурная группа">
-              <input type="text" id="srv_clean_time" placeholder="Часы работы" value="перед прогоном и в 18:00">
+
+            <!-- Дежурный электрик (всегда 1 по умолчанию) -->
+            <div class="service-row-item">
+              <input type="checkbox" id="srv_eng" checked disabled title="Дежурный электрик включён по умолчанию">
+              <label for="srv_eng"><b>Дежурный электрик площадки</b> <small style="color:var(--gold);">(включён в смену)</small></label>
+              <div class="counter-control">
+                <span class="counter-val" style="padding:0 8px;">1 чел.</span>
+              </div>
+              <input type="text" id="srv_eng_time" placeholder="Время" value="09:00 — 23:00" readonly>
             </div>
-            <div class="service-row">
-              <input type="checkbox" id="srv_eng">
-              <label for="srv_eng"><b>Дежурный электрик / механик</b></label>
-              <input type="text" id="srv_eng_cnt" placeholder="Кол-во чел." value="1 инженер">
-              <input type="text" id="srv_eng_time" placeholder="Часы работы" value="по требованию">
+
+            <!-- Блок динамического добавления уборок -->
+            <div class="cleaning-section">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <b style="font-size:11px; color:var(--cream);">Уборка планшета сцены (клининг):</b>
+                <button type="button" class="btn-add-cleaning" onclick="addCleaningRow()">+ Добавить ещё уборку</button>
+              </div>
+              <div id="cleaningEntriesContainer">
+                <div class="cleaning-entry-row" id="clean_row_1">
+                  <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--gold); min-width:80px;">Уборка №1:</span>
+                  <input type="text" class="clean-time-input" placeholder="Время" value="перед репетицией (13:30)" style="flex:1;">
+                  <input type="text" class="clean-task-input" placeholder="Задача" value="влажная уборка планшета" style="flex:1.2;">
+                  <span style="width:20px;"></span>
+                </div>
+              </div>
             </div>
-            <button type="button" class="btn-confirm-services" onclick="confirmServicesForm()">✓ Подтвердить состав служб</button>
+
+            <!-- Дополнительные потребности и ранний выезд -->
+            <div class="extra-needs-area">
+              <b style="font-size:11px; color:var(--gold);">Дополнительная заявка (ранний вызов до 09:00 / нестандартные задачи):</b>
+              <textarea id="srv_extra_needs" placeholder="Если требуются службы ранее 09:00, дополнительный такелаж или специфические условия — подробно опишите здесь..."></textarea>
+            </div>
+
+            <button type="button" class="btn-confirm-services" onclick="confirmAdvancedServicesForm()">✓ Подтвердить состав дневных служб</button>
+          </div>
+        `;
+      }
+
+      /* Загрузчик файлов и ввод ссылки (Шаг 10) */
+      if (stepData.type === "files_or_url") {
+        interactiveHtml = `
+          <div class="file-upload-zone">
+            <div style="font-size:12px; color:var(--cream);"><b>Загрузите файлы напрямую с компьютера</b> (PDF, DWG, ZIP, DOCX):</div>
+            <label class="btn-select-files">
+              📁 Выбрать файлы на устройстве
+              <input type="file" multiple id="fileUploadInput" onchange="handleFileSelection(event)">
+            </label>
+            <div class="selected-files-list" id="selectedFilesListDisplay">
+              ${appState.uploadedFiles.length ? appState.uploadedFiles.map(f => `<div>📄 <b>${f.name}</b> (${Math.round(f.size / 1024)} Кб)</div>`).join('') : '<span style="color:var(--muted); font-size:10px;">Файлы ещё не выбраны</span>'}
+            </div>
           </div>
         `;
       }
@@ -1747,9 +1993,9 @@
       chat.appendChild(msg);
       chat.scrollTop = chat.scrollHeight;
 
-      $("#chatForm").style.display = (stepData.type === "interactive_services") ? "none" : "flex";
-      if (stepData.type === "strict_url") {
-        $("#chatInput").placeholder = "Вставьте прямую ссылку: https://disk.yandex.ru/... или https://drive.google.com/...";
+      $("#chatForm").style.display = (stepData.type === "interactive_services_advanced") ? "none" : "flex";
+      if (stepData.type === "files_or_url") {
+        $("#chatInput").placeholder = "Вставьте ссылку на облачный диск (если применимо) или напишите комментарий к прикреплённым файлам...";
       } else {
         $("#chatInput").placeholder = "Введите ваш ответ или скорректируйте предложенный текст...";
       }
@@ -1767,38 +2013,99 @@
       handleStepSubmission(text);
     }
 
-    function confirmServicesForm() {
-      const rows = $$("#servicesBox .service-row");
-      const selectedServices = [];
+    /* Подтверждение продвинутой таблицы дневных служб */
+    function confirmAdvancedServicesForm() {
+      const resultParts = [];
 
-      rows.forEach(r => {
-        const chk = r.querySelector('input[type="checkbox"]');
-        if (chk && chk.checked) {
-          const name = r.querySelector('label').innerText.trim();
-          const cnt = r.querySelectorAll('input[type="text"]')[0].value.trim();
-          const time = r.querySelectorAll('input[type="text"]')[1].value.trim();
-          selectedServices.push(`• ${name}: ${cnt || "согласовано"} (${time || "по графику"})`);
-        }
-      });
+      // 1. Обязательные монтировщики
+      const machCnt = document.getElementById('cnt_mach').textContent;
+      const machTime = document.getElementById('srv_mach_time').value.trim();
+      resultParts.push(`• Монтировщики сцены: ${machCnt} чел. (${machTime})`);
 
-      if (selectedServices.length === 0) {
-        toast("Отметьте хотя бы одну службу площадки.");
-        return;
+      // 2. Обязательный оператор механики
+      const mechCnt = document.getElementById('cnt_mech').textContent;
+      const mechTime = document.getElementById('srv_mech_time').value.trim();
+      resultParts.push(`• Оператор механики (штанкеты): ${mechCnt} чел. (${mechTime})`);
+
+      // 3. Механик сцены
+      const stageMechChk = document.getElementById('srv_stage_mech').checked;
+      if (stageMechChk) {
+        const task = document.getElementById('srv_stage_mech_task').value;
+        const time = document.getElementById('srv_stage_mech_time').value.trim();
+        resultParts.push(`• Механик сцены (1 специалист, ${time}): ${task}`);
       }
 
-      const resultText = selectedServices.join("\n");
-      handleStepSubmission(resultText);
+      // 4. Осветители
+      if (document.getElementById('srv_light').checked) {
+        const cnt = document.getElementById('cnt_light').textContent;
+        const time = document.getElementById('srv_light_time').value.trim();
+        resultParts.push(`• Осветители (планшет + пульт): ${cnt} чел. (${time})`);
+      }
+
+      // 5. Звукоцех
+      if (document.getElementById('srv_sound').checked) {
+        const cnt = document.getElementById('cnt_sound').textContent;
+        const time = document.getElementById('srv_sound_time').value.trim();
+        resultParts.push(`• Звуковой цех площадки: ${cnt} чел. (${time})`);
+      }
+
+      // 6. Видеоцех
+      if (document.getElementById('srv_video').checked) {
+        const cnt = document.getElementById('cnt_video').textContent;
+        const time = document.getElementById('srv_video_time').value.trim();
+        resultParts.push(`• Видеоцех / проекция: ${cnt} чел. (${time})`);
+      }
+
+      // 7. Помреж / Завпост
+      if (document.getElementById('srv_pomrezh').checked) {
+        const cnt = document.getElementById('cnt_pomrezh').textContent;
+        const time = document.getElementById('srv_pomrezh_time').value.trim();
+        resultParts.push(`• Помощник режиссёра / Завпост: ${cnt} чел. (${time})`);
+      }
+
+      // 8. Дежурный электрик (всегда 1)
+      resultParts.push(`• Дежурный электрик площадки: 1 специалист (09:00 — 23:00, включён в смену)`);
+
+      // 9. Все назначенные уборки
+      const cleanRows = $$("#cleaningEntriesContainer .cleaning-entry-row");
+      const cleanDetails = [];
+      cleanRows.forEach((r, idx) => {
+        const t = r.querySelector('.clean-time-input').value.trim();
+        const task = r.querySelector('.clean-task-input').value.trim();
+        cleanDetails.push(`  - Уборка ${idx + 1}: ${t} (${task})`);
+      });
+      if (cleanDetails.length) {
+        resultParts.push(`• Клининг планшета сцены (всего ${cleanDetails.length} сессии):\n${cleanDetails.join('\n')}`);
+      }
+
+      // 10. Дополнительные потребности / ранний выезд
+      const extra = document.getElementById('srv_extra_needs').value.trim();
+      if (extra) {
+        resultParts.push(`• Дополнительные требования / ранний вызов (до 09:00):\n  ${extra}`);
+      }
+
+      handleStepSubmission(resultParts.join('\n\n'));
     }
 
     function handleStepSubmission(text) {
       const currentIdx = appState.step;
       const stepData = questions[currentIdx];
 
-      if (stepData.type === "strict_url") {
-        const isUrl = /^(http|https):\/\/[^ "]+$/.test(text.trim());
-        if (!isUrl) {
-          toast("Пожалуйста, укажите действующую веб-ссылку (начинающуюся с http:// или https://) на открытую папку с документами.");
+      // Валидация на шаге 10 (файлы или ссылка)
+      if (stepData.type === "files_or_url") {
+        const hasUrl = /^(http|https):\/\/[^ "]+$/.test(text.trim());
+        const hasFiles = appState.uploadedFiles && appState.uploadedFiles.length > 0;
+        if (!hasUrl && !hasFiles) {
+          toast("Пожалуйста, прикрепите файлы технического райдера со своего устройства ИЛИ укажите действующую веб-ссылку на облачный диск.");
           return;
+        }
+        if (hasFiles && !hasUrl) {
+          text = `Прикреплены файлы с устройства (${appState.uploadedFiles.length} шт.):\n` + 
+                 appState.uploadedFiles.map(f => `• ${f.name} (${Math.round(f.size / 1024)} Кб)`).join('\n') +
+                 (text.trim() ? `\n\nПримечание заявителя: ${text.trim()}` : '');
+        } else if (hasFiles && hasUrl) {
+          text = `Ссылка на облачный архив: ${text.trim()}\n\nТакже прикреплены файлы напрямую (${appState.uploadedFiles.length} шт.):\n` +
+                 appState.uploadedFiles.map(f => `• ${f.name}`).join('\n');
         }
       }
 
@@ -1849,7 +2156,7 @@
             <div class="chat-label"><span>Заявка сформирована</span></div>
             <div class="chat-text">
               ✅ <b>Заявка технического согласования сформирована!</b><br>
-              Все 10 разделов зафиксированы. Теперь вы можете распечатать/сохранить заявку в формате A4 (PDF) или передать данные техническому директору в Telegram для начала диалога.
+              Все 10 разделов зафиксированы (включая детальный график служб, мульти-уборки и пакет райдера). Теперь вы можете распечатать/сохранить заявку в формате A4 (PDF) или передать данные техническому директору в Telegram для начала диалога.
             </div>
             <div class="chat-options">
               <button type="button" onclick="downloadPassport()">📄 Скачать PDF-заявку (A4)</button>
@@ -1896,7 +2203,7 @@
       e.preventDefault();
       const input = $("#chatInput");
       const val = input.value.trim();
-      if (!val) {
+      if (!val && questions[appState.step].type !== "files_or_url") {
         toast("Введите информацию перед отправкой.");
         return;
       }
@@ -1919,7 +2226,6 @@
       const printWindow = window.open('', '_blank');
       
       const theatreTitle = appState.data.parsedTheatre || "Театр-заявитель";
-      const playTitle = appState.data.parsedPlay || "Спектакль";
       const signerRole = appState.data.parsedRole || "Завпост / Технический руководитель";
       const signerName = appState.data.parsedName || "Ответственное лицо";
       const signerPhone = appState.data.parsedPhone ? `Тел.: ${appState.data.parsedPhone}` : "";
@@ -1934,21 +2240,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    @page { size: A4 portrait; margin: 12mm 10mm; }
+    @page { size: A4 portrait; margin: 10mm 10mm; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Inter', Arial, sans-serif;
       color: #121418;
       background: #fff;
       padding: 0;
-      line-height: 1.4;
-      font-size: 9.5pt;
+      line-height: 1.35;
+      font-size: 9pt;
     }
     .passport-border {
-      border: 2px solid #6F5630; /* Dark Gold */
-      padding: 18px 20px;
+      border: 2px solid #6F5630;
+      padding: 16px 18px;
       position: relative;
-      min-height: 270mm;
+      min-height: 275mm;
     }
     .passport-border::after {
       content: "";
@@ -1962,8 +2268,8 @@
       justify-content: space-between;
       align-items: center;
       border-bottom: 2px solid #6F5630;
-      padding-bottom: 10px;
-      margin-bottom: 12px;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
     }
     .logo-box {
       display: flex;
@@ -1972,7 +2278,7 @@
     }
     .logo-main {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 24pt;
+      font-size: 22pt;
       letter-spacing: 0.16em;
       color: #6F5630;
       line-height: 1;
@@ -1990,20 +2296,20 @@
       font-family: 'IBM Plex Mono', Consolas, monospace;
       font-size: 8pt;
       color: #333;
-      line-height: 1.5;
+      line-height: 1.45;
     }
     .doc-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 17pt;
+      font-size: 16pt;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       text-align: center;
       color: #1a1a1a;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       font-weight: 700;
     }
     .section-block {
-      margin-bottom: 11px;
+      margin-bottom: 10px;
       page-break-inside: avoid;
     }
     .section-head {
@@ -2015,22 +2321,22 @@
       color: #6F5630;
       border-bottom: 1px solid #d4c29d;
       padding-bottom: 2px;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
     }
     .section-content {
       font-size: 8.5pt;
       color: #222;
       white-space: pre-wrap;
-      line-height: 1.4;
+      line-height: 1.35;
     }
     .grid-2col {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 11px;
+      gap: 12px;
+      margin-bottom: 10px;
     }
     .signatures-block {
-      margin-top: 22px;
+      margin-top: 18px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 30px;
@@ -2038,11 +2344,11 @@
     }
     .sign-col {
       border-top: 1px dashed #777;
-      padding-top: 6px;
+      padding-top: 5px;
       font-size: 7.5pt;
       color: #333;
       font-family: 'IBM Plex Mono', Consolas, monospace;
-      line-height: 1.5;
+      line-height: 1.45;
     }
     @media print {
       body { background: transparent; }
@@ -2100,7 +2406,7 @@
     </div>
 
     <div class="section-block">
-      <div class="section-head">7. Заявка на вызов дневных служб площадки</div>
+      <div class="section-head">7. Заявка на вызов дневных служб площадки (09:00 — 23:00)</div>
       <div class="section-content">${escapeHtml(appState.data.servicesTable)}</div>
     </div>
 
@@ -2110,7 +2416,7 @@
         <div class="section-content">${escapeHtml(appState.data.costumes)}</div>
       </div>
       <div class="section-block">
-        <div class="section-head">9. Облачный архив (райдер, планы, акты ОЗ)</div>
+        <div class="section-head">9. Техническая документация (файлы / ссылка)</div>
         <div class="section-content">${escapeHtml(appState.data.riders)}</div>
       </div>
     </div>
@@ -2175,13 +2481,13 @@
         "6. ПОЛЁТЫ, ТРЮКИ И БЕЗОПАСНОСТЬ:",
         appState.data.flightAndPyro,
         "",
-        "7. ВЫЗОВ ДНЕВНЫХ СЛУЖБ ПЛОЩАДКИ:",
+        "7. ВЫЗОВ ДНЕВНЫХ СЛУЖБ ПЛОЩАДКИ (09:00-23:00):",
         appState.data.servicesTable,
         "",
         "8. БЫТ И ГРИМЁРКИ:",
         appState.data.costumes,
         "",
-        "9. АРХИВ (РАЙДЕР, ПЛАНЫ, АКТЫ ОЗ):",
+        "9. РАЙДЕР И ДОКУМЕНТЫ (ФАЙЛЫ/ССЫЛКА):",
         appState.data.riders,
         "--------------------------------------------------",
         "Сформировано через портал координации ATLAS"
