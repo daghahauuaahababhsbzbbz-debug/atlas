@@ -576,6 +576,273 @@
       border-bottom: 1px solid var(--line-soft);
     }
 
+    .passport-kicker {
+      color: var(--muted);
+      font-family: "IBM Plex Mono", Consolas, monospace;
+      font-size: 8px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .document-preview {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+    }
+
+    .document-sheet {
+      position: relative;
+      min-height: 218px;
+      padding: 21px 22px 18px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, transparent 0 86%, rgba(214,168,95,.08) 86% 86.5%, transparent 86.5%),
+        var(--panel-2);
+      overflow: hidden;
+    }
+
+    body[data-theme="light"] .document-sheet {
+      background:
+        linear-gradient(135deg, transparent 0 86%, rgba(184,134,59,.09) 86% 86.5%, transparent 86.5%),
+        var(--panel);
+    }
+
+    .document-sheet::after {
+      content: "";
+      position: absolute;
+      right: -36px;
+      bottom: -52px;
+      width: 145px;
+      height: 145px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      opacity: .55;
+      pointer-events: none;
+    }
+
+    .document-sheet-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .document-mark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .document-mark-symbol {
+      width: 27px;
+      height: 27px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      color: var(--gold);
+      flex: 0 0 auto;
+    }
+
+    .document-mark-symbol span {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 1px;
+      height: 23px;
+      background: var(--gold);
+      transform-origin: center;
+      opacity: .72;
+    }
+
+    .document-mark-symbol span:nth-child(1) { transform: translate(-50%,-50%) rotate(0deg); }
+    .document-mark-symbol span:nth-child(2) { transform: translate(-50%,-50%) rotate(45deg); }
+    .document-mark-symbol span:nth-child(3) { transform: translate(-50%,-50%) rotate(90deg); }
+    .document-mark-symbol span:nth-child(4) { transform: translate(-50%,-50%) rotate(135deg); }
+
+    .document-mark-symbol b {
+      position: relative;
+      z-index: 2;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold);
+      background: var(--panel-2);
+      line-height: 1;
+      padding: 1px;
+    }
+
+    body[data-theme="light"] .document-mark-symbol b {
+      background: var(--panel);
+    }
+
+    .document-mark-word {
+      color: var(--gold);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 20px;
+      letter-spacing: .13em;
+    }
+
+    .document-sheet-code {
+      display: grid;
+      gap: 3px;
+      text-align: right;
+      color: var(--muted);
+      font-family: "IBM Plex Mono", Consolas, monospace;
+      font-size: 7px;
+      letter-spacing: .1em;
+    }
+
+    .document-sheet-code strong {
+      color: var(--gold);
+      font-size: 9px;
+      font-weight: 500;
+    }
+
+    .document-sheet-rule {
+      height: 1px;
+      background: var(--line-soft);
+      margin: 18px 0 18px;
+    }
+
+    .document-sheet-title {
+      display: grid;
+      gap: 0;
+      color: var(--text);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 23px;
+      line-height: 1.05;
+      letter-spacing: .035em;
+    }
+
+    .document-sheet-title strong {
+      font-weight: 600;
+    }
+
+    .document-sheet-fields {
+      display: grid;
+      grid-template-columns: 1.45fr 1fr;
+      gap: 18px;
+      margin-top: 19px;
+    }
+
+    .document-sheet-fields div {
+      display: grid;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .document-sheet-fields span {
+      color: var(--muted);
+      font-family: "IBM Plex Mono", Consolas, monospace;
+      font-size: 7px;
+      letter-spacing: .12em;
+    }
+
+    .document-sheet-fields strong {
+      color: var(--text);
+      font-family: "IBM Plex Mono", Consolas, monospace;
+      font-size: 9px;
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .document-sheet-footer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 21px;
+      color: var(--muted);
+      font-family: "IBM Plex Mono", Consolas, monospace;
+      font-size: 7px;
+      letter-spacing: .09em;
+    }
+
+    .document-sheet-footer i {
+      height: 1px;
+      flex: 1;
+      background: var(--line-soft);
+    }
+
+    .document-info {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+      column-gap: 14px;
+      row-gap: 4px;
+      padding: 0 2px;
+    }
+
+    .document-info-label {
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .document-info .doc-meta {
+      grid-column: 1;
+      color: var(--muted);
+      font-family: "IBM Plex Mono", Consolas, monospace;
+      font-size: 8px;
+      line-height: 1.65;
+      text-transform: uppercase;
+    }
+
+    .document-info-note {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      max-width: 145px;
+      color: var(--muted);
+      font-size: 8.5px;
+      line-height: 1.45;
+      text-align: right;
+    }
+
+    .passport-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .passport-actions button {
+      height: 48px;
+      background: transparent;
+      border: 1px solid var(--line-soft);
+      color: var(--text);
+      font-family: "IBM Plex Mono", Consolas, monospace;
+      font-size: 9px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: border-color .2s, background .2s, color .2s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      text-align: left;
+    }
+
+    .passport-actions button:first-child {
+      border-color: var(--line);
+      color: var(--gold);
+    }
+
+    .passport-actions button b {
+      font-size: 14px;
+      font-weight: 400;
+      opacity: .9;
+    }
+
+    .passport-actions button:hover {
+      background: rgba(214, 168, 95, 0.06);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+
     .passport-head {
       display: flex;
       justify-content: space-between;
@@ -1457,24 +1724,63 @@
 
         <section class="passport" id="passport-card">
           <div class="passport-head">
-            <div class="passport-title">Заявка на согласование</div>
+            <div>
+              <div class="passport-kicker">ATLAS / TECH / 2026</div>
+              <div class="passport-title">Заявка на согласование</div>
+            </div>
             <div class="status" id="passportStatus">Формируется</div>
           </div>
 
-          <div class="document">
-            <div class="document-paper">
-              <strong>ATLAS</strong>
-              <div class="doc-lines"><i></i><i></i><i></i></div>
+          <div class="document-preview">
+            <div class="document-sheet">
+              <div class="document-sheet-top">
+                <div class="document-mark">
+                  <div class="document-mark-symbol" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span>
+                    <b>A</b>
+                  </div>
+                  <div class="document-mark-word">ATLAS</div>
+                </div>
+                <div class="document-sheet-code">
+                  <span>TECHNICAL</span>
+                  <strong>01 / 26</strong>
+                </div>
+              </div>
+
+              <div class="document-sheet-rule"></div>
+
+              <div class="document-sheet-title">
+                <span>Техническая заявка</span>
+                <strong>спектакля</strong>
+              </div>
+
+              <div class="document-sheet-fields">
+                <div>
+                  <span>ПЛОЩАДКА</span>
+                  <strong id="docScenePreview">НЕ ВЫБРАНА</strong>
+                </div>
+                <div>
+                  <span>ВЕРСИЯ</span>
+                  <strong>1.0 · 2026</strong>
+                </div>
+              </div>
+
+              <div class="document-sheet-footer">
+                <span>ДОКУМЕНТ ДЛЯ СОГЛАСОВАНИЯ</span>
+                <i></i>
+              </div>
             </div>
-            <div>
-              <div class="doc-name">Техническая заявка<br>спектакля</div>
+
+            <div class="document-info">
+              <div class="document-info-label">Техническая заявка</div>
               <div class="doc-meta" id="docMeta">Площадка не выбрана<br>Версия 1.0 · 2026</div>
+              <div class="document-info-note">Формируется на основании данных, введённых в диалоге согласования.</div>
             </div>
           </div>
 
           <div class="passport-actions">
-            <button data-action="download">Скачать PDF</button>
-            <button data-action="telegram">Отправить в TG ↗</button>
+            <button data-action="download"><span>Скачать PDF</span><b>↓</b></button>
+            <button data-action="telegram"><span>Передать в Telegram</span><b>↗</b></button>
           </div>
         </section>
       </aside>
@@ -1930,6 +2236,8 @@
         $("#chatForm").style.display = "none";
         $("#passportStatus").textContent = "Заявка готова к отправке";
         $("#passportStatus").style.borderColor = "var(--gold)";
+        const scenePreview = document.getElementById("docScenePreview");
+        if (scenePreview && appState.data.scene) scenePreview.textContent = appState.data.scene;
         $("#btnContinueLabel").textContent = "Заявка сформирована";
         
         setTimeout(() => {
@@ -1977,6 +2285,8 @@
       $("#progressValue").textContent = `${progressPercent}%`;
       $("#passportStatus").textContent = "Редактирование";
       $("#btnContinueLabel").textContent = "Продолжить согласование";
+      const scenePreview = document.getElementById("docScenePreview");
+      if (scenePreview && appState.data.scene) scenePreview.textContent = appState.data.scene;
 
       showQuestion(targetIdx);
       toast(`Вы вернулись к этапу: ${questions[targetIdx].stepTitle}`);
