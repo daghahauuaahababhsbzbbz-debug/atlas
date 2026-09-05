@@ -7,12 +7,10 @@
   <meta name="description" content="ATLAS — портал координации технических служб площадки." />
   <title>ATLAS — Портал координации технических служб</title>
 
-  <!-- Защита от зависания кэша -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
 
-  <!-- Фирменный знак ATLAS во вкладке браузера -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23090A0C'/%3E%3Ccircle cx='50' cy='50' r='38' fill='none' stroke='%236F5630' stroke-width='1.2' stroke-dasharray='2 2'/%3E%3Ccircle cx='50' cy='50' r='24' fill='none' stroke='%23D6A85F' stroke-width='1.2'/%3E%3Cpath d='M50 4 L54 42 L96 50 L54 58 L50 96 L46 58 L4 50 L46 42 Z' fill='%23B8863B'/%3E%3Cpath d='M50 4 L64 78 L50 68 L36 78 Z' fill='%23D6A85F'/%3E%3Cpath d='M42 54 L58 54' stroke='%23090A0C' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='50' cy='50' r='4.5' fill='%23D6A85F' stroke='%23090A0C' stroke-width='1.5'/%3E%3C/svg%3E" />
   <link rel="icon" type="image/png" href="img/atlas_symbol.png" />
   <link rel="apple-touch-icon" href="img/atlas_symbol.png" />
@@ -22,7 +20,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* Токены согласно Брендбуку ATLAS 2026 (Dark / Light) */
     :root {
       --bg: #090A0C;
       --panel: #111316;
@@ -233,28 +230,29 @@
       background-color: var(--bg);
     }
 
+    /* Фоновый чертёжный компас с поддержкой PNG на прозрачном слое */
     .hero-compass-bg {
       position: absolute;
       top: 0;
       right: 0;
       width: 65%;
       height: 100%;
-      background-image: url('img/atlas_compass_bg.jpg'), url('atlas_compass_bg.jpg');
-      background-size: cover;
+      background-image: url('img/atlas_compass_bg.png'), url('atlas_compass_bg.png'), url('img/atlas_compass_bg.jpg'), url('atlas_compass_bg.jpg');
+      background-size: contain;
       background-position: right center;
       background-repeat: no-repeat;
-      opacity: 0.58;
+      opacity: 0.45;
       pointer-events: none;
       mask-image: linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%),
                   linear-gradient(to bottom, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%);
       -webkit-mask-composite: source-in;
       mask-composite: intersect;
       z-index: 1;
+      transition: opacity 0.25s ease;
     }
 
     body[data-theme="light"] .hero-compass-bg {
-      opacity: 0.22;
-      filter: contrast(1.15);
+      opacity: 0.25;
     }
 
     .eyebrow {
@@ -909,7 +907,6 @@
       text-transform: uppercase;
     }
 
-    /* ---------- МОДАЛЬНЫЕ ОКНА ---------- */
     .modal {
       position: fixed;
       inset: 0;
@@ -1814,12 +1811,11 @@
     const $ = (selector) => document.querySelector(selector);
     const $$ = (selector) => document.querySelectorAll(selector);
 
-    // Подключенный URL вашего веб-приложения Google Apps Script
     const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx9VbvRaJ9RM2Rk-6_CEc_1mkOSrFOflbv7Pyx_I7h0JxsKJrIin5GpEbKT-Yih2oqSTA/exec";
 
     const appState = {
       step: 0,
-      uploadedFiles: [], // Файлы с устройства { name, mimeType, base64, size }
+      uploadedFiles: [],
       data: {
         theatreInfo: "",
         parsedTheatre: "",
@@ -2304,7 +2300,6 @@
 
       resultParts.push(`• Дежурный электрик площадки: 1 специалист (09:00 — 23:00, включён в смену)`);
 
-      // Сбор карточек уборок с чекбоксами
       const cleanCards = $$("#cleaningEntriesContainer .cleaning-card-entry");
       const cleanDetails = [];
       cleanCards.forEach((c, idx) => {
@@ -2538,7 +2533,6 @@
               <input type="text" id="srv_eng_time" placeholder="Время" value="09:00 — 23:00" readonly>
             </div>
 
-            <!-- Карточки клининга с чекбоксами -->
             <div class="cleaning-section">
               <div style="display:flex; justify-content:space-between; align-items:center;">
                 <b style="font-size:11px; color:var(--cream);">Уборка планшета сцены (клининг):</b>
